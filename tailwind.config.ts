@@ -27,14 +27,20 @@ const config = {
         input: "var(--input)",
         ring: "var(--ring)",
         background: "var(--background)",
+        backgroundLighter: "var(--background-lighter)",
         foreground: "var(--foreground)",
 
+        mainColor: "var(--main-color)",
+        mainColorDarker: "var(--main-color-darker)",
         emotion: {
           happy: "var(--emotion-happy)",
           calm: "var(--emotion-calm)",
           sad: "var(--emotion-sad)",
           annoy: "var(--emotion-annoy)",
           angry: "var(--emotion-angry)",
+        },
+        tabColor: {
+          DEFAULT: "var(--bottom-tab-color)",
         },
 
         primary: {
@@ -45,6 +51,7 @@ const config = {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
         },
+
         destructive: {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
