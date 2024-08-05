@@ -1,0 +1,123 @@
+type BaseFetchParamTypes = {
+  url: string
+  method: string
+  data?: string | FormData
+  headers?: HeadersInit
+}
+
+const baseFetch = async ({
+  url,
+  method,
+  data,
+  headers,
+  ...option
+}: BaseFetchParamTypes) => {
+  let authorizationHeader: string | null
+  const apiUrl = !url.startsWith("http")
+    ? process.env.NEXT_PUBLIC_API_URL + url
+    : url
+
+  const accessToken = localStorage.getItem("ACCESS_TOKEN")
+
+  if (accessToken) {
+    authorizationHeader = `Bearer ${accessToken}`
+  } else {
+    authorizationHeader = null
+  }
+
+  const request = {
+    body: data,
+    ...(authorizationHeader
+      ? {
+          headers: {
+            Authorization: authorizationHeader,
+            ...headers,
+          },
+        }
+      : { headers }),
+    method,
+    ...option,
+  }
+
+  try {
+    const res = await fetch(apiUrl, request)
+    return await res.json()
+  } catch (error) {
+    if (error instanceof TypeError) {
+      console.error("네트워크 에러", error.message)
+    } else if (error instanceof Error) {
+      console.error(error.message)
+    }
+  }
+}
+
+const fetcher = (url: string) => {
+  return baseFetch({
+    url,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+const postRequest = <T>(url: string, arg: T) => {
+  return baseFetch({
+    url,
+    method: "POST",
+    data: JSON.stringify(arg),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+const postFormRequest = (url: string, arg: FormData) => {
+  return baseFetch({
+    url,
+    method: "POST",
+    headers: undefined,
+    data: arg,
+  })
+}
+
+const patchRequest = <T>(url: string, arg: T) => {
+  return baseFetch({
+    url,
+    method: "PATCH",
+    data: JSON.stringify(arg),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+const putRequest = <T>(url: string, arg: T) => {
+  return baseFetch({
+    url,
+    method: "PUT",
+    data: JSON.stringify(arg),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+const deleteRequest = (url: string) => {
+  return baseFetch({
+    url,
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+export {
+  fetcher,
+  postRequest,
+  postFormRequest,
+  patchRequest,
+  putRequest,
+  deleteRequest,
+}
