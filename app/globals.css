@@ -14,8 +14,9 @@
     --main-color-darker: #288d1d;
     --background: #272727;
     --background-lighter: #3e3e3e;
-    --main-font-color: #ffffff;
-    --sub-font-color: #c4c4c4;
+    --main-text-color: #ffffff;
+    --sub-text-color: #c4c4c4;
+    --bottom-tab-color: #363636;
 
     /* 기존 */
     --foreground: #1a1d29;
@@ -23,9 +24,9 @@
     --card-foreground: #1a1d29;
     --popover: #ffffff;
     --popover-foreground: #1a1d29;
-    --primary: red;
+    --primary: #ffffff;
     --primary-foreground: #ffffff;
-    --secondary: #f2f2f2;
+    --secondary: #c4c4c4;
     --secondary-foreground: #1a1d29;
     --muted: #f2f2f2;
     --muted-foreground: #7a7a7a;
