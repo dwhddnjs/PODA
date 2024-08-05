@@ -4,10 +4,63 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import ReactQueryProvider from "@/provider/react-query-provider"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import localFont from "next/font/local"
 
-const fontSans = FontSans({
-  subsets: ["latin"],
+// const fontSans = FontSans({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// })
+
+const myFont = localFont({
   variable: "--font-sans",
+  src: [
+    {
+      path: "./fonts/SCDream1.otf",
+      weight: "100",
+      style: "thin",
+    },
+    {
+      path: "./fonts/SCDream2.otf",
+      weight: "200",
+      style: "extralight",
+    },
+    {
+      path: "./fonts/SCDream3.otf",
+      weight: "300",
+      style: "light",
+    },
+    {
+      path: "./fonts/SCDream4.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/SCDream5.otf",
+      weight: "500",
+      style: "medium",
+    },
+    {
+      path: "./fonts/SCDream6.otf",
+      weight: "600",
+      style: "semibold",
+    },
+    {
+      path: "./fonts/SCDream7.otf",
+      weight: "700",
+      style: "bold",
+    },
+    {
+      path: "./fonts/SCDream8.otf",
+      weight: "800",
+      style: "extrabold",
+    },
+    {
+      path: "./fonts/SCDream9.otf",
+      weight: "900",
+      style: "black",
+    },
+  ],
+  display: "swap",
 })
 
 export function generateViewport() {
@@ -57,7 +110,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          myFont.variable
         )}>
         <ReactQueryProvider>
           {children}
