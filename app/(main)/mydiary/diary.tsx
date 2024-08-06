@@ -1,3 +1,4 @@
+import { getEmotionClasses } from "@/lib/function/get-emotion-classes"
 import { Ellipsis } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
 
@@ -49,27 +50,42 @@ const mood = {
   },
 }
 
+// const getEmotionClasses = (index: number, length: number) => {
+//   let classes = ""
+
+//   // 첫 번째 또는 마지막 인덱스일 때 py-6 추가
+//   if (index === 0 || index === length - 1) {
+//     classes += "py-6 "
+//   }
+
+//   // length가 2일 때 두 번째 인덱스에 pb-6과 pt-0 추가
+//   if (length === 2 && index === 1) {
+//     classes += "pb-6 pt-0 "
+//   }
+
+//   return classes.trim() // 불필요한 공백 제거
+// }
+
 export const Diary = ({ date }: DiaryProps) => {
-  console.log("데이터!!!", date)
   return (
     <div className="relative bg-backgroundLighter rounded-xl">
       {date.map((item, index) => {
+        console.log(date)
         const currentMood = item.mood
         const moodColor = mood.color[currentMood]
         const moodImg = mood.img[currentMood]
         const moodTxt = mood.txt[currentMood]
 
+        console.log(date.length)
         return (
           <>
             {/* 왼쪽 */}
             <div
               key={item.id}
-              className={`px-4 flex gap-3  ${
-                index === 0 || index === date.length - 1 ? "py-6" : ""
-              } ${date.length === 2 && index === 1 ? "pb-6" : ""} ${
-                date.length === 2 && index === 1 ? "pt-0" : ""
-              } `}>
-              {/* 왼쪽 */}
+              className={`px-4 flex gap-3 ${getEmotionClasses(
+                index,
+                date.length
+              )}`}>
               <div className="flex flex-col">
                 <div className="flex-shrink-0">
                   <Image
@@ -90,7 +106,9 @@ export const Diary = ({ date }: DiaryProps) => {
               <div className="w-full">
                 {/* 이미지텍스트, 시간 */}
                 <div className="flex gap-2 items-center mb-2">
-                  <h2 className={`text-2xl text-[${moodColor}]`}>{moodTxt}</h2>
+                  <h2 className={`text-2xl text-emotion-${currentMood}`}>
+                    {moodTxt}
+                  </h2>
                   <div className="text-secondary">{item.time}</div>
                 </div>
                 {/* 상황 태그들 */}
