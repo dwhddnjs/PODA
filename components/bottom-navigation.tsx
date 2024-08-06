@@ -55,7 +55,7 @@ export const BottomNavigation = () => {
       key={item.id}
       variant="ghost"
       type="button"
-      className=" h-full inline-flex flex-col items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-800 group ">
+      className=" h-full inline-flex flex-col items-center justify-center hover:bg-transparent dark:hover:bg-gray-800 group ">
       <Link
         href={item.url}
         className="flex justify-center flex-col items-center space-y-0.5">
@@ -68,7 +68,7 @@ export const BottomNavigation = () => {
   ))
 
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-tabColor border-t border-backgroundLighter dark:bg-gray-700 dark:border-gray-600">
       <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
         {renderTabs}
       </div>
