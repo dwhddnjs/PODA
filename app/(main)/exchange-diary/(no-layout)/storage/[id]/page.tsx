@@ -5,7 +5,7 @@ import { NavigationHeader } from "@/components/navigation-header"
 
 import React from "react"
 
-export default function IdPage() {
+export default function StorageIdPage() {
   return (
     <div className="w-full">
       <NavigationHeader />
