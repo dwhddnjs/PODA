@@ -1,9 +1,9 @@
 import { Dropdown } from "@/components/dropdown"
-import { getEmotionClasses } from "@/lib/function/get-emotion-classes"
 import { EmotionType, getInfoByMood } from "@/lib/function/get-info-by-mood"
+import { getTxtcolorClasses } from "@/lib/function/get-txtcolor-classes"
 import { cn } from "@/lib/utils"
 
-import Image, { StaticImageData } from "next/image"
+import Image from "next/image"
 type Tag = {
   tagImg: string
   tagTxt: string
@@ -30,21 +30,20 @@ type DiaryProps = {
 
 export const Diary = ({ diaryData }: DiaryProps) => {
   return (
-    <div className="">
+    <div className="py-6 bg-backgroundLighter rounded-xl">
       {diaryData.map((item, index) => {
         const currentMood = item.mood
         const moodInfo = getInfoByMood(currentMood)
-        console.log(currentMood)
         return (
           <>
-            <div className={`${getEmotionClasses(diaryData.length)}`}>
+            <div>
               <div className="flex gap-2 px-4 relative">
                 {/* 드롭다운 메뉴 */}
-                <div className="absolute right-0 -top-1 text-primary">
+                <div className="absolute right-0 top-0 text-primary">
                   <Dropdown />
                 </div>
                 {/* 왼쪽 */}
-                <div className="flex flex-col flex-shrink-0">
+                <div className="flex items-center flex-col flex-shrink-0">
                   <div>
                     <Image
                       width={48}
@@ -54,9 +53,9 @@ export const Diary = ({ diaryData }: DiaryProps) => {
                     />
                   </div>
                   {/* 이모션 세로 선 */}
-                  <div className="h-full relative mt-3 -mb-1">
+                  <div className="flex flex-col my-3 h-full">
                     {index < diaryData.length - 1 && (
-                      <div className="h-full absolute border-[0.5px] border-[#55555] mx-[18px] "></div>
+                      <div className="h-full w-1 bg-[#555555]"></div>
                     )}
                   </div>
                 </div>
@@ -64,15 +63,7 @@ export const Diary = ({ diaryData }: DiaryProps) => {
                 <div>
                   {/* 이미지텍스트, 시간 */}
                   <div className="flex gap-2 items-center mb-2">
-                    <h2
-                      className={cn(
-                        `text-2xl text-emotion-${item.mood}`,
-                        item.mood === "happy" && "text-emotion-happy",
-                        item.mood === "calm" && "text-emotion-calm",
-                        item.mood === "sad" && "text-emotion-sad",
-                        item.mood === "annoy" && "text-emotion-annoy",
-                        item.mood === "angry" && "text-emotion-angry"
-                      )}>
+                    <h2 className={getTxtcolorClasses(item.mood)}>
                       {moodInfo.txt}
                     </h2>
                     <div className="text-secondary text-sm">{item.time}</div>

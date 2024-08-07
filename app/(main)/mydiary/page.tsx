@@ -2,14 +2,13 @@ import React from "react"
 import { Diary } from "./diary"
 import Image from "next/image"
 import { NavigationHeader } from "@/components/navigation-header"
-import { getEmotionClasses } from "@/lib/function/get-emotion-classes"
 
 export default function MydiaryPage() {
   // 예시 데이터, 여기서 전체 일기 받아와주기~
   const diaryDatas: { [key: string]: Diary[] } = {
     "2024-08-03": [
       {
-        id: 6,
+        id: 20,
         time: "오전 9:00",
         mood: "happy",
         tags: [
@@ -29,7 +28,7 @@ export default function MydiaryPage() {
     ],
     "2024-08-02": [
       {
-        id: 3,
+        id: 19,
         time: "오전 9:00",
         mood: "happy",
         tags: [
@@ -47,7 +46,7 @@ export default function MydiaryPage() {
         isHighlighted: false,
       },
       {
-        id: 4,
+        id: 18,
         time: "오후 4:30",
         mood: "calm",
         tags: [{ tagImg: "/assets/tag6.png", tagTxt: "휴식" }],
@@ -58,7 +57,7 @@ export default function MydiaryPage() {
         uploadImgs: [],
       },
       {
-        id: 5,
+        id: 17,
         time: "오후 4:30",
         mood: "annoy",
         tags: [{ tagImg: "/assets/tag6.png", tagTxt: "휴식" }],
@@ -74,7 +73,7 @@ export default function MydiaryPage() {
     ],
     "2024-08-01": [
       {
-        id: 1,
+        id: 16,
         time: "오전 10:03",
         mood: "happy",
         tags: [
@@ -89,7 +88,7 @@ export default function MydiaryPage() {
         isHighlighted: true,
       },
       {
-        id: 2,
+        id: 15,
         time: "오후 5:03",
         mood: "sad",
         tags: [{ tagImg: "/assets/tag3.png", tagTxt: "슬픔" }],
@@ -112,15 +111,10 @@ export default function MydiaryPage() {
         return (
           <div key={dateKey} className="m-6">
             <h2 className="text-primary mb-1">{dateKey}</h2>
-            {/* 날짜에 해당하는 모든 일기 항목을 각각 렌더링 */}
-            <div className="bg-backgroundLighter rounded-xl">
-              <Diary key={dateKey} diaryData={datas} />
-            </div>
+            <Diary key={dateKey} diaryData={datas} />
           </div>
         )
       })}
     </>
   )
 }
-
-// diary
