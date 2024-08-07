@@ -64,7 +64,7 @@ export default function MydiaryPage() {
           title: "오늘의 일기",
           content: "박재웅씨가 디자인 피드백을 해줬다. 너무 기쁘다.",
         },
-        uploadImgs: ["/assets/image1.png", "/assets/image2.png"],
+        uploadImgs: [],
         isHighlighted: true,
       },
       {
@@ -82,18 +82,20 @@ export default function MydiaryPage() {
   }
 
   const dates = Object.keys(diaryDatas)
+  console.log(Object.keys(diaryDatas).length)
 
   return (
     <>
       <NavigationHeader isDate={true} isSearch={true} />
 
-      {dates.map((dateKey): any => {
+      {dates.map((dateKey: string) => {
+        console.log("aa")
         const datas = diaryDatas[dateKey] || []
         return (
           <div key={dateKey} className="m-6">
             <h2 className="text-primary mb-1">{dateKey}</h2>
             {/* 날짜에 해당하는 모든 일기 항목을 각각 렌더링 */}
-            <Diary key={dateKey} date={datas} />
+            <Diary key={dateKey} diaryData={datas} />
           </div>
         )
       })}
