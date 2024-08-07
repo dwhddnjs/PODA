@@ -1,3 +1,4 @@
+import { Dropdown } from "@/components/dropdown"
 import { getEmotionClasses } from "@/lib/function/get-emotion-classes"
 import { Ellipsis } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
@@ -26,7 +27,7 @@ type DiaryProps = {
   date: Diary[]
 }
 
-const mood = {
+const mood: any = {
   color: {
     happy: "#ffc134",
     calm: "#3cc42e",
@@ -50,40 +51,22 @@ const mood = {
   },
 }
 
-// const getEmotionClasses = (index: number, length: number) => {
-//   let classes = ""
-
-//   // 첫 번째 또는 마지막 인덱스일 때 py-6 추가
-//   if (index === 0 || index === length - 1) {
-//     classes += "py-6 "
-//   }
-
-//   // length가 2일 때 두 번째 인덱스에 pb-6과 pt-0 추가
-//   if (length === 2 && index === 1) {
-//     classes += "pb-6 pt-0 "
-//   }
-
-//   return classes.trim() // 불필요한 공백 제거
-// }
-
 export const Diary = ({ date }: DiaryProps) => {
   return (
-    <div className="relative bg-backgroundLighter rounded-xl">
+    <div className="bg-backgroundLighter rounded-xl">
       {date.map((item, index) => {
-        console.log(date)
+        console.log(item)
         const currentMood = item.mood
         const moodColor = mood.color[currentMood]
         const moodImg = mood.img[currentMood]
         const moodTxt = mood.txt[currentMood]
 
-        console.log(date.length)
         return (
           <>
             {/* 왼쪽 */}
             <div
               key={item.id}
-              className={`px-4 flex gap-3 ${getEmotionClasses(
-                index,
+              className={`relative px-4 flex gap-3 ${getEmotionClasses(
                 date.length
               )}`}>
               <div className="flex flex-col">
@@ -96,6 +79,8 @@ export const Diary = ({ date }: DiaryProps) => {
                     alt="감정 이미지"
                   />
                 </div>
+
+                {/* 세로 점선 */}
                 <div className="h-full relative">
                   {index < date.length - 1 && (
                     <div className="h-full border-2 border-dashed border-secondary absolute mx-4 top-3"></div>
@@ -159,8 +144,8 @@ export const Diary = ({ date }: DiaryProps) => {
               </div>
 
               {/* 오른쪽 ...이미지 클라이언트 컴포넌트 */}
-              <div className="absolute right-4 top-3 text-primary ">
-                <Ellipsis />
+              <div className="absolute right-4 top-3 text-primary">
+                <Dropdown />
               </div>
               {/* 감정 이미지 사이에 세로 점선 추가 */}
             </div>

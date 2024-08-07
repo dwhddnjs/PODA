@@ -1,7 +1,7 @@
 import React from "react"
 import { Diary } from "./diary"
 import Image from "next/image"
-import { Search } from "lucide-react"
+import { NavigationHeader } from "@/components/navigation-header"
 
 export default function MydiaryPage() {
   // 예시 데이터, 여기서 전체 일기 받아와주기~
@@ -84,27 +84,19 @@ export default function MydiaryPage() {
   const dates = Object.keys(diaryDatas)
 
   return (
-    <div className="">
-      {/* header */}
-      <header className="flex justify-center items-center text-primary pt-[59px] relative">
-        <h1 className="">2024년 8월</h1>
-        <Search
-          className="absolute top-[69px] right-10"
-          width={25}
-          height={25}
-        />
-      </header>
+    <>
+      <NavigationHeader isDate={true} isSearch={true} />
 
-      {dates.map((dateKey) => {
+      {dates.map((dateKey): any => {
         const datas = diaryDatas[dateKey] || []
         return (
           <div key={dateKey} className="m-6">
             <h2 className="text-primary mb-1">{dateKey}</h2>
             {/* 날짜에 해당하는 모든 일기 항목을 각각 렌더링 */}
-            <Diary key={dateKey.id} date={datas} />
+            <Diary key={dateKey} date={datas} />
           </div>
         )
       })}
-    </div>
+    </>
   )
 }
