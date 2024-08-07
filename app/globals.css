@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+:root {
+  height: 100%;
+  background: #272727;
+}
+
 h1,
 h2,
 h3 {
@@ -98,12 +105,6 @@ p {
 }
 
 @layer base {
-  html,
-  body,
-  :root {
-    height: 100%;
-    background: #272727;
-  }
   * {
     @apply border-border;
   }
