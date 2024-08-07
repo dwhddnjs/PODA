@@ -2,10 +2,31 @@ import React from "react"
 import { Diary } from "./diary"
 import Image from "next/image"
 import { NavigationHeader } from "@/components/navigation-header"
+import { getEmotionClasses } from "@/lib/function/get-emotion-classes"
 
 export default function MydiaryPage() {
   // 예시 데이터, 여기서 전체 일기 받아와주기~
   const diaryDatas: { [key: string]: Diary[] } = {
+    "2024-08-03": [
+      {
+        id: 6,
+        time: "오전 9:00",
+        mood: "happy",
+        tags: [
+          { tagImg: "/assets/svg/sun.svg", tagTxt: "맑음" },
+          { tagImg: "/assets/svg/family.svg", tagTxt: "가족" },
+        ],
+        description: {
+          title: "여행의 시작",
+          content: "오늘은 드디어 오랫동안 기다려온 여행을 간다!",
+        },
+        uploadImgs: [
+          "/assets/start-page-desc.png",
+          "/assets/start-page-desc.png",
+        ],
+        isHighlighted: false,
+      },
+    ],
     "2024-08-02": [
       {
         id: 3,
@@ -82,23 +103,24 @@ export default function MydiaryPage() {
   }
 
   const dates = Object.keys(diaryDatas)
-  console.log(Object.keys(diaryDatas).length)
-
   return (
     <>
       <NavigationHeader isDate={true} isSearch={true} />
 
       {dates.map((dateKey: string) => {
-        console.log("aa")
         const datas = diaryDatas[dateKey] || []
         return (
           <div key={dateKey} className="m-6">
             <h2 className="text-primary mb-1">{dateKey}</h2>
             {/* 날짜에 해당하는 모든 일기 항목을 각각 렌더링 */}
-            <Diary key={dateKey} diaryData={datas} />
+            <div className="bg-backgroundLighter rounded-xl">
+              <Diary key={dateKey} diaryData={datas} />
+            </div>
           </div>
         )
       })}
     </>
   )
 }
+
+// diary
