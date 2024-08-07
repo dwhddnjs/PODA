@@ -1,4 +1,3 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -20,10 +19,8 @@ export function Dropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="focus:outline-none"
-          style={{ outline: "none", outlineOffset: 0 }}>
+        {/* //! 드롭다운 focus 적용 안되는 문제 있음 */}
+        <Button variant="ghost" className="focus:outline-none">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
