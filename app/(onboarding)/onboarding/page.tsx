@@ -84,7 +84,7 @@ export default function OnboardingPage() {
       <Button
         type="button"
         className="fixed bottom-6 w-5/6 max-w-96 left-1/2 -translate-x-1/2 bg-mainColor text-black font-bold"
-        onClick={() => router.push(`/get-additional-user-info/1`)}>
+        onClick={() => router.push(`/get-extra-user-info/radio/1`)}>
         계속
       </Button>
     </div>
