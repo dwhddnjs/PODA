@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import React from "react"
 
 export const ExchangeDiaryTab = () => {
+  const { push } = useRouter()
   return (
     <>
       <div className="pt-24 flex flex-col justify-center items-center">
@@ -18,8 +20,10 @@ export const ExchangeDiaryTab = () => {
         </div>
       </div>
       <div className="w-full px-[48px] pt-[48px]">
-        <Button className="w-full font-black h-14 rounded-xl bg-mainColor text-black text-lg">
-          내일기 포장하기
+        <Button
+          onClick={() => push("/exchange-diary/load-diary")}
+          className="w-full font-black h-14 rounded-xl bg-mainColor text-black text-lg">
+          내 일기 포장하기
         </Button>
       </div>
     </>
