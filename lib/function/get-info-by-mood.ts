@@ -7,19 +7,11 @@ export type EmotionType = {
 }
 
 interface moodDataType {
-  color: EmotionType
   img: EmotionType
   txt: EmotionType
 }
 
 const moodData: moodDataType = {
-  color: {
-    happy: "#ffc134",
-    calm: "#3cc42e",
-    sad: "#3a76e2",
-    annoy: "#9a48c1",
-    angry: "#f13c33",
-  },
   img: {
     happy: "/assets/svg/happy.svg",
     calm: "/assets/svg/calm.svg",
@@ -37,8 +29,7 @@ const moodData: moodDataType = {
 }
 
 export const getInfoByMood = (mood: keyof EmotionType) => {
-  const color = moodData.color[mood]
   const img = moodData.img[mood]
   const txt = moodData.txt[mood]
-  return { color, img, txt }
+  return { img, txt }
 }
