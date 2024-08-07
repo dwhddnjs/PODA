@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import ReactQueryProvider from "@/provider/react-query-provider"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import localFont from "next/font/local"
+import { SheetProvider } from "@/provider/sheet-provider"
 
 // const fontSans = FontSans({
 //   subsets: ["latin"],
@@ -114,6 +115,7 @@ export default function RootLayout({
         )}>
         <ReactQueryProvider>
           {children}
+          <SheetProvider />
           <ReactQueryDevtools />
         </ReactQueryProvider>
       </body>
