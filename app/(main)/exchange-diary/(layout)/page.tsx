@@ -8,7 +8,7 @@ import Image from "next/image"
 import React from "react"
 import { DeliveryStatusItem } from "../delivery-status-item"
 import { ExchangeDiaryTab } from "../exchange-diary-tab"
-import { DiaryStorgeTab } from "../diary-storge-tab"
+import { DiaryStorageTab } from "../diary-storage-tab"
 import { SendDiaryTab } from "../send-diary-tab"
 
 export default function ExchangeDiaryPage() {
@@ -34,7 +34,7 @@ export default function ExchangeDiaryPage() {
         <TabsContent
           value="diary-storage"
           className="w-full flex flex-col justify-center items-center px-[24px]">
-          <DiaryStorgeTab />
+          <DiaryStorageTab />
         </TabsContent>
       </Tabs>
     </div>
