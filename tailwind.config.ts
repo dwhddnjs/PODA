@@ -4,10 +4,11 @@ import { fontFamily } from "tailwindcss/defaultTheme"
 const config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./hooks/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
+    "./provider/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
