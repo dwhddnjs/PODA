@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import { ProcessStatusGreen } from "../../process-status-green"
 import { useRouter } from "next/navigation"
+import { useUserData } from "@/hooks/store/use-user-data"
 
 const regionOptions = [
   "서울",
@@ -36,7 +37,7 @@ const regionOptions = [
 ]
 
 const FormSchema = z.object({
-  region: z.string({
+  type: z.string({
     required_error: "옵션을 선택해주셔야 해요!",
   }),
 })
@@ -48,15 +49,18 @@ export default function SelectPage({
 }) {
   const pageNum = Number(params.process)
 
+  const { setUserRegion } = useUserData()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
   const router = useRouter()
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
-
-    router.push(`/get-extra-user-info/multi-select/1`)
+    if (pageNum === 1) {
+      setUserRegion(data.type)
+      router.push(`/get-extra-user-info/multi-select/1`)
+    }
   }
 
   return (
@@ -69,7 +73,7 @@ export default function SelectPage({
           className="mt-40 mx-auto w-11/12 max-w-96">
           <FormField
             control={form.control}
-            name="region"
+            name="type"
             render={({ field }) => (
               <FormItem>
                 <Select
