@@ -1,19 +1,23 @@
 "use client"
 
+import { useUserData } from "@/hooks/store/use-user-data"
 import { cn } from "@/lib/utils"
 import React, { useState } from "react"
 
 export const Tag = ({ children }: { children: React.ReactNode }) => {
   const [selected, setSelected] = useState<null | React.ReactNode>(null)
   console.log("selected: ", selected)
+  const { addUserInterest, removeUserInterest } = useUserData()
 
   const handleSelectTag = (e: React.MouseEvent<HTMLLabelElement>) => {
     const target = e.target as HTMLLabelElement
     if (target.id) {
       setSelected(target.id)
+      addUserInterest(target.id)
     }
     if (target.id === selected) {
       setSelected(null)
+      removeUserInterest(target.id)
     }
   }
 
