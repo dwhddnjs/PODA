@@ -10,6 +10,14 @@ const config = {
     "./lib/**/*.{ts,tsx}",
     "./provider/**/*.{ts,tsx}",
   ],
+  // 빌드단계에서 항상 포함되도록 설정
+  safelist: [
+    "text-emotion-happy",
+    "text-emotion-calm",
+    "text-emotion-sad",
+    "text-emotion-annoy",
+    "text-emotion-angry",
+  ],
   prefix: "",
   theme: {
     container: {
