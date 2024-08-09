@@ -12,13 +12,21 @@ import {
 } from "@/components/ui/drawer"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { Sun } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React from "react"
 
 export const InterestBottomSheet = () => {
-  const { isOpen, onOpen, onClose } = useInterestSheet()
+  const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
+  const { push } = useRouter()
+  console.log("isOpen: ", isOpen)
+
+  const handleSubmit = () => {
+    setOpen(false)
+    push("/exchange-diary/delivery-success")
+  }
 
   return (
-    <Drawer open={isOpen} onOpenChange={onClose}>
+    <Drawer open={isOpen} onOpenChange={setOpen}>
       <DrawerContent className="h-[50%] border-backgroundLighter ">
         <DrawerHeader>
           <div className=" flex flex-col justify-center items-start">
@@ -46,7 +54,9 @@ export const InterestBottomSheet = () => {
           <Tag>몰라</Tag>
         </div>
         <DrawerFooter>
-          <Button className="bg-mainColor h-[48px] text-black text-md font-black">
+          <Button
+            onClick={handleSubmit}
+            className="bg-mainColor h-[48px] text-black text-md font-black">
             배송시작
           </Button>
         </DrawerFooter>
