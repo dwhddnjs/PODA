@@ -1,7 +1,9 @@
 import React from "react"
-import { Diary } from "./diary"
+
 import Image from "next/image"
 import { NavigationHeader } from "@/components/navigation-header"
+import { Diary } from "@/components/diary"
+import { WriteDiaryBtn } from "../write-diary-btn"
 
 export default function MydiaryPage() {
   // 예시 데이터, 여기서 전체 일기 받아와주기~
@@ -119,6 +121,7 @@ export default function MydiaryPage() {
           </div>
         )
       })}
+      <WriteDiaryBtn />
     </>
   )
 }
