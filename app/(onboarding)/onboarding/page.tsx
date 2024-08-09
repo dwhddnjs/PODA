@@ -20,13 +20,33 @@ export default function OnboardingPage() {
           {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem key={index} className="h-full">
               <div className="flex flex-col h-full relative">
-                <Image
-                  src={"/assets/start-page-desc.png"}
-                  alt="start page description"
-                  width={786}
-                  height={540}
-                  className="w-full"
-                />
+                {index === 0 && (
+                  <Image
+                    src={"/assets/onboarding-mydiary.png"}
+                    alt="My diary tab description"
+                    width={786}
+                    height={540}
+                    className="w-full"
+                  />
+                )}
+                {index === 1 && (
+                  <Image
+                    src={"/assets/onboarding-chart.png"}
+                    alt="Chart tab description"
+                    width={786}
+                    height={540}
+                    className="w-full"
+                  />
+                )}
+                {index === 2 && (
+                  <Image
+                    src={"/assets/onboarding-exchange-diary.png"}
+                    alt="Exchange diary tab description"
+                    width={786}
+                    height={540}
+                    className="w-full"
+                  />
+                )}
                 <div className="p-6">
                   <div className="p-1">
                     {index === 0 && (
