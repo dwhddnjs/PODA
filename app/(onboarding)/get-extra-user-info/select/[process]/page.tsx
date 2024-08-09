@@ -22,6 +22,7 @@ import {
 import { ProcessStatusGreen } from "../../process-status-green"
 import { useRouter } from "next/navigation"
 import { useUserData } from "@/hooks/store/use-user-data"
+import { NavigationHeader } from "@/components/navigation-header"
 
 const regionOptions = [
   "서울",
@@ -65,6 +66,7 @@ export default function SelectPage({
 
   return (
     <>
+      <NavigationHeader />
       <ProcessStatusGreen />
       <h2 className="text-center">{pageNum === 1 && `지역을 알려주세요`}</h2>
       <Form {...form}>
