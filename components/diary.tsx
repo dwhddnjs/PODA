@@ -3,7 +3,7 @@ import { getImgByMood } from "@/lib/function/get-img-by-mood"
 import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
 import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
-import { WriteDiaryBtn } from "./write-diary-btn"
+import { WriteDiaryBtn } from "../app/(main)/mydiary/write-diary-btn"
 
 export type MoodType = {
   happy: string
@@ -116,8 +116,6 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
           </div>
         </div>
       </div>
-
-      <WriteDiaryBtn />
     </div>
   )
 }
