@@ -1,19 +1,16 @@
 import Image from "next/image"
 import { getImgByMood } from "@/lib/function/get-img-by-mood"
 import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
-import { getTxtcolorClasses } from "@/lib/function/get-txtcolor-classes"
 import { Dropdown } from "@/components/dropdown"
-import { cn } from "@/lib/utils"
+import { DiaryTag } from "@/components/diary-tag"
+import { WriteDiaryBtn } from "./write-diary-btn"
+
 export type MoodType = {
   happy: string
   calm: string
   sad: string
   annoy: string
   angry: string
-}
-type Tag = {
-  tagImg: string
-  tagTxt: string
 }
 
 type Description = {
@@ -25,108 +22,102 @@ export type Diary = {
   id: number
   time: string
   mood: keyof MoodType
-  tags: Tag[]
-  description: Description
-  uploadImgs: string[]
+  tags?: string[]
+  description?: Description
+  uploadImgs?: string[]
   isHighlighted?: boolean
 }
 
 type DiaryProps = {
-  diaryData: Diary[]
+  diaryData: Diary
+  index: number
+  totalLength: number
 }
 
-export const Diary = ({ diaryData }: DiaryProps) => {
+export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
   return (
-    <div className="bg-backgroundLighter rounded-xl">
-      {diaryData.map((item, index) => {
-        console.log(getTxtcolorClasses(item.mood))
-        return (
-          <>
-            <div
-              key={item.id}
-              className="pt-[16px] first:pt-[24px] last:pb-[24px]">
-              <div className="flex gap-3 px-4 relative">
-                {/* 드롭다운 메뉴 */}
-                <div className="absolute right-0 top-0 text-primary">
-                  <Dropdown />
-                </div>
-                {/* 왼쪽 */}
-                <div className="flex items-center flex-col flex-shrink-0">
-                  <div>
+    <div className="pt-[16px] first:pt-[28px] last:pb-[28px]">
+      <div className="flex gap-3 px-4 relative">
+        {/* 드롭다운 메뉴 */}
+        <div className="absolute right-0 -top-1 text-primary">
+          <Dropdown />
+        </div>
+        {/* 왼쪽 */}
+        <div className="flex items-center flex-col flex-shrink-0">
+          <div>
+            <Image
+              width={48}
+              height={48}
+              src={getImgByMood(diaryData.mood)}
+              alt="감정 이미지"
+            />
+          </div>
+          {/* 이모션 세로 선 */}
+          <div className="flex flex-col h-full pt-[16px]">
+            {totalLength > 1 && index < totalLength - 1 && (
+              <div className="h-full border-[1.2px] border-[#666666]"></div>
+            )}
+          </div>
+        </div>
+        {/* 오른쪽 */}
+        <div className="flex flex-col">
+          {/* 이미지텍스트, 시간 */}
+          <div className="flex gap-2 items-center mb-2">
+            <h2 className={`text-md text-emotion-${diaryData.mood}`}>
+              {getTxtByMood(diaryData.mood)}
+            </h2>
+            <div className="text-secondary text-sm">{diaryData.time}</div>
+          </div>
+          {/* 상황 태그들 */}
+          <ul
+            className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.mood}`}>
+            {diaryData.tags &&
+              diaryData.tags.map((tagName, tagIndex) => {
+                return (
+                  <DiaryTag
+                    tagName={tagName}
+                    mood={diaryData.mood}
+                    tagIndex={tagIndex}
+                  />
+                )
+              })}
+          </ul>
+
+          {/* 디스크립션 */}
+          <div className="mb-2">
+            {diaryData.description && diaryData.description.title && (
+              <h3>{diaryData.description.title}</h3>
+            )}
+            <p className="text-primary text-xs">
+              {diaryData.description && diaryData.description.content}
+            </p>
+          </div>
+          {/* 업로드한 이미지들 */}
+          <div className="flex flex-wrap w-full gap-3">
+            {diaryData.uploadImgs &&
+              diaryData.uploadImgs.map((imgItem) => {
+                return (
+                  <div
+                    className={`${
+                      diaryData.uploadImgs?.length === 1
+                        ? ""
+                        : "w-[calc(50%-6px)]"
+                    }`}>
                     <Image
-                      width={48}
-                      height={48}
-                      src={getImgByMood(item.mood)}
-                      alt="감정 이미지"
+                      src={imgItem}
+                      width={300}
+                      height={300}
+                      alt="업로드 이미지"
+                      className="object-cover rounded-md"
                     />
                   </div>
-                  {/* 이모션 세로 선 */}
-                  <div className="flex flex-col h-full pt-[16px]">
-                    {index < diaryData.length - 1 && (
-                      <div className="h-full border-[1.2px] border-[#666666]"></div>
-                    )}
-                  </div>
-                </div>
-                {/* 오른쪽 */}
-                <div>
-                  {/* 이미지텍스트, 시간 */}
-                  <div className="flex gap-2 items-center mb-2">
-                    <h2 className={`text-2xl ${getTxtcolorClasses(item.mood)}`}>
-                      {getTxtByMood(item.mood)}
-                    </h2>
-                    <div className="text-secondary text-sm text-emotion-happy">
-                      {item.time}
-                    </div>
-                  </div>
-                  {/* 상황 태그들 */}
-                  <ul className="flex gap-2 flex-wrap mb-2">
-                    {item.tags.map((tagItem, tagIndex) => {
-                      return (
-                        <li
-                          key={tagIndex}
-                          className="px-2 flex border-solid border-[1px] border-secondary rounded-[20px]">
-                          <Image
-                            src={tagItem.tagImg}
-                            className="mr-1"
-                            alt="태그 아이콘"
-                            width={16}
-                            height={16}
-                          />
-                          <small className="text-secondary">
-                            {tagItem.tagTxt}
-                          </small>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                )
+              })}
+          </div>
+        </div>
+      </div>
 
-                  {/* 디스크립션 */}
-                  {item.description.title && <h3>{item.description.title}</h3>}
-                  <p className="text-primary text-xs">
-                    {item.description.content}
-                  </p>
-                  {/* 업로드한 이미지들 */}
-                  <div className="flex flex-wrap w-full">
-                    {item.uploadImgs.map((imgItem) => {
-                      return (
-                        <div key={index} className="w-1/2 p-1">
-                          <Image
-                            src={imgItem}
-                            width={160}
-                            height={160}
-                            alt="업로드 이미지"
-                            className="w-full h-auto object-cover"
-                          />
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )
-      })}
+      <WriteDiaryBtn />
     </div>
   )
 }
