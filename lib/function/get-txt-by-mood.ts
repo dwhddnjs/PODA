@@ -1,4 +1,4 @@
-import { MoodType } from "@/app/(main)/mydiary/diary"
+import { MoodType } from "@/components/diary"
 
 const moodTxtData: MoodType = {
   happy: "즐거움",

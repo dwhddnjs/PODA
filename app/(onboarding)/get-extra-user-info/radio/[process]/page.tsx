@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useRouter } from "next/navigation"
 import { ProcessStatusGreen } from "../../process-status-green"
+import { useUserData } from "@/hooks/store/use-user-data"
 
 const ageOptions = ["20대 이하", "20대", "30대", "40대", "50대 이상"]
 const genderOptions = ["여성", "남성", "기타"]
@@ -35,17 +36,20 @@ export default function GetExtraUserInfoPage({
 }) {
   const pageNum = Number(params.process)
 
+  const { setUserAge, setUserGender } = useUserData()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
   const router = useRouter()
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log(data)
-    if (pageNum === 2) {
+    if (pageNum === 1) {
+      setUserAge(data.type)
+      router.push(`/get-extra-user-info/radio/2`)
+    } else if (pageNum === 2) {
+      setUserGender(data.type)
       router.push(`/get-extra-user-info/select/1`)
-    } else {
-      router.push(`/get-extra-user-info/radio/${pageNum + 1}`)
     }
   }
 
