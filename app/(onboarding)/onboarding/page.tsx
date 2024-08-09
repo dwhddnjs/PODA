@@ -66,7 +66,7 @@ export default function OnboardingPage() {
                     {index === 1 && (
                       <>
                         <h1 className={`mt-2`}>
-                          지나간 감점들을
+                          지나간 감정들을
                           <br />한 눈에 살펴보세요
                         </h1>
                         <p className="mt-2">
