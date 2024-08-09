@@ -1,19 +1,38 @@
+"use client"
+
+import { Diary } from "@/app/(main)/mydiary/diary"
 import { NavigationHeader } from "@/components/navigation-header"
+import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
+import { diaryDatas } from "@/lib/mock-data"
+import { cn } from "@/lib/utils"
+import { useParams, usePathname } from "next/navigation"
 import React from "react"
 
 export default function LoadDiaryPage() {
+  const { selectDiary, setSelectDiary, setDate } = useSelectedDiary()
+
+  const pathname = usePathname()
+
+  const handleSelectDiary = (diary: Diary[], date: string) => {
+    if (pathname === "/exchange-diary/load-diary") {
+      setSelectDiary(diary)
+      setDate(date)
+    }
+  }
+
   return (
     <div className="w-full ">
       <NavigationHeader isDate isSearch />
-      <div className=" w-full px-[24px] space-y-5 ">
-        <div className="space-y-1">
-          <p className="pl-1 text-primary font-semibold">7월 25일 목요일</p>
-          <div className="w-full bg-backgroundLighter h-[150px] rounded-lg" />
-        </div>
-        <div className="space-y-1">
-          <p className="pl-1 text-primary font-semibold">7월 26일 목요일</p>
-          <div className="w-full bg-backgroundLighter h-[150px] rounded-lg" />
-        </div>
+      <div className="w-full space-y-5 ">
+        {Object.keys(diaryDatas).map((date) => (
+          <div
+            key={date}
+            className="m-6"
+            onClick={() => handleSelectDiary(diaryDatas[date], date)}>
+            <h2 className="text-primary mb-1">{date}</h2>
+            <Diary key={date} diaryData={diaryDatas[date]} />
+          </div>
+        ))}
       </div>
     </div>
   )

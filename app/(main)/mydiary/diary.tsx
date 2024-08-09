@@ -1,9 +1,13 @@
+"use client"
+
 import Image from "next/image"
 import { getImgByMood } from "@/lib/function/get-img-by-mood"
 import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
 import { getTxtcolorClasses } from "@/lib/function/get-txtcolor-classes"
 import { Dropdown } from "@/components/dropdown"
 import { cn } from "@/lib/utils"
+import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
+import { useParams, usePathname, useRouter } from "next/navigation"
 export type MoodType = {
   happy: string
   calm: string
@@ -36,15 +40,19 @@ type DiaryProps = {
 }
 
 export const Diary = ({ diaryData }: DiaryProps) => {
+  const { back } = useRouter()
+  const pathname = usePathname()
+
   return (
-    <div className="bg-backgroundLighter rounded-xl">
-      {diaryData.map((item, index) => {
-        console.log(getTxtcolorClasses(item.mood))
+    <div
+      onClick={() => pathname === "/exchange-diary/load-diary" && back()}
+      className="bg-backgroundLighter rounded-xl hover:bg-[#555555]">
+      {diaryData?.map((item, index) => {
         return (
           <>
             <div
               key={item.id}
-              className="pt-[16px] first:pt-[24px] last:pb-[24px]">
+              className={cn("pt-[16px] first:pt-[24px] last:pb-[24px] ")}>
               <div className="flex gap-3 px-4 relative">
                 {/* 드롭다운 메뉴 */}
                 <div className="absolute right-0 top-0 text-primary">
@@ -74,7 +82,7 @@ export const Diary = ({ diaryData }: DiaryProps) => {
                     <h2 className={`text-2xl ${getTxtcolorClasses(item.mood)}`}>
                       {getTxtByMood(item.mood)}
                     </h2>
-                    <div className="text-secondary text-sm text-emotion-happy">
+                    <div className=" text-sm text-emotion-happy">
                       {item.time}
                     </div>
                   </div>
@@ -99,7 +107,6 @@ export const Diary = ({ diaryData }: DiaryProps) => {
                       )
                     })}
                   </ul>
-
                   {/* 디스크립션 */}
                   {item.description.title && <h3>{item.description.title}</h3>}
                   <p className="text-primary text-xs">
