@@ -4,6 +4,7 @@ import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
 import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
 import { WriteDiaryBtn } from "../app/(main)/mydiary/write-diary-btn"
+import { usePathname, useRouter } from "next/navigation"
 
 export type MoodType = {
   happy: string
@@ -35,8 +36,12 @@ type DiaryProps = {
 }
 
 export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
+  const { back } = useRouter()
+  const pathname = usePathname()
   return (
-    <div className="pt-[16px] first:pt-[28px] last:pb-[28px]">
+    <div
+      onClick={() => pathname === "/exchange-diary/load-diary" && back()}
+      className="pt-[16px] first:pt-[28px] last:pb-[28px]">
       <div className="flex gap-3 px-4 relative">
         {/* 드롭다운 메뉴 */}
         <div className="absolute right-0 -top-1 text-primary">
