@@ -1,3 +1,5 @@
+import { Diary } from "@/components/diary"
+
 export type MoodType = {
   happy: string
   calm: string
@@ -15,31 +17,19 @@ type Description = {
   content: string
 }
 
-export type Diary = {
-  id: number
-  time: string
-  mood: keyof MoodType
-  tags: Tag[]
-  description: Description
-  uploadImgs: string[]
-  isHighlighted?: boolean
-}
-
 export const diaryDatas: { [key: string]: Diary[] } = {
   "2024-08-03": [
     {
       id: 20,
       time: "오전 9:00",
       mood: "happy",
-      tags: [
-        { tagImg: "/assets/svg/sun.svg", tagTxt: "맑음" },
-        { tagImg: "/assets/svg/family.svg", tagTxt: "가족" },
-      ],
+      tags: ["sun", "family"],
       description: {
         title: "여행의 시작",
         content: "오늘은 드디어 오랫동안 기다려온 여행을 간다!",
       },
       uploadImgs: [
+        "/assets/start-page-desc.png",
         "/assets/start-page-desc.png",
         "/assets/start-page-desc.png",
       ],
@@ -50,26 +40,20 @@ export const diaryDatas: { [key: string]: Diary[] } = {
     {
       id: 19,
       time: "오전 9:00",
-      mood: "happy",
-      tags: [
-        { tagImg: "/assets/svg/sun.svg", tagTxt: "맑음" },
-        { tagImg: "/assets/svg/family.svg", tagTxt: "가족" },
-      ],
+      mood: "angry",
+      tags: ["cloud", "family", "comfort"],
       description: {
         title: "여행의 시작",
         content: "오늘은 드디어 오랫동안 기다려온 여행을 간다!",
       },
-      uploadImgs: [
-        "/assets/start-page-desc.png",
-        "/assets/start-page-desc.png",
-      ],
+      uploadImgs: ["/assets/start-page-desc.png"],
       isHighlighted: false,
     },
     {
       id: 18,
       time: "오후 4:30",
       mood: "calm",
-      tags: [{ tagImg: "/assets/tag6.png", tagTxt: "휴식" }],
+      tags: ["snow", "family", "angry"],
       description: {
         content: "일정을 마치고 바닷가에서 휴식을 취했다. 정말 힐링이 되었다.",
       },
@@ -79,7 +63,7 @@ export const diaryDatas: { [key: string]: Diary[] } = {
       id: 17,
       time: "오후 4:30",
       mood: "annoy",
-      tags: [{ tagImg: "/assets/tag6.png", tagTxt: "휴식" }],
+      tags: ["sun", "family"],
       description: {
         content: "일정을 마치고 바닷가에서 휴식을 취했다. 정말 힐링이 되었다.",
       },
@@ -94,10 +78,7 @@ export const diaryDatas: { [key: string]: Diary[] } = {
       id: 16,
       time: "오전 10:03",
       mood: "happy",
-      tags: [
-        { tagImg: "/assets/tag1.png", tagTxt: "일상" },
-        { tagImg: "/assets/tag2.png", tagTxt: "기쁨" },
-      ],
+      tags: ["sun", "family"],
       description: {
         title: "오늘의 일기",
         content: "박재웅씨가 디자인 피드백을 해줬다. 너무 기쁘다.",
@@ -109,7 +90,7 @@ export const diaryDatas: { [key: string]: Diary[] } = {
       id: 15,
       time: "오후 5:03",
       mood: "sad",
-      tags: [{ tagImg: "/assets/tag3.png", tagTxt: "슬픔" }],
+      tags: ["sun", "family", "friend", "rain", "fine"],
       description: {
         content:
           "아까 피코마 작성중에 방해한 사람 내가 찾아서 가만히 안둘께다.",
