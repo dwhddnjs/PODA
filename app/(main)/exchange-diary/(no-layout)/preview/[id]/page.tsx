@@ -1,6 +1,6 @@
 "use client"
 
-import { Diary } from "@/app/(main)/mydiary/diary"
+import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
 import { AvatarName } from "@/components/avatar-name"
 import { Dotline } from "@/components/dot-line"
 import { NavigationHeader } from "@/components/navigation-header"
@@ -25,7 +25,7 @@ export default function PreviewIdPage() {
         </div>
         <div className="w-full px-[24px] space-y-1">
           <p className="pl-1 text-primary font-semibold">7월 26일 목요일</p>
-          <Diary diaryData={selectDiary!} />
+          <ExchangeDiary diaryDatas={selectDiary!} />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
-import { Diary } from "@/app/(main)/mydiary/diary"
+import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
+import { Diary } from "@/components/diary"
 import { NavigationHeader } from "@/components/navigation-header"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { diaryDatas } from "@/lib/mock-data"
@@ -24,13 +25,13 @@ export default function LoadDiaryPage() {
     <div className="w-full ">
       <NavigationHeader isDate isSearch />
       <div className="w-full space-y-5 ">
-        {Object.keys(diaryDatas).map((date) => (
+        {Object.keys(diaryDatas).map((date, index) => (
           <div
             key={date}
             className="m-6"
             onClick={() => handleSelectDiary(diaryDatas[date], date)}>
             <h2 className="text-primary mb-1">{date}</h2>
-            <Diary key={date} diaryData={diaryDatas[date]} />
+            <ExchangeDiary key={date} diaryDatas={diaryDatas[date]} />
           </div>
         ))}
       </div>

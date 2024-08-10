@@ -1,6 +1,6 @@
 "use client"
 
-import { Diary } from "@/app/(main)/mydiary/diary"
+import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
 import { AvatarName } from "@/components/avatar-name"
 import { NavigationHeader } from "@/components/navigation-header"
 import { convertDate } from "@/lib/function"
@@ -21,7 +21,7 @@ export default function StorageIdPage() {
               {convertDate("2024-08-03")}
             </p>
           </div>
-          <Diary diaryData={item} />
+          <ExchangeDiary diaryDatas={item} />
         </div>
         <div className="w-full space-y-1.5">
           <div className=" flex justify-between items-end flex-row-reverse">
@@ -30,7 +30,7 @@ export default function StorageIdPage() {
               {convertDate("2024-08-02")}
             </p>
           </div>
-          <Diary diaryData={item2} />
+          <ExchangeDiary diaryDatas={item2} />
         </div>
       </div>
     </div>

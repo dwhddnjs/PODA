@@ -4,7 +4,7 @@ import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
-import { Diary } from "../mydiary/diary"
+
 import Link from "next/link"
 
 export const SendDiaryTab = () => {
