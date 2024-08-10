@@ -118,7 +118,7 @@ export const DiaryTag = ({ tagName, mood, tagIndex }: DiaryTagParam) => {
   return (
     <li
       key={tagIndex}
-      className={`px-2 flex items-center gap-[3px] border-solid border-[1px] border-secondary rounded-[20px]`}>
+      className={`px-2 py-0.5 flex items-center gap-[3px] border-solid border-[1px] border-secondary rounded-[20px]`}>
       {React.cloneElement(tagInfo.icon as React.ReactElement, {
         size: 20,
         moodData: mood,

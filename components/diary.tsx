@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import { getImgByMood } from "@/lib/function/get-img-by-mood"
 import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
@@ -80,6 +82,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
               diaryData.tags.map((tagName, tagIndex) => {
                 return (
                   <DiaryTag
+                    key={tagName}
                     tagName={tagName}
                     mood={diaryData.mood}
                     tagIndex={tagIndex}
@@ -103,6 +106,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
               diaryData.uploadImgs.map((imgItem) => {
                 return (
                   <div
+                    key={imgItem}
                     className={`${
                       diaryData.uploadImgs?.length === 1
                         ? ""
