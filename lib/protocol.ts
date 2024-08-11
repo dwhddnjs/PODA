@@ -57,6 +57,7 @@ const fetcher = (url: string) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "client-id": "09-triots",
     },
   })
 }
@@ -68,6 +69,7 @@ const postRequest = <T>(url: string, arg: T) => {
     data: JSON.stringify(arg),
     headers: {
       "Content-Type": "application/json",
+      "client-id": "09-triots",
     },
   })
 }
@@ -88,6 +90,7 @@ const patchRequest = <T>(url: string, arg: T) => {
     data: JSON.stringify(arg),
     headers: {
       "Content-Type": "application/json",
+      "client-id": "09-triots",
     },
   })
 }
@@ -99,6 +102,7 @@ const putRequest = <T>(url: string, arg: T) => {
     data: JSON.stringify(arg),
     headers: {
       "Content-Type": "application/json",
+      "client-id": "09-triots",
     },
   })
 }
@@ -109,6 +113,7 @@ const deleteRequest = (url: string) => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      "client-id": "09-triots",
     },
   })
 }
