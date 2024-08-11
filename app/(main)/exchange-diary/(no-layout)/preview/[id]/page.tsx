@@ -1,10 +1,16 @@
+"use client"
+
+import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
 import { AvatarName } from "@/components/avatar-name"
 import { Dotline } from "@/components/dot-line"
 import { NavigationHeader } from "@/components/navigation-header"
+import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 export default function PreviewIdPage() {
+  const { selectDiary } = useSelectedDiary()
+
   return (
     <div className="w-full ">
       <NavigationHeader />
@@ -19,7 +25,7 @@ export default function PreviewIdPage() {
         </div>
         <div className="w-full px-[24px] space-y-1">
           <p className="pl-1 text-primary font-semibold">7월 26일 목요일</p>
-          <div className="w-full bg-backgroundLighter h-[150px] rounded-lg" />
+          <ExchangeDiary diaryDatas={selectDiary!} />
         </div>
       </div>
     </div>

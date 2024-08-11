@@ -10,29 +10,38 @@ import { DeliveryStatusItem } from "../delivery-status-item"
 import { ExchangeDiaryTab } from "../exchange-diary-tab"
 import { DiaryStorageTab } from "../diary-storage-tab"
 import { SendDiaryTab } from "../send-diary-tab"
+import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
+import { useExchangeDiaryTab } from "@/hooks/store/use-exchange-diary-tab"
 
 export default function ExchangeDiaryPage() {
+  const { selectDiary } = useSelectedDiary()
+  const { tabValue, setTabValue } = useExchangeDiaryTab()
+  console.log("tabValue: ", tabValue)
+
   return (
     <div className="w-full h-full ">
-      <Tabs defaultValue="send-diary" className="w-full h-full ">
+      <Tabs
+        defaultValue={tabValue}
+        value={tabValue}
+        onValueChange={(value: string) =>
+          setTabValue(value as "send" | "storage")
+        }
+        className="w-full h-full">
         <TabsList className="w-full h-[48px] bg-backgroundLighter rounded-none ">
-          <TabsTrigger className="w-full font-bold py-2.5" value="send-diary">
-            <p className="text-[#ffffff] ">교환일기</p>
+          <TabsTrigger className="w-full font-bold py-2.5" value="send">
+            <p className="text-[#ffffff]">교환일기</p>
           </TabsTrigger>
-          <TabsTrigger
-            className="w-full font-bold py-2.5"
-            value="diary-storage">
+          <TabsTrigger className="w-full font-bold py-2.5" value="storage">
             <p className="text-[#ffffff]">보관함</p>
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          value="send-diary"
+          value="send"
           className="flex flex-col justify-center items-center ">
-          {/* <ExchangeDiaryTab /> */}
-          <SendDiaryTab />
+          {!selectDiary ? <ExchangeDiaryTab /> : <SendDiaryTab />}
         </TabsContent>
         <TabsContent
-          value="diary-storage"
+          value="storage"
           className="w-full flex flex-col justify-center items-center px-[24px]">
           <DiaryStorageTab />
         </TabsContent>
