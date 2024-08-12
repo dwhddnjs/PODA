@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/drawer"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { Sun } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
   const { push } = useRouter()
   console.log("isOpen: ", isOpen)
+  const pathname = usePathname()
 
   const handleSubmit = () => {
     setOpen(false)
@@ -54,11 +55,19 @@ export const InterestBottomSheet = () => {
           <Tag>몰라</Tag>
         </div>
         <DrawerFooter>
-          <Button
-            onClick={handleSubmit}
-            className="bg-mainColor h-[48px] text-black text-md font-black">
-            배송시작
-          </Button>
+          {pathname === "/mypage" ? (
+            <Button
+              onClick={onClose}
+              className="bg-mainColor h-[48px] text-black text-md font-black">
+              완료
+            </Button>
+          ) : (
+            <Button
+              onClick={handleSubmit}
+              className="bg-mainColor h-[48px] text-black text-md font-black">
+              배송시작
+            </Button>
+          )}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

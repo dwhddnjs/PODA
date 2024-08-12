@@ -12,11 +12,15 @@ import { DiaryStorageTab } from "../diary-storage-tab"
 import { SendDiaryTab } from "../send-diary-tab"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useExchangeDiaryTab } from "@/hooks/store/use-exchange-diary-tab"
+import { useUser } from "@/hooks/query/user"
+import { usePost, usePosts } from "@/hooks/query/post"
 
 export default function ExchangeDiaryPage() {
   const { selectDiary } = useSelectedDiary()
   const { tabValue, setTabValue } = useExchangeDiaryTab()
-  console.log("tabValue: ", tabValue)
+  const { data } = usePosts()
+  //   const { data } = useUser("1")
+  console.log("data: ", data)
 
   return (
     <div className="w-full h-full ">
