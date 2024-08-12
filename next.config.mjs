@@ -5,6 +5,20 @@ const withPWA = withPWAInit({
 })
 
 export default withPWA({
-  // Your Next.js config
+  images: {
+    domains: ["api.fesp.shop"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.fesp.shop",
+        pathname: "/files/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.googleusercontent.com",
+        pathname: "**",
+      },
+    ],
+  },
   appDir: true,
 })
