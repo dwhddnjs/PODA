@@ -62,7 +62,7 @@ export default function SignupPage() {
     const resData = await signup(formData)
     if (resData.ok) {
       alert(`${resData.item.name}님, 회원가입을 환영합니다.`)
-      router.push("/welcome")
+      router.push("/login")
     } else {
       if ("errors" in resData) {
         // any 고치기--------------------

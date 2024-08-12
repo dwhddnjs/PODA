@@ -13,15 +13,16 @@ export async function signInWithCredentials(formData: FormData) {
     console.log(result)
   } catch (err) {
     console.error(err)
+    return
   }
 
-  redirect("/login")
+  redirect("/welcome")
 }
 
 export async function signInWithGoogle(formData: FormData) {
-  await signIn("google", { redirectTo: "/login" })
+  await signIn("google", { redirectTo: "/welcome" })
 }
 
 export async function signInWithGithub(formData: FormData) {
-  await signIn("github", { redirectTo: "/login" })
+  await signIn("github", { redirectTo: "/welcome" })
 }
