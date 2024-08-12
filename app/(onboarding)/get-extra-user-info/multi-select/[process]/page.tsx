@@ -4,6 +4,7 @@ import { Tag } from "@/components/tag"
 import { ProcessStatusGreen } from "../../process-status-green"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { NavigationHeader } from "@/components/navigation-header"
 
 const interestOptions = [
   "다이어트",
@@ -37,6 +38,7 @@ export default function MultiSelectPage({
 
   return (
     <>
+      <NavigationHeader />
       <ProcessStatusGreen />
       <h2 className="text-center">{pageNum === 1 && `관심사를 알려주세요`}</h2>
       <div className="flex flex-wrap mt-24 mx-6 ">
