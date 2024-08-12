@@ -16,6 +16,7 @@ import { z } from "zod"
 import { useRouter } from "next/navigation"
 import { ProcessStatusGreen } from "../../process-status-green"
 import { useUserData } from "@/hooks/store/use-user-data"
+import { NavigationHeader } from "@/components/navigation-header"
 
 const ageOptions = ["20대 이하", "20대", "30대", "40대", "50대 이상"]
 const genderOptions = ["여성", "남성", "기타"]
@@ -55,6 +56,7 @@ export default function GetExtraUserInfoPage({
 
   return (
     <>
+      <NavigationHeader />
       <ProcessStatusGreen />
       <h2 className="text-center">
         {pageNum === 1 && `어느 연령대에 속하시나요?`}
