@@ -32,22 +32,21 @@ import {
   Youtube,
 } from "lucide-react"
 
-import { FamilySvg } from "./svg/family"
-import { RunningSvg } from "./svg/running"
-import { ThankfulSvg } from "./svg/thankful"
-import { ComfortSvg } from "./svg/comfort"
-import { VolcanoSvg } from "./svg/volcano"
-import { FluSvg } from "./svg/flu"
-import { CrampsSvg } from "./svg/cramps"
-import { IndegestionSvg } from "./svg/indegestion"
-import { PregnantSvg } from "./svg/pregnant"
-import { ExhaustionSvg } from "./svg/exhaustion"
-import { BackacheSvg } from "./svg/backache"
+import { GiBackPain } from "react-icons/gi"
+import { MdFamilyRestroom } from "react-icons/md"
+import { FaRunning } from "react-icons/fa"
+import { PiHandsPrayingDuotone } from "react-icons/pi"
+import { FaUmbrellaBeach } from "react-icons/fa"
+import { MdVolcano } from "react-icons/md"
+import { MdSick } from "react-icons/md"
+import { IoMdWoman } from "react-icons/io"
+import { GiStomach } from "react-icons/gi"
+import { MdPregnantWoman } from "react-icons/md"
+import { BiSolidTired } from "react-icons/bi"
 
 type DiaryTagParam = {
   tagName: string
-  mood: string
-  tagIndex: number
+  tagIndex?: number
 }
 
 type TagDetails = {
@@ -59,7 +58,7 @@ interface TagDetailsType {
 }
 
 const tagDetailsData: TagDetailsType = {
-  // lucid icon
+  // 날씨
   sun: { icon: <Sun />, text: "맑음" },
   cloud: { icon: <Cloudy />, text: "흐림" },
   rain: { icon: <CloudRain />, text: "비" },
@@ -68,9 +67,14 @@ const tagDetailsData: TagDetailsType = {
   wind: { icon: <Wind />, text: "바람" },
   sweat: { icon: <Droplets />, text: "습함" },
   storm: { icon: <CloudLightning />, text: "폭풍" },
+
+  // 관계
   friend: { icon: <Users />, text: "친구" },
   colleague: { icon: <Building2 />, text: "회사동료" },
   couple: { icon: <Heart />, text: "연인" },
+  family: { icon: <MdFamilyRestroom />, text: "가족" },
+
+  // 활동
   tv: { icon: <Tv />, text: "TV 시청" },
   reading: { icon: <Book />, text: "독서" },
   game: { icon: <Joystick />, text: "게임" },
@@ -83,48 +87,42 @@ const tagDetailsData: TagDetailsType = {
   drink: { icon: <Milk />, text: "물 마시기" },
   music: { icon: <Headset />, text: "음악 감상" },
   hospital: { icon: <Hospital />, text: "병원" },
-  sing: { icon: <MicVocal />, text: "노래 부르기" },
+  sing: { icon: <MicVocal />, text: "노래" },
   hair: { icon: <Scissors />, text: "미용실" },
-  tired: { icon: <BedSingle />, text: "지침" },
+  running: { icon: <FaRunning />, text: "러닝" },
+
+  // 감정
   anxious: { icon: <Frown />, text: "불안함" },
+  tired: { icon: <BedSingle />, text: "지침" },
+  thankful: { icon: <PiHandsPrayingDuotone />, text: "감사함" },
+  comfort: { icon: <FaUmbrellaBeach />, text: "편안함" },
+  angry: { icon: <MdVolcano />, text: "화남" },
+
+  // 컨디션
   fine: { icon: <Smile />, text: "양호함" },
   fresh: { icon: <Laugh />, text: "상쾌함" },
   musclepain: { icon: <BicepsFlexed />, text: "근육통" },
-
-  // svg
-  exhaustion: { icon: <ExhaustionSvg />, text: "피로함" },
-  backache: { icon: <BackacheSvg />, text: "허리 아픔" },
-  family: { icon: <FamilySvg />, text: "가족" },
-  cramps: { icon: <CrampsSvg />, text: "Cramps" },
-  indigestion: { icon: <IndegestionSvg />, text: "소화 불량" },
-  pregnant: { icon: <PregnantSvg />, text: "임신" },
-  flu: { icon: <FluSvg />, text: "감기" },
-  thankful: { icon: <ThankfulSvg />, text: "감사함" },
-  comfort: { icon: <ComfortSvg />, text: "편안함" },
-  angry: { icon: <VolcanoSvg />, text: "화남" },
-  running: { icon: <RunningSvg />, text: "러닝" },
+  exhaustion: { icon: <BiSolidTired />, text: "피로함" },
+  backache: { icon: <GiBackPain />, text: "허리 아픔" },
+  cramps: { icon: <IoMdWoman />, text: "생리통" },
+  indigestion: { icon: <GiStomach />, text: "소화 불량" },
+  pregnant: { icon: <MdPregnantWoman />, text: "임신" },
+  flu: { icon: <MdSick />, text: "감기" },
 }
 
-const getTagDetails = (tagName: string) => {
-  const tagDetails = tagDetailsData[tagName] || {
-    icon: null,
-    text: "Unknown Tag",
-  }
+export const getTagDetails = (tagName: string) => {
+  const tagDetails = tagDetailsData[tagName] || []
   return tagDetails
 }
 
-export const DiaryTag = ({ tagName, mood, tagIndex }: DiaryTagParam) => {
+export const DiaryTag = ({ tagName }: DiaryTagParam) => {
   const tagInfo = getTagDetails(tagName)
   return (
     <li
-      key={tagIndex}
-      className={`px-2 py-0.5 flex items-center gap-[3px] border-solid border-[1px] border-secondary rounded-[20px]`}>
-      {React.cloneElement(tagInfo.icon as React.ReactElement, {
-        size: 20,
-        moodData: mood,
-      })}
-
-      <small className="text-secondary text-xs">{tagInfo.text}</small>
+      key={tagName}
+      className={`px-2 py-[1px] flex items-center gap-[3px] border-solid border-[1px] border-secondary rounded-[20px]`}>
+      {React.cloneElement(tagInfo.icon as React.ReactElement, { size: 16 })}
+      <span className="text-secondary text-xs">{tagInfo.text}</span>
     </li>
   )
 }
