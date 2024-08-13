@@ -1,4 +1,4 @@
-import { Diary } from "@/app/(main)/mydiary/diary"
+import { Diary } from "@/types/my-diarys"
 import { create } from "zustand"
 
 type SelectedDiaryTypes = {

@@ -8,7 +8,7 @@ export type Emotion = {
   src: string
   alt: string
   label: string
-  mood: string
+  mood: "happy" | "calm" | "sad" | "annoy" | "angry"
 }
 const emotions: Emotion[] = [
   {

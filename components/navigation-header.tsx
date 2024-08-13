@@ -29,12 +29,12 @@ export const NavigationHeader = ({
     <div className="w-full flex justify-between items-center py-[12px] ">
       <div className="flex">
         <Button variant="ghost" onClick={back}>
-          <ChevronLeft className="text-primary" width={28} height={28} />
+          <ChevronLeft className="text-mainColor" width={32} height={32} />
         </Button>
         {isMood && (
           <Image
-            width={28}
-            height={28}
+            width={32}
+            height={32}
             src={`/assets/svg/${selectedMood}.svg`}
             alt="선택한 감정상태"
             className="-ml-1"

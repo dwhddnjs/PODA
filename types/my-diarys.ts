@@ -11,9 +11,8 @@ type Description = {
   content: string
 }
 
-export type Diary = {
+export type DiaryTypes = {
   id: number
-  time: string
   createdAt: string
   updatedAt: string
   mood: keyof MoodType
@@ -25,5 +24,5 @@ export type Diary = {
 
 export interface MyDiary {
   id: number
-  [key: string]: Diary[] | number
+  [key: string]: DiaryTypes[] | number
 }
