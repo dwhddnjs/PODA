@@ -7,6 +7,7 @@ import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
 import { usePathname, useRouter } from "next/navigation"
 import { DiaryTypes } from "@/types/my-diarys"
+import { getKoTime } from "@/lib/function/format-time"
 
 export type MoodType = {
   happy: string
@@ -25,6 +26,7 @@ type DiaryProps = {
 export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
   const { back } = useRouter()
   const pathname = usePathname()
+
   return (
     <div
       onClick={() => pathname === "/exchange-diary/load-diary" && back()}
@@ -58,7 +60,9 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
             <h2 className={`text-md text-emotion-${diaryData.mood}`}>
               {getTxtByMood(diaryData.mood)}
             </h2>
-            <div className="text-secondary text-sm">{diaryData.createdAt}</div>
+            <div className="text-secondary text-sm">
+              {getKoTime(diaryData.createdAt)}
+            </div>
           </div>
           {/* 상황 태그들 */}
           <ul

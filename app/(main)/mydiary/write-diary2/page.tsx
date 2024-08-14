@@ -71,59 +71,79 @@ interface TagData {
 
 const datas: TagData = {
   날씨: {
-    sun: { id: "weather_1", icon: <Sun />, text: "맑음" },
-    cloud: { id: "weather_2", icon: <Cloudy />, text: "흐림" },
-    rain: { id: "weather_3", icon: <CloudRain />, text: "비" },
-    snow: { id: "weather_4", icon: <Snowflake />, text: "눈" },
-    hot: { id: "weather_5", icon: <ThermometerSun />, text: "무더위" },
-    wind: { id: "weather_6", icon: <Wind />, text: "바람" },
-    sweat: { id: "weather_7", icon: <Droplets />, text: "습함" },
-    storm: { id: "weather_8", icon: <CloudLightning />, text: "폭풍" },
+    sun: { id: "sun", icon: <Sun />, text: "맑음" },
+    cloud: { id: "cloud", icon: <Cloudy />, text: "흐림" },
+    rain: { id: "rain", icon: <CloudRain />, text: "비" },
+    snow: { id: "snow", icon: <Snowflake />, text: "눈" },
+    hot: { id: "hot", icon: <ThermometerSun />, text: "무더위" },
+    wind: { id: "wind", icon: <Wind />, text: "바람" },
+    sweat: { id: "sweat", icon: <Droplets />, text: "습함" },
+    storm: { id: "storm", icon: <CloudLightning />, text: "폭풍" },
   },
   관계: {
-    friend: { id: "relation_1", icon: <Users />, text: "친구" },
-    colleague: { id: "relation_2", icon: <Building2 />, text: "회사동료" },
-    couple: { id: "relation_3", icon: <Heart />, text: "연인" },
-    family: { id: "relation_4", icon: <MdFamilyRestroom />, text: "가족" },
+    friend: { id: "friend", icon: <Users />, text: "친구" },
+    colleague: { id: "colleague", icon: <Building2 />, text: "회사동료" },
+    couple: { id: "couple", icon: <Heart />, text: "연인" },
+    family: { id: "family", icon: <MdFamilyRestroom />, text: "가족" },
   },
   활동: {
-    tv: { id: "activity_1", icon: <Tv />, text: "TV 시청" },
-    reading: { id: "activity_2", icon: <Book />, text: "독서" },
-    game: { id: "activity_3", icon: <Joystick />, text: "게임" },
-    travel: { id: "activity_4", icon: <Plane />, text: "여행" },
-    drive: { id: "activity_5", icon: <Car />, text: "드라이브" },
-    eatout: { id: "activity_6", icon: <Utensils />, text: "외식" },
-    youtube: { id: "activity_7", icon: <Youtube />, text: "유튜브" },
-    rest: { id: "activity_8", icon: <Bed />, text: "휴식" },
-    workout: { id: "activity_9", icon: <Dumbbell />, text: "운동" },
-    drink: { id: "activity_10", icon: <Milk />, text: "물 마시기" },
-    music: { id: "activity_11", icon: <Headset />, text: "음악 감상" },
-    hospital: { id: "activity_12", icon: <Hospital />, text: "병원" },
-    sing: { id: "activity_13", icon: <MicVocal />, text: "노래" },
-    hair: { id: "activity_14", icon: <Scissors />, text: "미용실" },
-    running: { id: "activity_15", icon: <FaRunning />, text: "러닝" },
+    tv: { id: "tv", icon: <Tv />, text: "TV 시청" },
+    reading: { id: "reading", icon: <Book />, text: "독서" },
+    game: { id: "game", icon: <Joystick />, text: "게임" },
+    travel: { id: "travel", icon: <Plane />, text: "여행" },
+    drive: { id: "drive", icon: <Car />, text: "드라이브" },
+    eatout: { id: "eatout", icon: <Utensils />, text: "외식" },
+    youtube: { id: "youtube", icon: <Youtube />, text: "유튜브" },
+    rest: { id: "rest", icon: <Bed />, text: "휴식" },
+    workout: { id: "workout", icon: <Dumbbell />, text: "운동" },
+    drink: { id: "drink", icon: <Milk />, text: "물 마시기" },
+    music: { id: "music", icon: <Headset />, text: "음악 감상" },
+    hospital: { id: "hospital", icon: <Hospital />, text: "병원" },
+    sing: { id: "sing", icon: <MicVocal />, text: "노래" },
+    hair: { id: "hair", icon: <Scissors />, text: "미용실" },
+    running: { id: "running", icon: <FaRunning />, text: "러닝" },
   },
   감정: {
-    anxious: { id: "emotion_1", icon: <Frown />, text: "불안함" },
-    tired: { id: "emotion_2", icon: <BedSingle />, text: "지침" },
+    anxious: { id: "anxious", icon: <Frown />, text: "불안함" },
+    tired: { id: "tired", icon: <BedSingle />, text: "지침" },
     thankful: {
-      id: "emotion_3",
+      id: "thankful",
       icon: <PiHandsPrayingDuotone />,
       text: "감사함",
     },
-    comfort: { id: "emotion_4", icon: <FaUmbrellaBeach />, text: "편안함" },
-    angry: { id: "emotion_5", icon: <MdVolcano />, text: "화남" },
+    comfort: { id: "comfort", icon: <FaUmbrellaBeach />, text: "편안함" },
+    angry: { id: "angry", icon: <MdVolcano />, text: "화남" },
   },
   컨디션: {
-    fine: { id: "condition_1", icon: <Smile />, text: "양호함" },
-    fresh: { id: "condition_2", icon: <Laugh />, text: "상쾌함" },
-    musclepain: { id: "condition_3", icon: <BicepsFlexed />, text: "근육통" },
-    exhaustion: { id: "condition_4", icon: <BiSolidTired />, text: "피로함" },
-    backache: { id: "condition_5", icon: <GiBackPain />, text: "허리 아픔" },
-    cramps: { id: "condition_6", icon: <IoMdWoman />, text: "생리통" },
-    indigestion: { id: "condition_7", icon: <GiStomach />, text: "소화 불량" },
-    pregnant: { id: "condition_8", icon: <MdPregnantWoman />, text: "임신" },
-    flu: { id: "condition_9", icon: <MdSick />, text: "감기" },
+    fine: { id: "fine", icon: <Smile />, text: "양호함" },
+    fresh: { id: "fresh", icon: <Laugh />, text: "상쾌함" },
+    musclepain: {
+      id: "musclepain",
+      icon: <BicepsFlexed />,
+      text: "근육통",
+    },
+    exhaustion: {
+      id: "exhaustion",
+      icon: <BiSolidTired />,
+      text: "피로함",
+    },
+    backache: {
+      id: "backache",
+      icon: <GiBackPain />,
+      text: "허리 아픔",
+    },
+    cramps: { id: "cramps", icon: <IoMdWoman />, text: "생리통" },
+    indigestion: {
+      id: "indigestion",
+      icon: <GiStomach />,
+      text: "소화 불량",
+    },
+    pregnant: {
+      id: "pregnant",
+      icon: <MdPregnantWoman />,
+      text: "임신",
+    },
+    flu: { id: "flu", icon: <MdSick />, text: "감기" },
   },
 }
 
@@ -136,8 +156,8 @@ export default function WriteDiary2Page() {
   const {
     noteContentVal,
     noteTitleVal,
-    uploadImages,
-    cameraInput,
+    // uploadImages,
+    // cameraInput,
     selectedTags,
     seter,
   } = useDiaryValues()
@@ -209,22 +229,22 @@ export default function WriteDiary2Page() {
     seter(e.target.value, "noteContentVal")
   }
 
-  //! 사진 촬영 했을때, 구현 x
-  const handleCameraClick = () => {
-    if (cameraInput) {
-      // cameraInput.click()
-    }
-  }
-  // 업로드이미지
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      const fileUrls = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      )
-      seter(fileUrls, "uploadImages")
-    }
-  }
+  // //! 사진 촬영 했을때, 구현 x
+  // const handleCameraClick = () => {
+  //   if (cameraInput) {
+  //     // cameraInput.click()
+  //   }
+  // }
+  // // 업로드이미지
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files
+  //   if (files) {
+  //     const fileUrls = Array.from(files).map((file) =>
+  //       URL.createObjectURL(file)
+  //     )
+  //     seter(fileUrls, "uploadImages")
+  //   }
+  // }
 
   const getCurrentTags = () => {
     const currentTab = tabData[activeTabIndex] as keyof TagData
@@ -355,7 +375,7 @@ export default function WriteDiary2Page() {
         </div>
 
         {/* 사진 */}
-        <div className="flex gap-2 mb-4">
+        {/* <div className="flex gap-2 mb-4">
           <Image
             src={"/assets/svg/camera.svg"}
             width={26}
@@ -363,11 +383,11 @@ export default function WriteDiary2Page() {
             alt="카메라 이미지"
           />
           <h2>사진</h2>
-        </div>
+        </div> */}
 
         {/* 사진 촬영, 갤러리 버튼 */}
-        <div className="flex mb-16 gap-4">
-          {/* 사진 촬영 버튼 */}
+        {/* <div className="flex mb-16 gap-4">
+          
           <Label className="flex-1 rounded-[6px]">
             <Button
               variant="ghost"
@@ -375,7 +395,7 @@ export default function WriteDiary2Page() {
               onClick={handleCameraClick}>
               사진 촬영
             </Button>
-            {/* 사진 촬영을 누를시 핸드폰 디바이스 카메라에 접근해야한다. */}
+            
             <Input
               type="file"
               id="cameraInput"
@@ -386,7 +406,7 @@ export default function WriteDiary2Page() {
             />
           </Label>
 
-          {/* 갤러리에서 버튼 */}
+          
           <Label className="flex-1 rounded-[6px]">
             <Button
               variant="ghost"
@@ -403,10 +423,10 @@ export default function WriteDiary2Page() {
               className="hidden"
             />
           </Label>
-        </div>
+        </div> */}
 
         {/* 업로드된 이미지 표시 부분 */}
-        <div className="image-preview">
+        {/* <div className="image-preview">
           {uploadImages &&
             uploadImages.map((url, index) => (
               <div className="flex flex-wrap flex-1 gap-4">
@@ -420,7 +440,7 @@ export default function WriteDiary2Page() {
                 />
               </div>
             ))}
-        </div>
+        </div> */}
 
         <Button
           variant="ghost"

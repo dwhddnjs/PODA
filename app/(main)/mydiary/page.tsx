@@ -10,7 +10,7 @@ export default function MydiaryPage() {
     "2024-08-03": [
       {
         id: 20,
-        createdAt: "오전 9:20",
+        createdAt: "2024.08.13 21:08:10",
         updatedAt: "",
         mood: "happy",
         tags: ["sun", "family"],
@@ -29,7 +29,7 @@ export default function MydiaryPage() {
     "2024-08-02": [
       {
         id: 19,
-        createdAt: "오전 9:20",
+        createdAt: "2024.08.12 23:38:10",
         updatedAt: "",
         mood: "angry",
         tags: ["cloud", "family", "comfort"],
@@ -42,7 +42,7 @@ export default function MydiaryPage() {
       },
       {
         id: 18,
-        createdAt: "오전 9:20",
+        createdAt: "2024.07.27 18:08:10",
         updatedAt: "",
         mood: "calm",
         tags: ["snow", "family", "angry"],
@@ -54,7 +54,7 @@ export default function MydiaryPage() {
       },
       {
         id: 17,
-        createdAt: "오전 9:20",
+        createdAt: "2024.07.25 11:08:10",
         updatedAt: "",
         mood: "annoy",
         tags: ["sun", "family"],
@@ -71,7 +71,7 @@ export default function MydiaryPage() {
     "2024-08-01": [
       {
         id: 16,
-        createdAt: "오전 9:20",
+        createdAt: "2024.07.23 14:08:10",
         updatedAt: "",
         mood: "happy",
         tags: ["sun", "family"],
@@ -84,7 +84,7 @@ export default function MydiaryPage() {
       },
       {
         id: 15,
-        createdAt: "오전 9:20",
+        createdAt: "2024.07.19 09:08:10",
         updatedAt: "",
         mood: "sad",
         tags: ["sun", "family", "friend", "rain", "fine"],
