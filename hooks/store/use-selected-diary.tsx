@@ -1,11 +1,11 @@
-import { Diary } from "@/types/my-diarys"
+import { DiaryTypes } from "@/types/my-diarys"
 import { create } from "zustand"
 
 type SelectedDiaryTypes = {
-  selectDiary?: Diary[]
+  selectDiary?: DiaryTypes[]
   date?: string
   setDate: (date: string) => void
-  setSelectDiary: (diary: Diary[]) => void
+  setSelectDiary: (diary: DiaryTypes[]) => void
 }
 
 export const useSelectedDiary = create<SelectedDiaryTypes>((set) => ({

@@ -1,6 +1,6 @@
 import { MoodType } from "@/types/my-diarys"
 
-const moodImgData: MoodType = {
+export const moodImgData: MoodType = {
   happy: "/assets/svg/happy.svg",
   calm: "/assets/svg/calm.svg",
   sad: "/assets/svg/sad.svg",

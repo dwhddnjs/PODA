@@ -7,8 +7,13 @@ import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
 import { usePathname, useRouter } from "next/navigation"
 import { Diary } from "@/components/diary"
+import { DiaryTypes } from "@/types/my-diarys"
 
-export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
+interface ExchangeDiaryProps {
+  diaryDatas: DiaryTypes[]
+}
+
+export const ExchangeDiary = ({ diaryDatas }: ExchangeDiaryProps) => {
   const { back } = useRouter()
   const pathname = usePathname()
 
@@ -16,8 +21,8 @@ export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
     <div
       onClick={() => pathname === "/exchange-diary/load-diary" && back()}
       className="bg-backgroundLighter rounded-lg pt-[20px] pb-[8px]">
-      {diaryDatas.map((diaryData) => (
-        <div className="flex gap-3 px-4 relative pb-[12px]" key={diaryData.id}>
+      {diaryDatas.map((diaryData, index) => (
+        <div className="flex gap-3 px-4 relative pb-[12px]" key={diaryData._id}>
           {/* 드롭다운 메뉴 */}
           <div className="absolute right-0 -top-1 text-primary">
             <Dropdown />
@@ -28,13 +33,13 @@ export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
               <Image
                 width={48}
                 height={48}
-                src={getImgByMood(diaryData.mood)}
+                src={getImgByMood(diaryData.extra.mood)}
                 alt="감정 이미지"
               />
             </div>
             {/* 이모션 세로 선 */}
             <div className="flex flex-col h-full pt-[12px] ">
-              {diaryDatas.length > 1 && (
+              {diaryDatas.length > 1 && index < diaryDatas.length - 1 && (
                 <div className="h-full border-[1.2px] border-[#666666]" />
               )}
             </div>
@@ -43,21 +48,24 @@ export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
           <div className="flex flex-col">
             {/* 이미지텍스트, 시간 */}
             <div className="flex gap-2 items-center mb-2">
-              <h2 className={`text-md text-emotion-${diaryData.mood}`}>
-                {getTxtByMood(diaryData.mood)}
+              <h2 className={`text-md text-emotion-${diaryData.extra.mood}`}>
+                {getTxtByMood(diaryData.extra.mood)}
               </h2>
-              <div className="text-secondary text-sm">{diaryData.time}</div>
+              <div className="text-secondary text-sm">
+                {diaryData.createdAt}
+              </div>
             </div>
+
             {/* 상황 태그들 */}
             <ul
-              className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.mood}`}>
-              {diaryData.tags &&
-                diaryData.tags.map((tagName, tagIndex) => {
+              className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.extra.mood}`}>
+              {diaryData?.extra?.tag &&
+                diaryData.extra?.tag.map((tagName, tagIndex) => {
                   return (
                     <DiaryTag
                       key={tagName}
                       tagName={tagName}
-                      mood={diaryData.mood}
+                      mood={diaryData.extra.mood}
                       tagIndex={tagIndex}
                     />
                   )
@@ -66,27 +74,26 @@ export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
 
             {/* 디스크립션 */}
             <div className="mb-2">
-              {diaryData.description && diaryData.description.title && (
-                <h3>{diaryData.description.title}</h3>
-              )}
-              <p className="text-primary text-xs">
-                {diaryData.description && diaryData.description.content}
-              </p>
+              {diaryData.title && <h3>{diaryData.title}</h3>}
+              <p className="text-primary text-xs">{diaryData.content}</p>
             </div>
             {/* 업로드한 이미지들 */}
-            <div className="flex flex-wrap w-full gap-3">
-              {diaryData.uploadImgs &&
-                diaryData.uploadImgs.map((imgItem) => {
+            {/* <div className="flex flex-wrap w-full gap-3">
+              {diaryData.mainImages &&
+                diaryData.mainImages.map((imgItem) => {
+                  console.log(
+                    `${process.env.NEXT_PUBLIC_API_URL}${imgItem.path}`
+                  )
                   return (
                     <div
-                      key={imgItem}
+                      key={imgItem.name}
                       className={`${
-                        diaryData.uploadImgs?.length === 1
+                        diaryData.mainImages?.length === 1
                           ? ""
                           : "w-[calc(50%-6px)]"
                       }`}>
                       <Image
-                        src={imgItem}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${imgItem.path}`}
                         width={300}
                         height={300}
                         alt="업로드 이미지"
@@ -95,7 +102,7 @@ export const ExchangeDiary = ({ diaryDatas }: { diaryDatas: Diary[] }) => {
                     </div>
                   )
                 })}
-            </div>
+            </div> */}
           </div>
         </div>
       ))}
