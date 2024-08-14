@@ -1,4 +1,4 @@
-import { MoodType } from "@/components/diary"
+import { MoodType } from "@/types/my-diarys"
 
 export const moodImgData: MoodType = {
   happy: "/assets/svg/happy.svg",

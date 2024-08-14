@@ -1,17 +1,17 @@
 import React from "react"
-
-import Image from "next/image"
 import { NavigationHeader } from "@/components/navigation-header"
+import { WriteDiaryBtn } from "./write-diary-btn"
 import { Diary } from "@/components/diary"
-import { WriteDiaryBtn } from "../write-diary-btn"
+import { DiaryTypes } from "@/types/my-diarys"
 
 export default function MydiaryPage() {
   // 예시 데이터, 여기서 전체 일기 받아와주기~
-  const diaryDatas: { [key: string]: Diary[] } = {
+  const diaryDatas: { [key: string]: DiaryTypes[] } = {
     "2024-08-03": [
       {
         id: 20,
-        time: "오전 9:00",
+        createdAt: "2024.08.13 21:08:10",
+        updatedAt: "",
         mood: "happy",
         tags: ["sun", "family"],
         description: {
@@ -29,7 +29,8 @@ export default function MydiaryPage() {
     "2024-08-02": [
       {
         id: 19,
-        time: "오전 9:00",
+        createdAt: "2024.08.12 23:38:10",
+        updatedAt: "",
         mood: "angry",
         tags: ["cloud", "family", "comfort"],
         description: {
@@ -41,7 +42,8 @@ export default function MydiaryPage() {
       },
       {
         id: 18,
-        time: "오후 4:30",
+        createdAt: "2024.07.27 18:08:10",
+        updatedAt: "",
         mood: "calm",
         tags: ["snow", "family", "angry"],
         description: {
@@ -52,7 +54,8 @@ export default function MydiaryPage() {
       },
       {
         id: 17,
-        time: "오후 4:30",
+        createdAt: "2024.07.25 11:08:10",
+        updatedAt: "",
         mood: "annoy",
         tags: ["sun", "family"],
         description: {
@@ -68,7 +71,8 @@ export default function MydiaryPage() {
     "2024-08-01": [
       {
         id: 16,
-        time: "오전 10:03",
+        createdAt: "2024.07.23 14:08:10",
+        updatedAt: "",
         mood: "happy",
         tags: ["sun", "family"],
         description: {
@@ -80,7 +84,8 @@ export default function MydiaryPage() {
       },
       {
         id: 15,
-        time: "오후 5:03",
+        createdAt: "2024.07.19 09:08:10",
+        updatedAt: "",
         mood: "sad",
         tags: ["sun", "family", "friend", "rain", "fine"],
         description: {
@@ -91,8 +96,8 @@ export default function MydiaryPage() {
       },
     ],
   }
-
   const dates = Object.keys(diaryDatas)
+
   return (
     <>
       <NavigationHeader isDate={true} isSearch={true} />
@@ -105,8 +110,7 @@ export default function MydiaryPage() {
             <div className="bg-backgroundLighter rounded-xl">
               {
                 // 날짜별 일기 수 만큼 반복
-                datas.map((data, index) => {
-                  const isLastDiary = index === datas.length - 1
+                datas.map((data: DiaryTypes, index: number) => {
                   return (
                     <Diary
                       key={data.id}
