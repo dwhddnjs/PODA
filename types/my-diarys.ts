@@ -1,3 +1,5 @@
+import { User } from "./user"
+
 export type MoodType = {
   happy: string
   calm: string
@@ -21,6 +23,27 @@ export type Diary = {
   description?: Description
   uploadImgs?: string[]
   isHighlighted?: boolean
+}
+
+export type ImageTypes = {
+  path: string
+  name: string
+  originalname: string
+}
+
+export type DiaryTypes = {
+  _id: number
+  content: string
+  createdAt: string
+  updatedAt: string
+  mainImages: ImageTypes[]
+  title?: string
+  type: string
+  user: Pick<User, "_id" | "image" | "name">
+  extra: {
+    mood: keyof MoodType
+    tag: string[]
+  }
 }
 
 export interface MyDiary {
