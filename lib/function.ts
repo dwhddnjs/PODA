@@ -1,4 +1,7 @@
-import { MoodType } from "@/app/(main)/mydiary/diary"
+import { create } from "zustand"
+import { MoodType } from "./mock-data"
+import { ApiResSuccess } from "@/types/api-response"
+import { DiaryTypes } from "@/types/my-diarys"
 
 const moodImgData: MoodType = {
   happy: "/assets/svg/happy.svg",
@@ -25,10 +28,39 @@ export const getTxtByMood = (mood: keyof MoodType) => {
 }
 
 export const getTxtcolorClasses = (mood: keyof MoodType) => {
-  return `text-emotion-${mood}`
+  return `text-emotion-${mood as any}`
 }
 
 export const convertDate = (dateStr: string) => {
   const [year, month, day] = dateStr.split("-").map(Number)
   return `${year}년 ${month}월 ${day}일`
+}
+
+export const sortDiarys = (diarys: DiaryTypes[]) => {
+  return diarys.reduce(
+    (acc: Record<string, DiaryTypes[]>, item: DiaryTypes) => {
+      const date = item.createdAt
+      if (!acc[date]) {
+        acc[date] = []
+      }
+
+      acc[date].push({
+        _id: item._id,
+        type: item.type,
+        title: item.title,
+        user: {
+          _id: item.user._id,
+          name: item.user.name,
+          image: item.user.image,
+        },
+        content: item.content,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        mainImages: item.mainImages,
+        extra: item.extra,
+      })
+      return acc
+    },
+    {}
+  )
 }
