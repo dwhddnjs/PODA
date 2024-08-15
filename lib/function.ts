@@ -2,8 +2,9 @@ import { create } from "zustand"
 import { MoodType } from "./mock-data"
 import { ApiResSuccess } from "@/types/api-response"
 import { DiaryTypes } from "@/types/my-diarys"
-import { getKoDate } from "./function/format-time"
 import { DeliveryStatusTypes } from "@/types/exchange-diary"
+import { parse, format } from "date-fns"
+import { ko } from "date-fns/locale"
 
 const moodImgData: MoodType = {
   happy: "/assets/svg/happy.svg",
@@ -51,6 +52,22 @@ export const convertStatusText = (status: DeliveryStatusTypes) => {
       break
   }
   return result
+}
+
+export const getKoTime = (val: string) => {
+  if (val) {
+    const date = parse(val, "yyyy.MM.dd HH:mm:ss", new Date())
+    const formattedTime = format(date, "aa h:mm", { locale: ko })
+    return formattedTime
+  }
+}
+
+export const getKoDate = (val: string) => {
+  if (val) {
+    const date = parse(val, "yyyy.MM.dd HH:mm:ss", new Date())
+    const formattedDate = format(date, `M월 d일 E요일`, { locale: ko })
+    return formattedDate
+  }
 }
 
 export const sortDiarys = (diarys: DiaryTypes[]) => {
