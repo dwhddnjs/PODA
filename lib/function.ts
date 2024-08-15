@@ -2,6 +2,8 @@ import { create } from "zustand"
 import { MoodType } from "./mock-data"
 import { ApiResSuccess } from "@/types/api-response"
 import { DiaryTypes } from "@/types/my-diarys"
+import { getKoDate } from "./function/format-time"
+import { DeliveryStatusTypes } from "@/types/exchange-diary"
 
 const moodImgData: MoodType = {
   happy: "/assets/svg/happy.svg",
@@ -36,10 +38,25 @@ export const convertDate = (dateStr: string) => {
   return `${year}년 ${month}월 ${day}일`
 }
 
+export const convertStatusText = (status: DeliveryStatusTypes) => {
+  let result
+
+  switch (status) {
+    case "delivery":
+      result = "배송중"
+      break
+
+    default:
+      result = "배송완료"
+      break
+  }
+  return result
+}
+
 export const sortDiarys = (diarys: DiaryTypes[]) => {
   return diarys.reduce(
     (acc: Record<string, DiaryTypes[]>, item: DiaryTypes) => {
-      const date = item.createdAt
+      const date = getKoDate(item.createdAt) as string
       if (!acc[date]) {
         acc[date] = []
       }
