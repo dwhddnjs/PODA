@@ -23,6 +23,8 @@ import {
   signInWithGithub,
   signInWithGoogle,
 } from "@/actions/authAction"
+import { useTransition } from "react"
+import { FullScreen } from "@/components/spinner"
 
 const FormSchema = z.object({
   email: z
@@ -35,6 +37,8 @@ const FormSchema = z.object({
 })
 
 export default function LoginPage() {
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -43,8 +47,15 @@ export default function LoginPage() {
     },
   })
 
+  const onCredentialSubmit = async (formData: any) => {
+    startTransition(async () => {
+      await signInWithCredentials(formData)
+    })
+  }
+
   return (
     <div className="flex flex-col justify-around px-10 w-full h-full max-w-96 mx-auto py-8 gap-3">
+      {isPending && <FullScreen />}
       <div>
         <Image
           src={"/assets/svg/logo-small.svg"}
@@ -87,7 +98,8 @@ export default function LoginPage() {
             <div className="flex flex-col pt-6">
               <Button
                 type="submit"
-                formAction={signInWithCredentials}
+                onClick={form.handleSubmit(onCredentialSubmit)}
+                disabled={isPending}
                 className="bg-mainColor text-black font-bold">
                 로그인
               </Button>
@@ -96,6 +108,7 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   formAction={signInWithGoogle}
+                  disabled={isPending}
                   className="justify-between w-full text-black font-bold">
                   <FcGoogle size="20" />
                   구글
@@ -104,6 +117,7 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   formAction={signInWithGithub}
+                  disabled={isPending}
                   className="justify-between w-full bg-backgroundLighter text-primary font-bold">
                   <FaGithub size="20" />
                   깃허브

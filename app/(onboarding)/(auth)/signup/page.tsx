@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { signup } from "@/actions/userAction"
 import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { FullScreen } from "@/components/spinner"
 
 const FormSchema = z
   .object({
@@ -44,6 +46,8 @@ const FormSchema = z
 export default function SignupPage() {
   const router = useRouter()
 
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -56,27 +60,32 @@ export default function SignupPage() {
 
   // any 고치기
   const onSubmit = async (formData: any) => {
-    formData.type = "user"
-    delete formData.passwordCheck
-    console.log(formData)
-    const resData = await signup(formData)
-    if (resData.ok) {
-      alert(`${resData.item.name}님, 회원가입을 환영합니다.`)
-      router.push("/login")
-    } else {
-      if ("errors" in resData) {
-        // any 고치기--------------------
-        resData.errors.forEach((error: any) =>
-          form.setError(error.path, { message: error.msg })
-        )
-      } else if (resData.message) {
-        alert(resData.message)
+    startTransition(async () => {
+      formData.type = "user"
+      delete formData.passwordCheck
+      console.log("onSubmit formData of signup is : " + formData)
+
+      const resData = await signup(formData)
+
+      if (resData.ok) {
+        alert(`${resData.item.name}님, 회원가입을 환영합니다.`)
+        router.push("/login")
+      } else {
+        if ("errors" in resData) {
+          // any 고치기--------------------
+          resData.errors.forEach((error: any) =>
+            form.setError(error.path, { message: error.msg })
+          )
+        } else if (resData.message) {
+          alert(resData.message)
+        }
       }
-    }
+    })
   }
 
   return (
     <div className="flex flex-col justify-around px-10 w-full h-full max-w-96 mx-auto py-8 gap-3">
+      {isPending && <FullScreen />}
       <div>
         <Image
           src={"/assets/svg/logo-small.svg"}
@@ -147,7 +156,8 @@ export default function SignupPage() {
             <div className="flex flex-col pt-6">
               <Button
                 type="submit"
-                className="bg-mainColor text-black font-bold">
+                className="bg-mainColor text-black font-bold"
+                disabled={isPending}>
                 회원가입
               </Button>
               <FormMessage className="text-emotion-angry text-center" />
