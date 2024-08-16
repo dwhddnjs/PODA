@@ -2,18 +2,17 @@ import { apiKeys } from "@/lib/api-keys"
 import { sortDiarys } from "@/lib/function"
 import { fetcher } from "@/lib/protocol"
 import { ApiResError, ApiResSuccess } from "@/types/api-response"
+import { ExchangeDiaryTypes } from "@/types/exchange-diary"
 import { DiaryTypes } from "@/types/my-diarys"
 import { useQuery } from "@tanstack/react-query"
 
-export const usePostsDiarys = () => {
+export const useProductsDiarys = () => {
   const { data, isPending, error, refetch } = useQuery<
-    Record<string, DiaryTypes[]>
+    ApiResSuccess<ExchangeDiaryTypes[]>
   >({
-    queryKey: [apiKeys.posts],
+    queryKey: [apiKeys.products],
     queryFn: async () => {
-      const res = await fetcher(`${apiKeys.posts}?type=seller`)
-      console.log("res: ", res)
-      return sortDiarys(res.item)
+      return await fetcher(`${apiKeys.products}`)
     },
     staleTime: 1000 * 3,
   })
@@ -26,11 +25,14 @@ export const usePostsDiarys = () => {
   }
 }
 
-export const usePostsDiary = (id: string) => {
-  const { data, isPending, error, refetch } = useQuery({
-    queryKey: [apiKeys.posts, id],
+export const useProductsRepliesDiary = (id: string) => {
+  const { data, isPending, error, refetch } = useQuery<
+    Record<string, DiaryTypes[]>
+  >({
+    queryKey: [apiKeys.replies, id],
     queryFn: async () => {
-      return await fetcher(`/posts/${id}`)
+      const res = await fetcher(`${apiKeys.replies}/${id}`)
+      return sortDiarys(res.item)
     },
     staleTime: 1000 * 3,
   })

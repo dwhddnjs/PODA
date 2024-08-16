@@ -1,6 +1,6 @@
 "use client"
 
-import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
+import { ExchangeDiary } from "@/app/(main)/_components/exchange-diary"
 import { Diary } from "@/components/diary"
 import { NavigationHeader } from "@/components/navigation-header"
 import { usePostsDiarys } from "@/hooks/query/post"

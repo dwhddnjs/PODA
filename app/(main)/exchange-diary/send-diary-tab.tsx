@@ -11,6 +11,7 @@ export const SendDiaryTab = () => {
   const { push } = useRouter()
   const { onOpen } = useInterestSheet()
   const { selectDiary, date } = useSelectedDiary()
+
   const [isShowDiary, setIsShowDiary] = useState(false)
 
   return (
@@ -41,7 +42,7 @@ export const SendDiaryTab = () => {
         </Button>
       </div>
       <Button variant="ghost" className="text-mainColor">
-        <Link href={`/exchange-diary/preview/${date}`}>
+        <Link href={`/exchange-diary/preview/${selectDiary![0]._id}`}>
           포장한 일기 확인하러 가기
         </Link>
       </Button>
