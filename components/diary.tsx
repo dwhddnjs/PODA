@@ -64,7 +64,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
 
           {/* 디스크립션 */}
           <div className="mb-2">
-            {diaryData.title && <h3>{diaryData.title}</h3>}
+            {diaryData.extra.title && <h3>{diaryData.extra.title}</h3>}
             <p className="text-primary text-xs">{diaryData.content}</p>
           </div>
           {/* 업로드한 이미지들 */}

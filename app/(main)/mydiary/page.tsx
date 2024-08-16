@@ -11,23 +11,25 @@ import { BottomNavigation } from "@/components/bottom-navigation"
 
 export default function MydiaryPage() {
   const { data } = usePostsDiarys()
+  console.log("최종 data~~~~~~~~~~", data)
 
   if (!data) {
     return null
   }
   const dates = Object.keys(data)
+  console.log(dates)
 
   return (
     <>
       <NavigationHeader isDate={true} isSearch={true} />
       {/* 날짜(2024-08-03) 개수만큼 반복 */}
 
-      {data.item ? (
+      {data ? (
         dates.map((dateKey: string) => {
           const datas = data[dateKey] || []
           return (
             <div key={dateKey} className="m-6">
-              <h2 className="text-primary mb-1">{getKoDate(dateKey)}</h2>
+              <h2 className="text-primary mb-1">{dateKey}</h2>
               <div className="bg-backgroundLighter rounded-xl">
                 {
                   // 날짜별 일기 수 만큼 반복

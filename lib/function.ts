@@ -81,7 +81,6 @@ export const sortDiarys = (diarys: DiaryTypes[]) => {
       acc[date].push({
         _id: item._id,
         type: item.type,
-        title: item.title,
         user: {
           _id: item.user._id,
           name: item.user.name,

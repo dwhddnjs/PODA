@@ -36,10 +36,10 @@ export type DiaryTypes = {
   createdAt: string
   updatedAt: string
   mainImages?: ImageTypes[]
-  title?: string
   type: string
   user: Pick<User, "_id" | "image" | "name">
   extra: {
+    title?: string
     mood: keyof MoodType
     tag: string[]
   }
