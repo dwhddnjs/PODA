@@ -29,7 +29,7 @@ export const NavigationHeader = ({
     <div className="w-full flex justify-between items-center py-[12px] ">
       <div className="flex">
         <Button variant="ghost" onClick={back}>
-          <ChevronLeft className="text-mainColor" width={32} height={32} />
+          <ChevronLeft className="text-primary" width={32} height={32} />
         </Button>
         {isMood && (
           <Image

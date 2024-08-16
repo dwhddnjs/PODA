@@ -1,6 +1,6 @@
 "use client"
 
-import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
+import { ExchangeDiary } from "@/app/(main)/_components/exchange-diary"
 import { AvatarName } from "@/components/avatar-name"
 import { Dotline } from "@/components/dot-line"
 import { NavigationHeader } from "@/components/navigation-header"

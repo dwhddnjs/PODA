@@ -13,16 +13,16 @@ type Description = {
   content: string
 }
 
-export type DiaryTypes = {
-  id: number
-  createdAt: string
-  updatedAt: string
-  mood: keyof MoodType
-  tags?: string[]
-  description?: Description
-  uploadImgs?: string[]
-  isHighlighted?: boolean
-}
+// export type DiaryTypes = {
+//   id: number
+//   createdAt: string
+//   updatedAt: string
+//   mood: keyof MoodType
+//   tags?: string[]
+//   description?: Description
+//   uploadImgs?: string[]
+//   isHighlighted?: boolean
+// }
 
 export type ImageTypes = {
   path: string
@@ -35,7 +35,7 @@ export type DiaryTypes = {
   content: string
   createdAt: string
   updatedAt: string
-  mainImages: ImageTypes[]
+  mainImages?: ImageTypes[]
   title?: string
   type: string
   user: Pick<User, "_id" | "image" | "name">
