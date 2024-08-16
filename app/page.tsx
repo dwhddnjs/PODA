@@ -2,12 +2,12 @@
 
 import { Button } from "@/components/ui/button"
 import { useAddPost } from "@/hooks/mutation/post"
-import { usePost, usePosts } from "@/hooks/query/post"
+import { usePostsDiarys } from "@/hooks/query/post"
 
 export default function Home() {
   //   const { data } = usePosts()
 
-  const { data } = usePost("500")
+  const { data } = usePostsDiarys()
   console.log("data: ", data)
   const { mutate } = useAddPost()
 

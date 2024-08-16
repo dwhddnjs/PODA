@@ -56,20 +56,20 @@ import { BiSolidTired } from "react-icons/bi"
 
 import { cn } from "@/lib/utils"
 
-type DataDetails = {
+export type TagDetail = {
   id: string
   icon: React.ReactNode
   text: string
 }
-interface TagData {
-  날씨: { [key: string]: DataDetails }
-  관계: { [key: string]: DataDetails }
-  활동: { [key: string]: DataDetails }
-  감정: { [key: string]: DataDetails }
-  컨디션: { [key: string]: DataDetails }
+export interface TagData {
+  날씨: { [key: string]: TagDetail }
+  관계: { [key: string]: TagDetail }
+  활동: { [key: string]: TagDetail }
+  감정: { [key: string]: TagDetail }
+  컨디션: { [key: string]: TagDetail }
 }
 
-const datas: TagData = {
+export const datas: TagData = {
   날씨: {
     sun: { id: "sun", icon: <Sun />, text: "맑음" },
     cloud: { id: "cloud", icon: <Cloudy />, text: "흐림" },
@@ -150,8 +150,6 @@ const datas: TagData = {
 const tabData = ["날씨", "관계", "활동", "감정", "컨디션"]
 
 export default function WriteDiary2Page() {
-  const a = new Date()
-  console.log(a)
   const router = useRouter()
   const {
     noteContentVal,
@@ -160,10 +158,14 @@ export default function WriteDiary2Page() {
     // cameraInput,
     selectedTags,
     seter,
+    resetValues,
   } = useDiaryValues()
 
   const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
+  const currentDatas = Object.values(
+    datas[tabData[activeTabIndex] as keyof TagData]
+  )
 
   const handleTagClick = (id: string) => {
     const currentTab = tabData[activeTabIndex] as keyof TagData
@@ -172,49 +174,44 @@ export default function WriteDiary2Page() {
     )
 
     // 선택한 태그의 id로 상태 확인
-    const isTagSelected = selectedTags?.some((tag) => tag.id === currentTag?.id)
-    //
+    const isTagSelected = selectedTags?.some((tag) => tag === currentTag?.id)
     if (isTagSelected) {
       seter(
-        selectedTags?.filter((tag) => tag.id !== currentTag?.id),
+        selectedTags?.filter((tag) => tag !== currentTag?.id),
         "selectedTags"
       )
       setActiveTags((prev) => ({
         ...prev,
-        [id]: false, // 비활성화
+        [id]: false,
       }))
-      console.log(activeTags)
     } else {
       if (selectedTags) {
-        seter([...selectedTags, { ...currentTag }], "selectedTags")
-        setActiveTags((prev) => ({
-          ...prev,
-          [id]: true, // 활성화
-        }))
-        console.log(activeTags)
+        seter([...selectedTags, currentTag!.id], "selectedTags")
       }
+      setActiveTags((prev) => ({
+        ...prev,
+        [id]: true,
+      }))
     }
+    console.log(selectedTags)
   }
+
   const handlePreviewTagClick = (id: string) => {
     // 미리보기 박스에서 태그 클릭 시 해당 태그 제거
     if (selectedTags) {
       seter(
-        selectedTags.filter((tag) => tag.id !== id), // 클릭한 태그를 제거
+        selectedTags.filter((tag) => tag !== id), // 클릭한 태그를 제거
         "selectedTags"
       )
       setActiveTags((prev) => ({
         ...prev,
         [id]: false, // 비활성화
       }))
-      console.log(activeTags)
     }
   }
-
-  // 클릭한 탭의 인덱스로 상태 업데이트
   const handleTabClick = (tab: string) => {
     setActiveTabIndex(tabData.indexOf(tab))
   }
-
   const handleChevronLeftClick = () => {
     setActiveTabIndex((prevIndex) =>
       prevIndex === 0 ? tabData.length - 1 : prevIndex - 1
@@ -229,7 +226,7 @@ export default function WriteDiary2Page() {
     seter(e.target.value, "noteContentVal")
   }
 
-  // //! 사진 촬영 했을때, 구현 x
+  //! 사진 촬영 했을때, 구현 x
   // const handleCameraClick = () => {
   //   if (cameraInput) {
   //     // cameraInput.click()
@@ -245,12 +242,6 @@ export default function WriteDiary2Page() {
   //     seter(fileUrls, "uploadImages")
   //   }
   // }
-
-  const getCurrentTags = () => {
-    const currentTab = tabData[activeTabIndex] as keyof TagData
-    return Object.values(datas[currentTab])
-  }
-  const currentDatas = getCurrentTags()
 
   return (
     <>
@@ -312,21 +303,28 @@ export default function WriteDiary2Page() {
 
         {/* 선택한 상황들 미리보여주는 박스 */}
         <div className="flex flex-wrap bg-backgroundLighter w-full rounded-[6px] mb-4 p-6 gap-2">
-          {/* 미리보기 박스 */}
           {selectedTags &&
-            selectedTags.map((tag) => (
-              <div
-                key={tag.id}
-                className="flex flex-col flex-wrap items-center gap-1"
-                onClick={() => handlePreviewTagClick(tag.id)}>
-                <div className="p-4 rounded-full text-primary bg-mainColor">
-                  {React.cloneElement(tag.icon as React.ReactElement, {
-                    size: 16,
-                  })}
+            selectedTags.map((tagId) => {
+              const currentTag = Object.values(datas)
+                .flatMap((tabData) => Object.values(tabData))
+                .find((tag) => (tag as TagDetail).id === tagId) as TagDetail
+
+              return (
+                <div
+                  key={currentTag.id}
+                  className="flex flex-col flex-wrap items-center gap-1"
+                  onClick={() => handlePreviewTagClick(currentTag.id)}>
+                  <div className="p-4 rounded-full text-primary bg-mainColor">
+                    {React.cloneElement(currentTag.icon as React.ReactElement, {
+                      size: 16,
+                    })}
+                  </div>
+                  <span className="text-secondary text-xs">
+                    {currentTag.text}
+                  </span>
                 </div>
-                <span className="text-secondary text-xs">{tag.text}</span>
-              </div>
-            ))}
+              )
+            })}
         </div>
         {/*노트 */}
         <div className="mb-10">
@@ -373,7 +371,11 @@ export default function WriteDiary2Page() {
             )}
           </div>
         </div>
-
+        <Button
+          variant="ghost"
+          className="w-full bg-mainColor text-black font-extrabold mb-8">
+          저장
+        </Button>
         {/* 사진 */}
         {/* <div className="flex gap-2 mb-4">
           <Image
@@ -441,12 +443,6 @@ export default function WriteDiary2Page() {
               </div>
             ))}
         </div> */}
-
-        <Button
-          variant="ghost"
-          className="w-full bg-mainColor text-black font-extrabold">
-          저장
-        </Button>
       </div>
     </>
   )
