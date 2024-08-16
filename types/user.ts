@@ -24,3 +24,11 @@ export interface User {
     fcmToken: string
   }
 }
+
+export interface SignupForm extends Pick<User, "name" | "email"> {
+  type?: string
+  password: string
+  passwordCheck?: string
+  attach?: string[]
+  profileImage?: string
+}

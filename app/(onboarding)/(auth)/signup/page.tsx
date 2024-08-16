@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { signup } from "@/actions/userAction"
 import { useRouter } from "next/navigation"
+import { SignupForm } from "@/types/user"
 import { useTransition } from "react"
 import { FullScreen } from "@/components/spinner"
 
@@ -58,8 +59,7 @@ export default function SignupPage() {
     },
   })
 
-  // any 고치기
-  const onSubmit = async (formData: any) => {
+  const onSubmit = async (formData: SignupForm) => {
     startTransition(async () => {
       formData.type = "user"
       delete formData.passwordCheck
@@ -72,9 +72,11 @@ export default function SignupPage() {
         router.push("/login")
       } else {
         if ("errors" in resData) {
-          // any 고치기--------------------
-          resData.errors.forEach((error: any) =>
-            form.setError(error.path, { message: error.msg })
+          resData.errors.forEach(
+            (error: {
+              path: "name" | "email" | "password" | "passwordCheck"
+              msg: string
+            }) => form.setError(error.path, { message: error.msg })
           )
         } else if (resData.message) {
           alert(resData.message)
