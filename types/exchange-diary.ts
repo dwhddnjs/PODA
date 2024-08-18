@@ -33,6 +33,7 @@ export type ExchangeDiaryTypes = {
   createdAt: string
   updatedAt: string
   extra: {
+    title: string
     status: DeliveryStatusTypes
     interest: string[]
   }

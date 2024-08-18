@@ -40,6 +40,7 @@ export type DiaryTypes = {
   type: string
   user: Pick<User, "_id" | "image" | "name">
   extra: {
+    title: string
     mood: keyof MoodType
     tag: string[]
   }
