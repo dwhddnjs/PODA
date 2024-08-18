@@ -116,7 +116,6 @@ export default function RootLayout({
         <ReactQueryProvider>
           {children}
           <SheetProvider />
-          <ReactQueryDevtools />
         </ReactQueryProvider>
       </body>
     </html>

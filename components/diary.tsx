@@ -1,21 +1,11 @@
 "use client"
 
 import Image from "next/image"
-import { getImgByMood } from "@/lib/function/get-img-by-mood"
-import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
 import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
 import { usePathname, useRouter } from "next/navigation"
 import { DiaryTypes } from "@/types/my-diarys"
-import { getKoTime } from "@/lib/function/format-time"
-
-export type MoodType = {
-  happy: string
-  calm: string
-  sad: string
-  annoy: string
-  angry: string
-}
+import { getImgByMood, getKoTime, getTxtByMood } from "@/lib/function"
 
 type DiaryProps = {
   diaryData: DiaryTypes
@@ -34,7 +24,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
       <div className="flex gap-3 px-4 relative">
         {/* 드롭다운 메뉴 */}
         <div className="absolute right-1 -top-[6px] text-primary">
-          <Dropdown />
+          <Dropdown diaryData={diaryData} />
         </div>
         {/* 왼쪽 */}
         <div className="flex items-center flex-col flex-shrink-0">
@@ -42,7 +32,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
             <Image
               width={48}
               height={48}
-              src={getImgByMood(diaryData.mood)}
+              src={getImgByMood(diaryData.extra.mood)}
               alt="감정 이미지"
             />
           </div>
@@ -57,8 +47,8 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
         <div className="flex flex-col">
           {/* 이미지텍스트, 시간 */}
           <div className="flex gap-2 items-center mb-1">
-            <h2 className={`text-md text-emotion-${diaryData.mood}`}>
-              {getTxtByMood(diaryData.mood)}
+            <h2 className={`text-md text-emotion-${diaryData.extra.mood}`}>
+              {getTxtByMood(diaryData.extra.mood)}
             </h2>
             <div className="text-secondary text-sm">
               {getKoTime(diaryData.createdAt)}
@@ -66,22 +56,19 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
           </div>
           {/* 상황 태그들 */}
           <ul
-            className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.mood}`}>
-            {diaryData.tags &&
-              diaryData.tags.map((tagName) => <DiaryTag tagName={tagName} />)}
+            className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.extra.mood}`}>
+            {diaryData.extra.tag.map((tagName) => (
+              <DiaryTag tagName={tagName} />
+            ))}
           </ul>
 
           {/* 디스크립션 */}
           <div className="mb-2">
-            {diaryData.description && diaryData.description.title && (
-              <h3>{diaryData.description.title}</h3>
-            )}
-            <p className="text-primary text-xs">
-              {diaryData.description && diaryData.description.content}
-            </p>
+            {diaryData.extra.title && <h3>{diaryData.extra.title}</h3>}
+            <p className="text-primary text-xs">{diaryData.content}</p>
           </div>
           {/* 업로드한 이미지들 */}
-          <div className="flex flex-wrap w-full gap-3">
+          {/* <div className="flex flex-wrap w-full gap-3">
             {diaryData.uploadImgs &&
               diaryData.uploadImgs.map((imgItem) => {
                 return (
@@ -102,7 +89,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
                   </div>
                 )
               })}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
