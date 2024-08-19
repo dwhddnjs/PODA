@@ -6,8 +6,8 @@ import { useDiaryValues } from "@/hooks/store/use-diary"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import React, { ChangeEvent, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import React, { ChangeEvent, useEffect, useState } from "react"
 
 import {
   Bed,
@@ -55,6 +55,7 @@ import { MdPregnantWoman } from "react-icons/md"
 import { BiSolidTired } from "react-icons/bi"
 
 import { cn } from "@/lib/utils"
+import { EmotionItem } from "../write-diary/emotion-item"
 
 export type TagDetail = {
   id: string
@@ -146,24 +147,44 @@ export const datas: TagData = {
     flu: { id: "flu", icon: <MdSick />, text: "감기" },
   },
 }
-
 const tabData = ["날씨", "관계", "활동", "감정", "컨디션"]
 
 export default function WriteDiary2Page() {
   const router = useRouter()
   const {
+    isEditMode,
+    _id,
+    moodVal,
+    createdAt,
+    updatedAt,
+    user,
     noteContentVal,
     noteTitleVal,
-    // uploadImages,
-    // cameraInput,
     selectedTags,
     seter,
     resetValues,
   } = useDiaryValues()
 
+  // console.log(
+  //   "_id",
+  //   _id,
+  //   "moodVal : ",
+  //   moodVal,
+  //   "createdAt : ",
+  //   createdAt,
+  //   "updatedAt : ",
+  //   updatedAt,
+  //   "noteTitleVal : ",
+  //   noteTitleVal,
+  //   "noteContentVal : ",
+  //   noteContentVal,
+  //   "selectedTags : ",
+  //   selectedTags
+  // )
+
   const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
-  const currentDatas = Object.values(
+  const currentTabDatas = Object.values(
     datas[tabData[activeTabIndex] as keyof TagData]
   )
 
@@ -195,7 +216,6 @@ export default function WriteDiary2Page() {
     }
     console.log(selectedTags)
   }
-
   const handlePreviewTagClick = (id: string) => {
     // 미리보기 박스에서 태그 클릭 시 해당 태그 제거
     if (selectedTags) {
@@ -226,27 +246,24 @@ export default function WriteDiary2Page() {
     seter(e.target.value, "noteContentVal")
   }
 
-  //! 사진 촬영 했을때, 구현 x
-  // const handleCameraClick = () => {
-  //   if (cameraInput) {
-  //     // cameraInput.click()
-  //   }
-  // }
-  // // 업로드이미지
-  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = e.target.files
-  //   if (files) {
-  //     const fileUrls = Array.from(files).map((file) =>
-  //       URL.createObjectURL(file)
-  //     )
-  //     seter(fileUrls, "uploadImages")
-  //   }
-  // }
+  // selectedTag값이 있다면, 상황들 값에도 활성화시켜주기
+  useEffect(() => {
+    const initialActiveTags: { [key: string]: boolean } = {}
+    selectedTags?.forEach((tagId) => {
+      initialActiveTags[tagId] = true
+    })
+    setActiveTags(initialActiveTags)
+  }, [selectedTags])
 
   return (
     <>
       <NavigationHeader isMood={true} isSave={true} />
       <div className="text-primary px-6">
+        {isEditMode && (
+          <div className="flex justify-between gap-2 my-6">
+            <EmotionItem isEditMode={isEditMode} />
+          </div>
+        )}
         <div className="flex gap-2 mb-4">
           <Image
             src={"/assets/svg/calendar.svg"}
@@ -279,8 +296,8 @@ export default function WriteDiary2Page() {
 
         {/* 상황들 */}
         <div className="flex flex-wrap bg-backgroundLighter w-full rounded-[6px] mb-4 p-6 gap-2">
-          {currentDatas &&
-            currentDatas.map((tagData) => (
+          {currentTabDatas &&
+            currentTabDatas.map((tagData) => (
               <div
                 key={tagData.id}
                 className="flex flex-col flex-wrap items-center gap-1"
@@ -355,7 +372,7 @@ export default function WriteDiary2Page() {
                   onClick={() => {
                     router.push("./write-note")
                   }}>
-                  {noteTitleVal}
+                  {noteTitleVal || ""}
                 </h3>
                 <p className="bg-[#555555] border-none outline-none bg-inherit">
                   {noteContentVal}
@@ -371,11 +388,19 @@ export default function WriteDiary2Page() {
             )}
           </div>
         </div>
-        <Button
-          variant="ghost"
-          className="w-full bg-mainColor text-black font-extrabold mb-8">
-          저장
-        </Button>
+        {isEditMode ? (
+          <Button
+            variant="ghost"
+            className="w-full bg-mainColor text-black font-extrabold mb-8">
+            수정
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            className="w-full bg-mainColor text-black font-extrabold mb-8">
+            저장
+          </Button>
+        )}
         {/* 사진 */}
         {/* <div className="flex gap-2 mb-4">
           <Image

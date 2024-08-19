@@ -70,6 +70,12 @@ export const getKoDate = (val: string) => {
   }
 }
 
+export const getCurrentFormattedDate = () => {
+  const now = new Date()
+  const formattedDate = format(now, "M월 d일 HH:mm", { locale: ko })
+  return formattedDate
+}
+
 export const sortDiarys = (diarys: DiaryTypes[]) => {
   return diarys.reduce(
     (acc: Record<string, DiaryTypes[]>, item: DiaryTypes) => {
