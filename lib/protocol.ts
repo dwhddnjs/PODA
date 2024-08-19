@@ -1,3 +1,5 @@
+import { auth } from "@/app/auth"
+
 type BaseFetchParamTypes = {
   url: string
   method: string
@@ -17,7 +19,8 @@ const baseFetch = async ({
     ? process.env.NEXT_PUBLIC_API_URL + url
     : url
 
-  const accessToken = localStorage.getItem("ACCESS_TOKEN")
+  const session = await auth()
+  const accessToken = session?.accessToken
 
   if (accessToken) {
     authorizationHeader = `Bearer ${accessToken}`
