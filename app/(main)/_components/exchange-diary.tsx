@@ -1,14 +1,12 @@
 "use client"
 
 import Image from "next/image"
-import { getImgByMood } from "@/lib/function/get-img-by-mood"
-import { getTxtByMood } from "@/lib/function/get-txt-by-mood"
 import { Dropdown } from "@/components/dropdown"
 import { DiaryTag } from "@/components/diary-tag"
 import { usePathname, useRouter } from "next/navigation"
 import { Diary } from "@/components/diary"
 import { DiaryTypes } from "@/types/my-diarys"
-import { getKoTime } from "@/lib/function/format-time"
+import { getImgByMood, getKoTime, getTxtByMood } from "@/lib/function"
 
 interface ExchangeDiaryProps {
   diaryDatas: DiaryTypes[]
@@ -61,7 +59,7 @@ export const ExchangeDiary = ({ diaryDatas }: ExchangeDiaryProps) => {
 
             {/* 상황 태그들 */}
             <ul
-              className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData?.extra?.mood}`}>
+              className={`flex gap-1 flex-wrap mb-2 text-emotion-${diaryData?.extra?.mood}`}>
               {diaryData?.extra?.tag &&
                 diaryData?.extra?.tag.map((tagName, tagIndex) => {
                   return <DiaryTag key={tagName} tagName={tagName} />
@@ -70,7 +68,7 @@ export const ExchangeDiary = ({ diaryDatas }: ExchangeDiaryProps) => {
 
             {/* 디스크립션 */}
             <div className="mb-2">
-              {diaryData?.title && <h3>{diaryData?.title}</h3>}
+              {diaryData?.extra?.title && <h3>{diaryData?.extra?.title}</h3>}
               <p className="text-primary text-xs">{diaryData?.content}</p>
             </div>
             {/* 업로드한 이미지들 */}

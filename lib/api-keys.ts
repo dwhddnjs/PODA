@@ -3,4 +3,5 @@ export const apiKeys = {
   user: "/users",
   products: "/seller/products",
   replies: "/replies/products",
+  reply: "/replies",
 }
