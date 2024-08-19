@@ -24,9 +24,10 @@ import {
   signInWithGoogle,
 } from "@/actions/authAction"
 import { useTransition } from "react"
+import { useUserData } from "@/hooks/store/use-user-data"
 import { FullScreen } from "@/components/spinner"
 
-const FormSchema = z.object({
+export const FormSchema = z.object({
   email: z
     .string()
     .min(1, {
@@ -34,9 +35,14 @@ const FormSchema = z.object({
     })
     .email({ message: "유효하지 않은 이메일 형식이에요!" }),
   password: z.string().min(8),
+  age: z.string().optional(),
+  gender: z.string().optional(),
+  region: z.string().optional(),
+  interest: z.array(z.string()).optional(),
 })
 
 export default function LoginPage() {
+  const { userData } = useUserData()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -44,10 +50,14 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      age: userData.age || "",
+      gender: userData.gender || "",
+      region: userData.region || "",
+      interest: userData.interest || [],
     },
   })
 
-  const onCredentialSubmit = async (formData: any) => {
+  const onCredentialSubmit = async (formData: z.infer<typeof FormSchema>) => {
     startTransition(async () => {
       await signInWithCredentials(formData)
     })
@@ -92,6 +102,50 @@ export default function LoginPage() {
                     <Input type="password" {...field} />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="region"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="interest"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
                 </FormItem>
               )}
             />

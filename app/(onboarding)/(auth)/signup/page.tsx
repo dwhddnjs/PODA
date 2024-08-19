@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation"
 import { SignupForm } from "@/types/user"
 import { useTransition } from "react"
 import { FullScreen } from "@/components/spinner"
+import { useUserData } from "@/hooks/store/use-user-data"
 
 const FormSchema = z
   .object({
@@ -46,7 +47,7 @@ const FormSchema = z
 
 export default function SignupPage() {
   const router = useRouter()
-
+  const { userData } = useUserData()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -62,6 +63,12 @@ export default function SignupPage() {
   const onSubmit = async (formData: SignupForm) => {
     startTransition(async () => {
       formData.type = "user"
+      formData.extra = {
+        age: userData.age,
+        gender: userData.gender,
+        region: userData.region,
+        interest: userData.interest,
+      }
       delete formData.passwordCheck
       console.log("onSubmit formData of signup is : " + formData)
 

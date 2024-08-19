@@ -2,10 +2,10 @@ import { create } from "zustand"
 
 interface IUserData {
   userData: {
-    age: string | null
-    gender: string | null
-    region: string | null
-    interest: string[] | null
+    age: string | undefined
+    gender: string | undefined
+    region: string | undefined
+    interest: string[] | undefined
   }
   setUserAge: (value: string) => void
   setUserGender: (value: string) => void
@@ -16,10 +16,10 @@ interface IUserData {
 
 export const useUserData = create<IUserData>((set) => ({
   userData: {
-    age: null,
-    gender: null,
-    region: null,
-    interest: null,
+    age: undefined,
+    gender: undefined,
+    region: undefined,
+    interest: undefined,
   },
   setUserAge: (value) =>
     set((state) => ({ userData: { ...state.userData, age: value } })),
@@ -42,7 +42,7 @@ export const useUserData = create<IUserData>((set) => ({
         ...state.userData,
         interest: state.userData.interest
           ? state.userData.interest.filter((el) => el !== value)
-          : null,
+          : undefined,
       },
     })),
 }))

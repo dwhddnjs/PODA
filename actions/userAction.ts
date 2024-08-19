@@ -19,8 +19,6 @@ export async function signup(formData: SignupForm) {
     formData.profileImage = fileRes.item[0].path
   }
 
-  formData.type = "user"
-
   const res = await postRequest(`${SERVER}/users`, formData)
 
   return res

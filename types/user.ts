@@ -27,6 +27,12 @@ export interface User {
 
 export interface SignupForm extends Pick<User, "name" | "email"> {
   type?: string
+  extra?: {
+    age: string | undefined
+    gender: string | undefined
+    region: string | undefined
+    interest: string[] | undefined
+  }
   password: string
   passwordCheck?: string
   attach?: string[]
