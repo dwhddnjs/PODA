@@ -23,8 +23,11 @@ import {
   signInWithGithub,
   signInWithGoogle,
 } from "@/actions/authAction"
+import { useTransition } from "react"
+import { useUserData } from "@/hooks/store/use-user-data"
+import { FullScreen } from "@/components/spinner"
 
-const FormSchema = z.object({
+export const FormSchema = z.object({
   email: z
     .string()
     .min(1, {
@@ -32,19 +35,37 @@ const FormSchema = z.object({
     })
     .email({ message: "유효하지 않은 이메일 형식이에요!" }),
   password: z.string().min(8),
+  age: z.string().optional(),
+  gender: z.string().optional(),
+  region: z.string().optional(),
+  interest: z.array(z.string()).optional(),
 })
 
 export default function LoginPage() {
+  const { userData } = useUserData()
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       password: "",
+      age: userData.age || "",
+      gender: userData.gender || "",
+      region: userData.region || "",
+      interest: userData.interest || [],
     },
   })
 
+  const onCredentialSubmit = async (formData: z.infer<typeof FormSchema>) => {
+    startTransition(async () => {
+      await signInWithCredentials(formData)
+    })
+  }
+
   return (
     <div className="flex flex-col justify-around px-10 w-full h-full max-w-96 mx-auto py-8 gap-3">
+      {isPending && <FullScreen />}
       <div>
         <Image
           src={"/assets/svg/logo-small.svg"}
@@ -84,10 +105,55 @@ export default function LoginPage() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="region"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="interest"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <div className="flex flex-col pt-6">
               <Button
                 type="submit"
-                formAction={signInWithCredentials}
+                onClick={form.handleSubmit(onCredentialSubmit)}
+                disabled={isPending}
                 className="bg-mainColor text-black font-bold">
                 로그인
               </Button>
@@ -96,6 +162,7 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   formAction={signInWithGoogle}
+                  disabled={isPending}
                   className="justify-between w-full text-black font-bold">
                   <FcGoogle size="20" />
                   구글
@@ -104,6 +171,7 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   formAction={signInWithGithub}
+                  disabled={isPending}
                   className="justify-between w-full bg-backgroundLighter text-primary font-bold">
                   <FaGithub size="20" />
                   깃허브
