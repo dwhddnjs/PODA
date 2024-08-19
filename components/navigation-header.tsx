@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { useSelectedDiaryMood } from "@/hooks/store/use-seleceted-mood"
+import { useDiaryValues } from "@/hooks/store/use-diary"
 
 interface NavigationHeaderProps {
   isMood?: boolean
@@ -23,7 +24,7 @@ export const NavigationHeader = ({
   isDate,
   isSearch,
 }: NavigationHeaderProps) => {
-  const { selectedMood } = useSelectedDiaryMood()
+  const { moodVal } = useDiaryValues()
   const { back } = useRouter()
   return (
     <div className="w-full flex justify-between items-center py-[12px] ">
@@ -35,7 +36,7 @@ export const NavigationHeader = ({
           <Image
             width={32}
             height={32}
-            src={`/assets/svg/${selectedMood}.svg`}
+            src={`/assets/svg/${moodVal}.svg`}
             alt="선택한 감정상태"
             className="-ml-1"
           />

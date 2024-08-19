@@ -14,47 +14,40 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEditDiaryValues } from "@/hooks/store/use-diary"
+import { useDiaryValues } from "@/hooks/store/use-diary"
 import { DiaryTypes } from "@/types/my-diarys"
 import { Ellipsis } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-
-// export type DiaryTypes = {
-//   _id: number
-//   title?: string
-//   content: string
-//   createdAt: string
-//   updatedAt: string
-//   mainImages?: ImageTypes[]
-//   type: string
-//   user: Pick<User, "_id" | "image" | "name">
-//   extra: {
-//     mood: keyof MoodType
-//     tag: string[]
-//   }
-// }
 
 type DropDownProps = {
-  diaryData: DiaryTypes
+  diaryData?: DiaryTypes
 }
 
 export function Dropdown({ diaryData }: DropDownProps) {
   const router = useRouter()
-  const { seter } = useEditDiaryValues()
+  const { seter } = useDiaryValues()
+
   const handleEdit = () => {
-    seter(diaryData.extra.mood, "mood")
-    if (diaryData.extra.tag) {
-      seter(diaryData.extra.tag, "tag")
+    seter(true, "isEditMode")
+    if (diaryData) {
+      seter(diaryData._id, "_id")
+      seter(diaryData.createdAt, "createdAt")
+      seter(diaryData.updatedAt, "updatedAt")
+      seter(diaryData.extra.mood, "moodVal")
+      seter(diaryData.user, "user")
+      if (diaryData.extra.tag) {
+        seter(diaryData.extra.tag, "selectedTags")
+      }
+      if (diaryData.extra.title) {
+        seter(diaryData.extra.title, "noteTitleVal")
+      }
+      if (diaryData.content) {
+        seter(diaryData.content, "noteContentVal")
+      }
+      router.push("/mydiary/write-diary2")
     }
-    if (diaryData.title) {
-      seter(diaryData.title, "title")
-    }
-    if (diaryData.content) {
-      seter(diaryData.content, "content")
-    }
-    router.push("./edit-diary")
   }
+  const handleDelete = () => {}
 
   return (
     <DropdownMenu>
@@ -69,9 +62,25 @@ export function Dropdown({ diaryData }: DropDownProps) {
           <DropdownMenuItem className="text-primary" onClick={handleEdit}>
             수정
           </DropdownMenuItem>
-          <DropdownMenuItem className="text-red-500">삭제</DropdownMenuItem>
+          <DropdownMenuItem className="text-red-500" onClick={handleDelete}>
+            삭제
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
+// export type DiaryTypes = {
+//   _id: number
+//   content?: string
+//   createdAt: string
+//   updatedAt: string
+//   mainImages?: ImageTypes[]
+//   type: string
+//   user: Pick<User, "_id" | "image" | "name">
+//   extra: {
+//     title?: string
+//     mood: keyof MoodType
+//     tag: string[]
+//   }
+// }
