@@ -1,10 +1,7 @@
 "use client"
 
-import { BottomNavigation } from "@/components/bottom-navigation"
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TabsContent } from "@radix-ui/react-tabs"
-import Image from "next/image"
 import React from "react"
 import { DeliveryStatusItem } from "../delivery-status-item"
 import { ExchangeDiaryTab } from "../exchange-diary-tab"
@@ -12,15 +9,10 @@ import { DiaryStorageTab } from "../diary-storage-tab"
 import { SendDiaryTab } from "../send-diary-tab"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useExchangeDiaryTab } from "@/hooks/store/use-exchange-diary-tab"
-import { useUser } from "@/hooks/query/user"
-import { usePostsDiarys } from "@/hooks/query/post"
 
 export default function ExchangeDiaryPage() {
   const { selectDiary } = useSelectedDiary()
   const { tabValue, setTabValue } = useExchangeDiaryTab()
-  const { data } = usePostsDiarys()
-  //   const { data } = useUser("1")
-  console.log("data: ", data)
 
   return (
     <div className="w-full h-full ">
