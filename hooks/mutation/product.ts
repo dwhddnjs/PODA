@@ -16,7 +16,7 @@ export const useAddProduct = () => {
             user_id: diary.user._id,
             order_id: 1,
             product_id: data.item._id,
-            content: diary.content,
+            content: diary.extra.content,
             extra: {
               title: diary.extra.title,
               mood: diary.extra.mood,

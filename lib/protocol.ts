@@ -19,7 +19,8 @@ const baseFetch = async ({
     ? process.env.NEXT_PUBLIC_API_URL + url
     : url
 
-  const accessToken = localStorage.getItem("accessToken")
+  const accessToken =
+    typeof window !== "undefined" && localStorage.getItem("accessToken")
 
   if (accessToken) {
     authorizationHeader = `Bearer ${accessToken}`
