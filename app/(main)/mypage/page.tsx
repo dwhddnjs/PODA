@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, Camera, LucideIcon, Palette } from "lucide-react"
+import { Bell, Camera, LucideIcon, Palette, LogOut } from "lucide-react"
 import { Half2Icon } from "@radix-ui/react-icons"
 import React from "react"
 import { Switch } from "@/components/ui/switch"
@@ -28,6 +28,11 @@ export default function MyPagePage() {
       id: 4,
       Icon: Palette,
       title: "관심사 변경",
+    },
+    {
+      id: 5,
+      Icon: LogOut,
+      title: "로그아웃",
     },
   ]
 
