@@ -2,7 +2,7 @@ import { create } from "zustand"
 
 type DiaryValue = {
   isEditMode?: boolean
-  _id?: number
+  _id: number
   createdAt?: string
   updatedAt?: string
   moodVal: string
