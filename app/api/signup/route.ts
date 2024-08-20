@@ -2,6 +2,8 @@ import { auth, update } from "@/app/auth"
 import { postRequest } from "@/lib/protocol"
 import { NextRequest } from "next/server"
 
+const PRODUCTION_URL = process.env.PRODUCTION_URL
+
 export async function GET(request: NextRequest) {
   const session = await auth()
 
@@ -39,7 +41,7 @@ export async function GET(request: NextRequest) {
 
     console.log("resLogin : " + JSON.stringify(resLogin))
     if (!resLogin.ok) throw new Error("로그인 에러입니다.")
-    return Response.redirect("http://localhost:3000/welcome")
+    return Response.redirect(`${PRODUCTION_URL}/welcome`)
   } catch (error) {
     console.error(error)
   }
