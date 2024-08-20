@@ -3,10 +3,21 @@ import { Dotline } from "@/components/dot-line"
 import { Tag } from "@/components/tag"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
+import { apiKeys } from "@/lib/api-keys"
 import { convertStatusText, getKoDate } from "@/lib/function"
+import { patchRequest } from "@/lib/protocol"
 import { cn } from "@/lib/utils"
 import { DeliveryStatusTypes, ExchangeDiaryTypes } from "@/types/exchange-diary"
 import { AvatarFallback } from "@radix-ui/react-avatar"
+import {
+  addHours,
+  getDate,
+  getDay,
+  getHours,
+  getMonth,
+  subHours,
+  toDate,
+} from "date-fns"
 import {
   Calendar,
   CalendarDays,
@@ -15,13 +26,47 @@ import {
   MessageSquareHeart,
 } from "lucide-react"
 import Image from "next/image"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 interface DeliveryStatusItemProps {
   diary: ExchangeDiaryTypes
 }
 
 export const DeliveryStatusItem = ({ diary }: DeliveryStatusItemProps) => {
+  const [timeValue, setTimeValue] = useState<number>(0)
+  console.log("timeValue: ", timeValue)
+
+  //   const result = () => {
+  //     const created = toDate(diary.createdAt)
+
+  //     const current = new Date()
+
+  //     if(get)
+  //   }
+
+  useEffect(() => {
+    ;(async () => {
+      const created = toDate(diary?.createdAt)
+      const current = new Date()
+
+      if (getDate(current) - getDate(created) > 0) {
+        setTimeValue(6)
+        if (getHours(current) === getHours(created)) {
+          const requestBody = {
+            extra: {
+              status: "completed",
+              interest: [...diary.extra.interest],
+            },
+          }
+
+          await patchRequest(`${apiKeys?.products}/${diary?._id}`, requestBody)
+        }
+      } else {
+        setTimeValue(getHours(current) - getHours(created))
+      }
+    })()
+  }, [diary])
+
   return (
     <div className="w-full h-full rounded-lg bg-backgroundLighter p-3 space-y-3">
       <div className="w-full h-full flex space-x-3">
@@ -61,7 +106,7 @@ export const DeliveryStatusItem = ({ diary }: DeliveryStatusItemProps) => {
       </div>
       <div className="w-full flex items-center space-x-4 pl-0.5 ">
         <Image src="/assets/svg/logo-small.svg" width={36} height={36} alt="" />
-        <Progress value={33} className="h-3" />
+        <Progress value={timeValue} max={6} className="h-3" />
       </div>
 
       {/* <h3 className="text-primary text-md font-bold text-center">

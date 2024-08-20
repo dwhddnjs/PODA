@@ -18,7 +18,7 @@ export const useAddProduct = () => {
             product_id: data.item._id,
             content: diary.content,
             extra: {
-              title: diary.title,
+              title: diary.extra.title,
               mood: diary.extra.mood,
               tag: diary.extra.tag,
             },
