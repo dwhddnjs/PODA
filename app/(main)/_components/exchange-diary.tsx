@@ -76,7 +76,9 @@ export const ExchangeDiary = ({ diaryDatas }: ExchangeDiaryProps) => {
                     {diaryData?.extra?.title && (
                       <h3>{diaryData?.extra?.title}</h3>
                     )}
-                    <p className="text-primary text-xs">{diaryData?.content}</p>
+                    <p className="text-primary text-xs">
+                      {diaryData?.extra.content}
+                    </p>
                   </div>
                 </div>
               </div>
