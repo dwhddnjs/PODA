@@ -8,14 +8,12 @@ import {
   useProductsRepliesDiary,
 } from "@/hooks/query/products"
 import { convertDate } from "@/lib/function"
-import { diaryDatas } from "@/lib/mock-data"
+
 import { DiaryTypes } from "@/types/my-diarys"
 import { useParams } from "next/navigation"
 import React from "react"
 
 export default function StorageIdPage() {
-  const item = diaryDatas["2024-08-03"]
-  const item2 = diaryDatas["2024-08-02"]
   const param = useParams()
   console.log("param: ", param)
   const { data, isPending } = useProductsRepliesDiary(param.id as string)

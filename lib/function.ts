@@ -1,7 +1,6 @@
 import { create } from "zustand"
-import { MoodType } from "./mock-data"
 import { ApiResSuccess } from "@/types/api-response"
-import { DiaryTypes } from "@/types/my-diarys"
+import { DiaryTypes, MoodType } from "@/types/my-diarys"
 import { DeliveryStatusTypes } from "@/types/exchange-diary"
 import { parse, format } from "date-fns"
 import { ko } from "date-fns/locale"
@@ -30,9 +29,9 @@ export const getTxtByMood = (mood: keyof MoodType) => {
   return moodTxtData[mood]
 }
 
-export const getTxtcolorClasses = (mood: keyof MoodType) => {
-  return `text-emotion-${mood as any}`
-}
+// export const getTxtcolorClasses = (mood: keyof MoodType) => {
+//   return `text-emotion-${mood as any}`
+// }
 
 export const convertDate = (dateStr: string) => {
   const [year, month, day] = dateStr.split("-").map(Number)
@@ -83,7 +82,6 @@ export const sortDiarys = (diarys: DiaryTypes[]) => {
       if (!acc[date]) {
         acc[date] = []
       }
-
       acc[date].push({
         _id: item._id,
         type: item.type,
@@ -92,7 +90,6 @@ export const sortDiarys = (diarys: DiaryTypes[]) => {
           name: item.user.name,
           image: item.user.image,
         },
-        content: item.content,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
         mainImages: item.mainImages,
