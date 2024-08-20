@@ -152,7 +152,7 @@ const datas: TagData = {
 
 const tabData = ["날씨", "관계", "활동", "감정", "컨디션"]
 
-export default async function WriteDiary2Page() {
+export default function WriteDiary2Page() {
   const router = useRouter()
   const {
     isEditMode,
