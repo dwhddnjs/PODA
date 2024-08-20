@@ -14,6 +14,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useDeletePost } from "@/hooks/mutation/deletePost"
 import { useDiaryValues } from "@/hooks/store/use-diary"
 import { DiaryTypes } from "@/types/my-diarys"
 import { Ellipsis } from "lucide-react"
@@ -26,6 +27,7 @@ type DropDownProps = {
 export function Dropdown({ diaryData }: DropDownProps) {
   const router = useRouter()
   const { seter } = useDiaryValues()
+  const { mutate: deleteMutate } = useDeletePost(diaryData!._id)
 
   const handleEdit = () => {
     seter(true, "isEditMode")
@@ -41,13 +43,16 @@ export function Dropdown({ diaryData }: DropDownProps) {
       if (diaryData.extra.title) {
         seter(diaryData.extra.title, "noteTitleVal")
       }
-      if (diaryData.content) {
-        seter(diaryData.content, "noteContentVal")
+      if (diaryData.extra.content) {
+        seter(diaryData.extra.content, "noteContentVal")
       }
-      router.push("/mydiary/write-diary2")
     }
+
+    router.push("/mydiary/write-diary2")
   }
-  const handleDelete = () => {}
+  const handleDelete = () => {
+    deleteMutate()
+  }
 
   return (
     <DropdownMenu>

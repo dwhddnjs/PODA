@@ -6,8 +6,14 @@ import { useDiaryValues } from "@/hooks/store/use-diary"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React, { ChangeEvent, useEffect, useState } from "react"
+import { format } from "date-fns"
+
+import { cn } from "@/lib/utils"
+import { EmotionItem } from "../write-diary/emotion-item"
+import { useAddPost } from "@/hooks/mutation/post"
+import { usePatchPost } from "@/hooks/mutation/patchPost"
 
 import {
   Bed,
@@ -39,7 +45,6 @@ import {
   Users,
   Utensils,
   Wind,
-  Youtube,
 } from "lucide-react"
 
 import { GiBackPain } from "react-icons/gi"
@@ -54,23 +59,20 @@ import { GiStomach } from "react-icons/gi"
 import { MdPregnantWoman } from "react-icons/md"
 import { BiSolidTired } from "react-icons/bi"
 
-import { cn } from "@/lib/utils"
-import { EmotionItem } from "../write-diary/emotion-item"
-
-export type TagDetail = {
+type TagDetail = {
   id: string
-  icon: React.ReactNode
+  icon: React.ReactElement
   text: string
 }
-export interface TagData {
-  날씨: { [key: string]: TagDetail }
-  관계: { [key: string]: TagDetail }
-  활동: { [key: string]: TagDetail }
-  감정: { [key: string]: TagDetail }
-  컨디션: { [key: string]: TagDetail }
+type TagData = {
+  날씨: Record<string, TagDetail>
+  관계: Record<string, TagDetail>
+  활동: Record<string, TagDetail>
+  감정: Record<string, TagDetail>
+  컨디션: Record<string, TagDetail>
 }
 
-export const datas: TagData = {
+const datas: TagData = {
   날씨: {
     sun: { id: "sun", icon: <Sun />, text: "맑음" },
     cloud: { id: "cloud", icon: <Cloudy />, text: "흐림" },
@@ -94,7 +96,7 @@ export const datas: TagData = {
     travel: { id: "travel", icon: <Plane />, text: "여행" },
     drive: { id: "drive", icon: <Car />, text: "드라이브" },
     eatout: { id: "eatout", icon: <Utensils />, text: "외식" },
-    youtube: { id: "youtube", icon: <Youtube />, text: "유튜브" },
+    // youtube: { id: "youtube", icon: <Youtube />, text: "유튜브" },
     rest: { id: "rest", icon: <Bed />, text: "휴식" },
     workout: { id: "workout", icon: <Dumbbell />, text: "운동" },
     drink: { id: "drink", icon: <Milk />, text: "물 마시기" },
@@ -147,13 +149,14 @@ export const datas: TagData = {
     flu: { id: "flu", icon: <MdSick />, text: "감기" },
   },
 }
+
 const tabData = ["날씨", "관계", "활동", "감정", "컨디션"]
 
-export default function WriteDiary2Page() {
+export default async function WriteDiary2Page() {
   const router = useRouter()
   const {
     isEditMode,
-    _id,
+    _id, // 일기 1개 ID
     moodVal,
     createdAt,
     updatedAt,
@@ -164,24 +167,6 @@ export default function WriteDiary2Page() {
     seter,
     resetValues,
   } = useDiaryValues()
-
-  // console.log(
-  //   "_id",
-  //   _id,
-  //   "moodVal : ",
-  //   moodVal,
-  //   "createdAt : ",
-  //   createdAt,
-  //   "updatedAt : ",
-  //   updatedAt,
-  //   "noteTitleVal : ",
-  //   noteTitleVal,
-  //   "noteContentVal : ",
-  //   noteContentVal,
-  //   "selectedTags : ",
-  //   selectedTags
-  // )
-
   const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
   const currentTabDatas = Object.values(
@@ -189,10 +174,10 @@ export default function WriteDiary2Page() {
   )
 
   const handleTagClick = (id: string) => {
-    const currentTab = tabData[activeTabIndex] as keyof TagData
-    const currentTag = Object.values(datas[currentTab]).find(
-      (tag) => tag.id === id
-    )
+    const currentTab = tabData[activeTabIndex]
+    const currentTag: any = Object.values(
+      datas[currentTab as keyof TagData]
+    ).find((tag: any) => tag.id === id)
 
     // 선택한 태그의 id로 상태 확인
     const isTagSelected = selectedTags?.some((tag) => tag === currentTag?.id)
@@ -216,8 +201,8 @@ export default function WriteDiary2Page() {
     }
     console.log(selectedTags)
   }
+  // 미리보기 박스에서 태그 클릭 시 해당 태그 제거
   const handlePreviewTagClick = (id: string) => {
-    // 미리보기 박스에서 태그 클릭 시 해당 태그 제거
     if (selectedTags) {
       seter(
         selectedTags.filter((tag) => tag !== id), // 클릭한 태그를 제거
@@ -244,6 +229,59 @@ export default function WriteDiary2Page() {
   }
   const handleInpVal = (e: ChangeEvent<HTMLInputElement>) => {
     seter(e.target.value, "noteContentVal")
+  }
+  const formatDate = (date: Date) => {
+    return format(date, "yyyy.MM.dd HH:mm:ss")
+  }
+  const { mutate: addMutate } = useAddPost()
+  const { mutate: patchMutate } = usePatchPost(_id.toString())
+
+  const handleEdit = () => {
+    const requestBody = {
+      _id: _id, // 일기 1개(Diary)의 ID
+      type: "seller",
+      user: user, // 일기 작성자 정보
+      createdAt: createdAt,
+      updatedAt: formatDate(new Date()),
+      extra: {
+        title: noteTitleVal,
+        content: noteContentVal,
+        mood: moodVal,
+        tag: selectedTags ? [...selectedTags] : [],
+      },
+    }
+    try {
+      const res = patchMutate(requestBody)
+      console.log("res: ", res)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      router.push("/mydiary")
+      resetValues()
+    }
+  }
+  const handleSave = () => {
+    const requestBody = {
+      user: user,
+      createdAt: formatDate(new Date()),
+      updatedAt: formatDate(new Date()),
+      extra: {
+        title: noteTitleVal,
+        content: noteContentVal,
+        mood: moodVal,
+        tag: selectedTags ? [...selectedTags] : [],
+      },
+    }
+
+    try {
+      const res = addMutate(requestBody)
+      console.log("res: ", res)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      router.push("/mydiary")
+      resetValues()
+    }
   }
 
   // selectedTag값이 있다면, 상황들 값에도 활성화시켜주기
@@ -305,7 +343,7 @@ export default function WriteDiary2Page() {
                 <div
                   className={cn(
                     "p-4 rounded-full",
-                    activeTags[tagData.id]
+                    activeTags[tagData.id || "sun"]
                       ? "text-primary bg-mainColor"
                       : "text-mainColor bg-[#272727]"
                   )}>
@@ -324,7 +362,7 @@ export default function WriteDiary2Page() {
             selectedTags.map((tagId) => {
               const currentTag = Object.values(datas)
                 .flatMap((tabData) => Object.values(tabData))
-                .find((tag) => (tag as TagDetail).id === tagId) as TagDetail
+                .find((tag) => tag.id === tagId) as TagDetail
 
               return (
                 <div
@@ -391,13 +429,15 @@ export default function WriteDiary2Page() {
         {isEditMode ? (
           <Button
             variant="ghost"
-            className="w-full bg-mainColor text-black font-extrabold mb-8">
+            className="w-full bg-mainColor text-black font-extrabold mb-8"
+            onClick={handleEdit}>
             수정
           </Button>
         ) : (
           <Button
             variant="ghost"
-            className="w-full bg-mainColor text-black font-extrabold mb-8">
+            className="w-full bg-mainColor text-black font-extrabold mb-8"
+            onClick={handleSave}>
             저장
           </Button>
         )}
