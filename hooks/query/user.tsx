@@ -1,3 +1,5 @@
+"use client"
+
 import { apiKeys } from "@/lib/api-keys"
 import { fetcher } from "@/lib/protocol"
 import { useQuery } from "@tanstack/react-query"

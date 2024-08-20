@@ -1,3 +1,5 @@
+"use client"
+
 import { apiKeys } from "@/lib/api-keys"
 import { sortDiarys } from "@/lib/function"
 import { fetcher } from "@/lib/protocol"
@@ -13,26 +15,6 @@ export const useProductsDiarys = () => {
     queryKey: [apiKeys.products],
     queryFn: async () => {
       return await fetcher(`${apiKeys.products}`)
-    },
-    staleTime: 1000 * 3,
-  })
-
-  return {
-    data,
-    isPending,
-    error,
-    refetch,
-  }
-}
-
-export const useProductsRepliesDiary = (id: string) => {
-  const { data, isPending, error, refetch } = useQuery<
-    Record<string, DiaryTypes[]>
-  >({
-    queryKey: [apiKeys.replies, id],
-    queryFn: async () => {
-      const res = await fetcher(`${apiKeys.replies}/${id}`)
-      return sortDiarys(res.item)
     },
     staleTime: 1000 * 3,
   })
