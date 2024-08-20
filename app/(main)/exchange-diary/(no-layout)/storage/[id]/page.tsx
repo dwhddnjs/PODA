@@ -3,23 +3,24 @@
 import { ExchangeDiary } from "@/app/(main)/_components/exchange-diary"
 import { AvatarName } from "@/components/avatar-name"
 import { NavigationHeader } from "@/components/navigation-header"
-import {
-  useProductsDiarys,
-  useProductsRepliesDiary,
-} from "@/hooks/query/products"
+import { usePostsDiarys } from "@/hooks/query/post"
+import { useUser } from "@/hooks/use-user"
 import { convertDate } from "@/lib/function"
 import { diaryDatas } from "@/lib/mock-data"
+import { cn } from "@/lib/utils"
 import { DiaryTypes } from "@/types/my-diarys"
 import { useParams } from "next/navigation"
 import React from "react"
 
 export default function StorageIdPage() {
-  const item = diaryDatas["2024-08-03"]
-  const item2 = diaryDatas["2024-08-02"]
   const param = useParams()
-  console.log("param: ", param)
-  const { data, isPending } = useProductsRepliesDiary(param.id as string)
-  console.log("data: ", data)
+
+  const { data, isPending } = usePostsDiarys(
+    "exchange-diary",
+    parseInt(param.id as string)
+  )
+
+  const user = useUser()
 
   if (isPending) {
     return null
@@ -29,7 +30,11 @@ export default function StorageIdPage() {
     data as Record<string, DiaryTypes[]>
   )?.map((item) => (
     <div className="w-full space-y-1.5" key={item[0]}>
-      <div className="flex justify-between items-end ">
+      <div
+        className={cn(
+          "flex justify-between items-end ",
+          item[1][0].user.name !== user?.name && "flex-row-reverse"
+        )}>
         <AvatarName name={item[1][0].user.name} />
         <p className="text-sm text-primary font-semibold">{item[0]}</p>
       </div>
@@ -40,27 +45,7 @@ export default function StorageIdPage() {
   return (
     <div className="w-full">
       <NavigationHeader />
-      <div className="space-y-8 px-[24px]">
-        {renderListItem}
-        {/* <div className="w-full space-y-1.5">
-          <div className="flex justify-between items-end ">
-            <AvatarName name={"사용자1"} />
-            <p className="text-sm text-primary font-semibold">
-              
-            </p>
-          </div>
-          <ExchangeDiary diaryDatas={item} />
-        </div>
-        <div className="w-full space-y-1.5">
-          <div className=" flex justify-between items-end flex-row-reverse">
-            <AvatarName name={"사용자2"} />
-            <p className="text-sm text-primary font-semibold">
-              
-            </p>
-          </div>
-          <ExchangeDiary diaryDatas={item2} />
-        </div> */}
-      </div>
+      <div className="space-y-8 px-[24px]">{renderListItem}</div>
     </div>
   )
 }
