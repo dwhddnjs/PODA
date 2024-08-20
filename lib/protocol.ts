@@ -19,8 +19,7 @@ const baseFetch = async ({
     ? process.env.NEXT_PUBLIC_API_URL + url
     : url
 
-  const session = await auth()
-  const accessToken = session?.accessToken
+  const accessToken = localStorage.getItem("accessToken")
 
   if (accessToken) {
     authorizationHeader = `Bearer ${accessToken}`

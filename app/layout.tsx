@@ -6,6 +6,8 @@ import ReactQueryProvider from "@/provider/react-query-provider"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import localFont from "next/font/local"
 import { SheetProvider } from "@/provider/sheet-provider"
+import { SessionProvider } from "next-auth/react"
+import { AuthProvider } from "@/provider/auth-provider"
 
 // const fontSans = FontSans({
 //   subsets: ["latin"],
@@ -97,7 +99,6 @@ export const metadata: Metadata = {
       sizes: "512x512",
       rel: "icon",
     },
-    // 추가 아이콘 정보
   ],
 }
 
@@ -113,10 +114,14 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           myFont.variable
         )}>
-        <ReactQueryProvider>
-          {children}
-          <SheetProvider />
-        </ReactQueryProvider>
+        <SessionProvider>
+          <AuthProvider>
+            <ReactQueryProvider>
+              {children}
+              <SheetProvider />
+            </ReactQueryProvider>
+          </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   )
