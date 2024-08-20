@@ -21,7 +21,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
     <div
       onClick={() => pathname === "/exchange-diary/load-diary" && back()}
       className="pt-[16px] first:pt-[28px] last:pb-[28px]">
-      <div className="flex gap-3 px-4 relative">
+      <div className="flex gap-3 px-6 relative">
         {/* 드롭다운 메뉴 */}
         <div className="absolute right-1 -top-[6px] text-primary">
           <Dropdown diaryData={diaryData} />
@@ -58,14 +58,16 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
           <ul
             className={`flex gap-1 flex-wrap mb-4 text-emotion-${diaryData.extra.mood}`}>
             {diaryData.extra.tag.map((tagName) => (
-              <DiaryTag tagName={tagName} />
+              <DiaryTag key={tagName} tagName={tagName} />
             ))}
           </ul>
 
           {/* 디스크립션 */}
           <div className="mb-2">
             {diaryData.extra.title && <h3>{diaryData.extra.title}</h3>}
-            <p className="text-primary text-xs">{diaryData.content}</p>
+            {diaryData.extra.content && (
+              <p className="text-primary text-xs">{diaryData.extra.content}</p>
+            )}
           </div>
           {/* 업로드한 이미지들 */}
           {/* <div className="flex flex-wrap w-full gap-3">

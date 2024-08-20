@@ -27,7 +27,7 @@ import { useTransition } from "react"
 import { useUserData } from "@/hooks/store/use-user-data"
 import { FullScreen } from "@/components/spinner"
 
-export const FormSchema = z.object({
+const FormSchema = z.object({
   email: z
     .string()
     .min(1, {

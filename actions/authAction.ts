@@ -1,12 +1,10 @@
 "use server"
-
-import { FormSchema } from "@/app/(onboarding)/(auth)/login/page"
 import { signIn } from "@/app/auth"
+import { SignupForm } from "@/types/user"
 import { redirect } from "next/navigation"
-import { z } from "zod"
 
 export async function signInWithCredentials(
-  formData: z.infer<typeof FormSchema>
+  formData: Pick<SignupForm, "email" | "password">
 ) {
   try {
     const result = await signIn("credentials", {
