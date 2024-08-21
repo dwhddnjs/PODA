@@ -80,6 +80,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   viewport:
     "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+  },
   icons: {
     other: [
       {
