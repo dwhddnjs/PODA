@@ -9,7 +9,7 @@ import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
 
 export default function MydiaryPage() {
-  const { data } = usePostsDiarys()
+  const { data } = usePostsDiarys("mydiary")
   // console.log(data)
 
   if (!data) {
