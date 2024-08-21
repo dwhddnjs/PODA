@@ -5,6 +5,7 @@ import { ProcessStatusGreen } from "../../process-status-green"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { NavigationHeader } from "@/components/navigation-header"
+import { interests } from "@/app/(main)/exchange-diary/interest-bottom-sheet"
 
 const interestOptions = [
   "다이어트",
@@ -42,8 +43,8 @@ export default function MultiSelectPage({
       <ProcessStatusGreen />
       <h2 className="text-center">{pageNum === 1 && `관심사를 알려주세요`}</h2>
       <div className="flex flex-wrap mt-24 mx-6 ">
-        {Array.from({ length: interestOptions.length }).map((_, index) => (
-          <Tag key={`t${index}`}>{interestOptions[index]}</Tag>
+        {Array.from({ length: interests.length }).map((_, index) => (
+          <Tag key={`t${index}`}>{interests[index]}</Tag>
         ))}
       </div>
       <Button
