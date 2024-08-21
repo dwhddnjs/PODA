@@ -12,8 +12,7 @@ import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
 import { EmotionItem } from "../write-diary/emotion-item"
-import { useAddPost } from "@/hooks/mutation/post"
-import { usePatchPost } from "@/hooks/mutation/patchPost"
+import { useAddPost, usePatchPost } from "@/hooks/mutation/post"
 
 import {
   Bed,
@@ -158,9 +157,6 @@ export default function WriteDiary2Page() {
     isEditMode,
     _id, // 일기 1개 ID
     moodVal,
-    createdAt,
-    updatedAt,
-    user,
     noteContentVal,
     noteTitleVal,
     selectedTags,
@@ -230,19 +226,21 @@ export default function WriteDiary2Page() {
   const handleInpVal = (e: ChangeEvent<HTMLInputElement>) => {
     seter(e.target.value, "noteContentVal")
   }
-  const formatDate = (date: Date) => {
-    return format(date, "yyyy.MM.dd HH:mm:ss")
-  }
+
+  // 로컬스토리지에서 불러온 userId값을 바로 requestbody에 넣어주면 안들어감
+  const [userId, setUserId] = useState("")
+  const [idVal, setIdVal] = useState(_id)
+  const id = localStorage.getItem("userId")
+  useEffect(() => {
+    setUserId(id!)
+    setIdVal(_id)
+  }, [])
   const { mutate: addMutate } = useAddPost()
-  const { mutate: patchMutate } = usePatchPost(_id.toString())
+  const { mutate: patchMutate } = usePatchPost(idVal)
 
   const handleEdit = () => {
     const requestBody = {
       _id: _id, // 일기 1개(Diary)의 ID
-      type: "seller",
-      user: user, // 일기 작성자 정보
-      createdAt: createdAt,
-      updatedAt: formatDate(new Date()),
       extra: {
         title: noteTitleVal,
         content: noteContentVal,
@@ -262,9 +260,8 @@ export default function WriteDiary2Page() {
   }
   const handleSave = () => {
     const requestBody = {
-      user: user,
-      createdAt: formatDate(new Date()),
-      updatedAt: formatDate(new Date()),
+      type: "mydiary",
+      product_id: parseInt(userId),
       extra: {
         title: noteTitleVal,
         content: noteContentVal,
