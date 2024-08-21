@@ -11,7 +11,7 @@ import React from "react"
 
 export default function LoadDiaryPage() {
   const { selectDiary, setSelectDiary, setDate } = useSelectedDiary()
-  const { data, isPending } = usePostsDiarys()
+  const { data, isPending } = usePostsDiarys("seller")
 
   const pathname = usePathname()
 
