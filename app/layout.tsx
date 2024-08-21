@@ -78,28 +78,112 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   viewport:
     "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
-  icons: [
-    {
-      url: "/assets/icon-192x192.png",
-      sizes: "192x192",
-      rel: "icon",
-    },
-    {
-      url: "/assets/icon-256x256.png",
-      sizes: "256x256",
-      rel: "icon",
-    },
-    {
-      url: "/assets/icon-384x384.png",
-      sizes: "384x384",
-      rel: "icon",
-    },
-    {
-      url: "/assets/icon-512x512.png",
-      sizes: "512x512",
-      rel: "icon",
-    },
-  ],
+  icons: {
+    other: [
+      {
+        url: "/assets/main-logo-96x96.png",
+        sizes: "96x96",
+        rel: "icon",
+      },
+      {
+        url: "/assets/main-logo-144x144.png",
+        sizes: "144x144",
+        rel: "icon",
+      },
+      {
+        url: "/assets/main-logo-192x192.png",
+        sizes: "192x192",
+        rel: "icon",
+      },
+      {
+        url: "/assets/main-logo-256x256.png",
+        sizes: "256x256",
+        rel: "icon",
+      },
+      {
+        url: "/assets/main-logo-384x384.png",
+        sizes: "384x384",
+        rel: "icon",
+      },
+      {
+        url: "/assets/main-logo-512x512.png",
+        sizes: "512x512",
+        rel: "icon",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "96x96",
+        url: "/assets/main-logo-96x96.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "144x144",
+        url: "/assets/main-logo-144x144.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "192x192",
+        url: "/assets/main-logo-192x192.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "256x256",
+        url: "/assets/main-logo-256x256.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "384x384",
+        url: "/assets/main-logo-384x384.png",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "512x512",
+        url: "/assets/main-logo-512x512.png",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)",
+      },
+      {
+        rel: "apple-touch-startup-image",
+        url: "/assets/main-logo-manifest.png",
+        media:
+          "(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
