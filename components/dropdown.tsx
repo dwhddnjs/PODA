@@ -49,7 +49,7 @@ export function Dropdown({ diaryData }: DropDownProps) {
       }
     }
 
-    router.push("/mydiary/write-diary2")
+    router.push("/mydiary/write-diary")
   }
   const handleDelete = () => {
     deleteMutate()
