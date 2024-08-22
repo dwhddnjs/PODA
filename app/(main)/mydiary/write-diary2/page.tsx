@@ -228,11 +228,9 @@ export default function WriteDiary2Page() {
   }
 
   // 로컬스토리지에서 불러온 userId값을 바로 requestbody에 넣어주면 안들어감
-  const [userId, setUserId] = useState("")
   const [idVal, setIdVal] = useState(_id)
   const id = localStorage.getItem("userId")
   useEffect(() => {
-    setUserId(id!)
     setIdVal(_id)
   }, [])
   const { mutate: addMutate } = useAddPost()
@@ -261,7 +259,7 @@ export default function WriteDiary2Page() {
   const handleSave = () => {
     const requestBody = {
       type: "mydiary",
-      product_id: parseInt(userId),
+      // product_id: parseInt(userId),
       extra: {
         title: noteTitleVal,
         content: noteContentVal,
