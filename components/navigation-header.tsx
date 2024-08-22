@@ -14,6 +14,7 @@ interface NavigationHeaderProps {
   isSave?: boolean
   isDate?: boolean
   isSearch?: boolean
+  isEditMode?: boolean
 }
 
 const handleBtnClick = () => {}
@@ -23,13 +24,23 @@ export const NavigationHeader = ({
   isSave,
   isDate,
   isSearch,
+  isEditMode,
 }: NavigationHeaderProps) => {
+  const { seter } = useDiaryValues()
   const { moodVal } = useDiaryValues()
-  const { back } = useRouter()
+  const { back, push } = useRouter()
+  const handleBack = () => {
+    if (isEditMode) {
+      seter(false, "isEditMode")
+      push("/mydiary")
+    } else {
+      back()
+    }
+  }
   return (
     <div className="w-full flex justify-between items-center py-[12px] ">
       <div className="flex">
-        <Button variant="ghost" onClick={back}>
+        <Button variant="ghost" onClick={handleBack}>
           <ChevronLeft className="text-primary" width={32} height={32} />
         </Button>
         {isMood && (

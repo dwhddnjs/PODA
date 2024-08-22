@@ -183,11 +183,7 @@ export default function WriteDiaryPage() {
   }, [selectedTags])
 
   const handleEmotionClick = () => {
-    if (step === 1) {
-      setStep(2)
-    } else {
-      setStep(1)
-    }
+    setStep(2)
   }
 
   const handleTagClick = (id: string) => {
@@ -271,7 +267,6 @@ export default function WriteDiaryPage() {
   const handleSave = () => {
     const requestBody = {
       type: "mydiary",
-      // product_id: parseInt(userId),
       extra: {
         title: noteTitleVal,
         content: noteContentVal,
@@ -291,6 +286,7 @@ export default function WriteDiaryPage() {
     }
   }
 
+  console.log("isEditMode@@@@@@@@@@@@@@@@@@@@@@@@", isEditMode)
   return (
     <>
       {step === 1 && !isEditMode && (
@@ -313,7 +309,7 @@ export default function WriteDiaryPage() {
       )}
       {step === 2 && (
         <>
-          <NavigationHeader isMood={true} isSave={true} />
+          <NavigationHeader isEditMode={true} isMood={true} isSave={true} />
           <div className="text-primary px-6">
             {isEditMode && (
               <div className="flex justify-between gap-2 my-6">
