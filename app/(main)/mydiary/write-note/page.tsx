@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 import React, { ChangeEvent } from "react"
 
 export default function WriteNotePage() {
-  const router = useRouter()
+  const { back } = useRouter()
   const { noteContentVal, noteTitleVal, seter } = useDiaryValues()
 
   const handleContentVal = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,7 +22,7 @@ export default function WriteNotePage() {
   const handleSaveBtn = () => {
     seter(noteTitleVal, "noteTitleVal")
     seter(noteContentVal, "noteContentVal")
-    router.push("./write-diary2")
+    back()
   }
 
   return (

@@ -49,6 +49,7 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
   },
   resetValues: () => {
     set({
+      isEditMode: false,
       _id: 0,
       createdAt: "",
       updatedAt: "",

@@ -7,7 +7,6 @@ import { getCurrentFormattedDate } from "@/lib/function"
 import { useAddPost, usePatchPost } from "@/hooks/mutation/post"
 import { useRouter } from "next/navigation"
 import { useDiaryValues } from "@/hooks/store/use-diary"
-import { cn } from "@/lib/utils"
 
 import {
   Bed,
@@ -54,10 +53,14 @@ import { MdPregnantWoman } from "react-icons/md"
 import { BiSolidTired } from "react-icons/bi"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Tabs } from "./tabs"
+import { TabDatas } from "./tab-datas"
+import { DataPreview } from "./data-preview"
+import { Note } from "./note"
+import { useUser } from "@/hooks/use-user"
 
 type TagDetail = {
-  id: string
+  key: string
   icon: React.ReactElement
   text: string
 }
@@ -70,84 +73,86 @@ type TagData = {
 }
 const datas: TagData = {
   날씨: {
-    sun: { id: "sun", icon: <Sun />, text: "맑음" },
-    cloud: { id: "cloud", icon: <Cloudy />, text: "흐림" },
-    rain: { id: "rain", icon: <CloudRain />, text: "비" },
-    snow: { id: "snow", icon: <Snowflake />, text: "눈" },
-    hot: { id: "hot", icon: <ThermometerSun />, text: "무더위" },
-    wind: { id: "wind", icon: <Wind />, text: "바람" },
-    sweat: { id: "sweat", icon: <Droplets />, text: "습함" },
-    storm: { id: "storm", icon: <CloudLightning />, text: "폭풍" },
+    sun: { key: "sun", icon: <Sun />, text: "맑음" },
+    cloud: { key: "cloud", icon: <Cloudy />, text: "흐림" },
+    rain: { key: "rain", icon: <CloudRain />, text: "비" },
+    snow: { key: "snow", icon: <Snowflake />, text: "눈" },
+    hot: { key: "hot", icon: <ThermometerSun />, text: "무더위" },
+    wind: { key: "wind", icon: <Wind />, text: "바람" },
+    sweat: { key: "sweat", icon: <Droplets />, text: "습함" },
+    storm: { key: "storm", icon: <CloudLightning />, text: "폭풍" },
   },
   관계: {
-    friend: { id: "friend", icon: <Users />, text: "친구" },
-    colleague: { id: "colleague", icon: <Building2 />, text: "회사동료" },
-    couple: { id: "couple", icon: <Heart />, text: "연인" },
-    family: { id: "family", icon: <MdFamilyRestroom />, text: "가족" },
+    friend: { key: "friend", icon: <Users />, text: "친구" },
+    colleague: { key: "colleague", icon: <Building2 />, text: "회사동료" },
+    couple: { key: "couple", icon: <Heart />, text: "연인" },
+    family: { key: "family", icon: <MdFamilyRestroom />, text: "가족" },
   },
   활동: {
-    tv: { id: "tv", icon: <Tv />, text: "TV 시청" },
-    reading: { id: "reading", icon: <Book />, text: "독서" },
-    game: { id: "game", icon: <Joystick />, text: "게임" },
-    travel: { id: "travel", icon: <Plane />, text: "여행" },
-    drive: { id: "drive", icon: <Car />, text: "드라이브" },
-    eatout: { id: "eatout", icon: <Utensils />, text: "외식" },
-    // youtube: { id: "youtube", icon: <Youtube />, text: "유튜브" },
-    rest: { id: "rest", icon: <Bed />, text: "휴식" },
-    workout: { id: "workout", icon: <Dumbbell />, text: "운동" },
-    drink: { id: "drink", icon: <Milk />, text: "물 마시기" },
-    music: { id: "music", icon: <Headset />, text: "음악 감상" },
-    hospital: { id: "hospital", icon: <Hospital />, text: "병원" },
-    sing: { id: "sing", icon: <MicVocal />, text: "노래" },
-    hair: { id: "hair", icon: <Scissors />, text: "미용실" },
-    running: { id: "running", icon: <FaRunning />, text: "러닝" },
+    tv: { key: "tv", icon: <Tv />, text: "TV 시청" },
+    reading: { key: "reading", icon: <Book />, text: "독서" },
+    game: { key: "game", icon: <Joystick />, text: "게임" },
+    travel: { key: "travel", icon: <Plane />, text: "여행" },
+    drive: { key: "drive", icon: <Car />, text: "드라이브" },
+    eatout: { key: "eatout", icon: <Utensils />, text: "외식" },
+    // youtube: { key: "youtube", icon: <Youtube />, text: "유튜브" },
+    rest: { key: "rest", icon: <Bed />, text: "휴식" },
+    workout: { key: "workout", icon: <Dumbbell />, text: "운동" },
+    drink: { key: "drink", icon: <Milk />, text: "물 마시기" },
+    music: { key: "music", icon: <Headset />, text: "음악 감상" },
+    hospital: { key: "hospital", icon: <Hospital />, text: "병원" },
+    sing: { key: "sing", icon: <MicVocal />, text: "노래" },
+    hair: { key: "hair", icon: <Scissors />, text: "미용실" },
+    running: { key: "running", icon: <FaRunning />, text: "러닝" },
   },
   감정: {
-    anxious: { id: "anxious", icon: <Frown />, text: "불안함" },
-    tired: { id: "tired", icon: <BedSingle />, text: "지침" },
+    anxious: { key: "anxious", icon: <Frown />, text: "불안함" },
+    tired: { key: "tired", icon: <BedSingle />, text: "지침" },
     thankful: {
-      id: "thankful",
+      key: "thankful",
       icon: <PiHandsPrayingDuotone />,
       text: "감사함",
     },
-    comfort: { id: "comfort", icon: <FaUmbrellaBeach />, text: "편안함" },
-    angry: { id: "angry", icon: <MdVolcano />, text: "화남" },
+    comfort: { key: "comfort", icon: <FaUmbrellaBeach />, text: "편안함" },
+    angry: { key: "angry", icon: <MdVolcano />, text: "화남" },
   },
   컨디션: {
-    fine: { id: "fine", icon: <Smile />, text: "양호함" },
-    fresh: { id: "fresh", icon: <Laugh />, text: "상쾌함" },
+    fine: { key: "fine", icon: <Smile />, text: "양호함" },
+    fresh: { key: "fresh", icon: <Laugh />, text: "상쾌함" },
     musclepain: {
-      id: "musclepain",
+      key: "musclepain",
       icon: <BicepsFlexed />,
       text: "근육통",
     },
     exhaustion: {
-      id: "exhaustion",
+      key: "exhaustion",
       icon: <BiSolidTired />,
       text: "피로함",
     },
     backache: {
-      id: "backache",
+      key: "backache",
       icon: <GiBackPain />,
       text: "허리 아픔",
     },
-    cramps: { id: "cramps", icon: <IoMdWoman />, text: "생리통" },
+    cramps: { key: "cramps", icon: <IoMdWoman />, text: "생리통" },
     indigestion: {
-      id: "indigestion",
+      key: "indigestion",
       icon: <GiStomach />,
       text: "소화 불량",
     },
     pregnant: {
-      id: "pregnant",
+      key: "pregnant",
       icon: <MdPregnantWoman />,
       text: "임신",
     },
-    flu: { id: "flu", icon: <MdSick />, text: "감기" },
+    flu: { key: "flu", icon: <MdSick />, text: "감기" },
   },
 }
 const tabData = ["날씨", "관계", "활동", "감정", "컨디션"]
 
 export default function WriteDiaryPage() {
+  const userData = useUser()
+  const userId = userData?.providerAccountId
   const {
     isEditMode,
     _id, // 일기 1개 ID
@@ -158,20 +163,19 @@ export default function WriteDiaryPage() {
     seter,
     resetValues,
   } = useDiaryValues()
+  const { push } = useRouter()
   const [step, setStep] = useState(isEditMode ? 2 : 1)
-  const [idVal, setIdVal] = useState(_id)
-  const router = useRouter()
+  const [idVal, setIdVal] = useState(userId)
   const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
   const currentTabDatas = Object.values(
     datas[tabData[activeTabIndex] as keyof TagData]
   )
   const { mutate: addMutate } = useAddPost()
-  const { mutate: patchMutate } = usePatchPost(idVal)
-
+  const { mutate: patchMutate } = usePatchPost(Number(idVal))
   useEffect(() => {
-    setIdVal(_id)
-  }, [])
+    setIdVal(userId)
+  }, [userId])
 
   // selectedTag(전역변수)값이 있다면, 상황들 초기값에도 활성화시켜주기
   useEffect(() => {
@@ -185,45 +189,44 @@ export default function WriteDiaryPage() {
   const handleEmotionClick = () => {
     setStep(2)
   }
-
-  const handleTagClick = (id: string) => {
+  const handleTagClick = (key: string) => {
     const currentTab = tabData[activeTabIndex]
-    const currentTag: any = Object.values(
-      datas[currentTab as keyof TagData]
-    ).find((tag: any) => tag.id === id)
+    const currentTag = Object.values(datas[currentTab as keyof TagData]).find(
+      (tag) => tag.key === key
+    )
+    if (!currentTag) return
 
-    // 선택한 태그의 id로 상태 확인
-    const isTagSelected = selectedTags?.some((tag) => tag === currentTag?.id)
+    // 선택한 태그의 key로 상태 확인
+    const isTagSelected = selectedTags?.some((tag) => tag === currentTag?.key)
     if (isTagSelected) {
       seter(
-        selectedTags?.filter((tag) => tag !== currentTag?.id),
+        selectedTags?.filter((tag) => tag !== currentTag?.key),
         "selectedTags"
       )
       setActiveTags((prev) => ({
         ...prev,
-        [id]: false,
+        [key]: false,
       }))
     } else {
       if (selectedTags) {
-        seter([...selectedTags, currentTag!.id], "selectedTags")
+        seter([...selectedTags, currentTag!.key], "selectedTags")
       }
       setActiveTags((prev) => ({
         ...prev,
-        [id]: true,
+        [key]: true,
       }))
     }
-    console.log(selectedTags)
   }
   // 미리보기 박스에서 태그 클릭 시 해당 태그 제거
-  const handlePreviewTagClick = (id: string) => {
+  const handlePreviewTagClick = (key: string) => {
     if (selectedTags) {
       seter(
-        selectedTags.filter((tag) => tag !== id), // 클릭한 태그를 제거
+        selectedTags.filter((tag) => tag !== key), // 클릭한 태그를 제거
         "selectedTags"
       )
       setActiveTags((prev) => ({
         ...prev,
-        [id]: false, // 비활성화
+        [key]: false, // 비활성화
       }))
     }
   }
@@ -243,7 +246,6 @@ export default function WriteDiaryPage() {
   const handleInpVal = (e: ChangeEvent<HTMLInputElement>) => {
     seter(e.target.value, "noteContentVal")
   }
-
   const handleEdit = () => {
     const requestBody = {
       _id: _id, // 일기 1개(Diary)의 ID
@@ -260,7 +262,7 @@ export default function WriteDiaryPage() {
     } catch (error) {
       console.log(error)
     } finally {
-      router.push("/mydiary")
+      push("/mydiary")
       resetValues()
     }
   }
@@ -281,12 +283,11 @@ export default function WriteDiaryPage() {
     } catch (error) {
       console.log(error)
     } finally {
-      router.push("/mydiary")
+      push("/mydiary")
       resetValues()
     }
   }
 
-  console.log("isEditMode@@@@@@@@@@@@@@@@@@@@@@@@", isEditMode)
   return (
     <>
       {step === 1 && !isEditMode && (
@@ -325,125 +326,50 @@ export default function WriteDiaryPage() {
               />
               <h2>무엇을 하고 있었나요?</h2>
             </div>
+            {/* 탭*/}
             <div className="flex justify-between bg-backgroundLighter px-2 py-[6px] rounded-full text-[#5b5b5b] mb-[10px]">
               <ChevronLeft
                 className="text-primary"
                 onClick={handleChevronLeftClick}
               />
-              {tabData.map((tab, index) => (
-                <div
-                  key={tab}
-                  onClick={() => handleTabClick(tab)}
-                  className={cn({
-                    "text-primary font-bold": activeTabIndex === index,
-                  })}>
-                  {tab}
-                </div>
-              ))}
+              <Tabs
+                tabData={tabData}
+                handleTabClick={handleTabClick}
+                activeTabIndex={activeTabIndex}
+              />
               <ChevronRight
                 className="text-primary"
                 onClick={handleChevronRightClick}
               />
             </div>
 
-            {/* 상황들 */}
+            {/* 현재 탭 데이터들 */}
             <div className="flex flex-wrap bg-backgroundLighter w-full rounded-[6px] mb-4 p-6 gap-2">
-              {currentTabDatas &&
-                currentTabDatas.map((tagData) => (
-                  <div
-                    key={tagData.id}
-                    className="flex flex-col flex-wrap items-center gap-1"
-                    onClick={() => handleTagClick(tagData.id)}>
-                    <div
-                      className={cn(
-                        "p-4 rounded-full",
-                        activeTags[tagData.id || "sun"]
-                          ? "text-primary bg-mainColor"
-                          : "text-mainColor bg-[#272727]"
-                      )}>
-                      {React.cloneElement(tagData.icon as React.ReactElement, {
-                        size: 16,
-                      })}
-                    </div>
-                    <span className="text-secondary text-xs">
-                      {tagData.text}
-                    </span>
-                  </div>
-                ))}
+              <TabDatas
+                currentTabDatas={currentTabDatas}
+                handleTagClick={handleTagClick}
+                activeTags={activeTags}
+              />
             </div>
 
             {/* 선택한 상황들 미리보여주는 박스 */}
             <div className="flex flex-wrap bg-backgroundLighter w-full rounded-[6px] mb-4 p-6 gap-2">
-              {selectedTags &&
-                selectedTags.map((tagId) => {
-                  const currentTag = Object.values(datas)
-                    .flatMap((tabData) => Object.values(tabData))
-                    .find((tag) => tag.id === tagId) as TagDetail
-
-                  return (
-                    <div
-                      key={currentTag.id}
-                      className="flex flex-col flex-wrap items-center gap-1"
-                      onClick={() => handlePreviewTagClick(currentTag.id)}>
-                      <div className="p-4 rounded-full text-primary bg-mainColor">
-                        {React.cloneElement(
-                          currentTag.icon as React.ReactElement,
-                          {
-                            size: 16,
-                          }
-                        )}
-                      </div>
-                      <span className="text-secondary text-xs">
-                        {currentTag.text}
-                      </span>
-                    </div>
-                  )
-                })}
+              {selectedTags && (
+                <DataPreview
+                  selectedTags={selectedTags}
+                  handlePreviewTagClick={handlePreviewTagClick}
+                  datas={datas}
+                  tabData={tabData}
+                />
+              )}
             </div>
             {/*노트 */}
             <div className="mb-10">
-              <div className="flex justify-between items-center mb-2">
-                <div className="flex gap-2">
-                  <Image
-                    src={"/assets/svg/note.svg"}
-                    width={32}
-                    height={32}
-                    alt="노트 이미지"
-                  />
-                  <h2>노트</h2>
-                </div>
-                <Button
-                  variant="ghost"
-                  className="text-mainColor font-medium"
-                  onClick={() => {
-                    router.push("./write-note")
-                  }}>
-                  전체노트 열기
-                </Button>
-              </div>
-              <div>
-                {noteTitleVal ? (
-                  <div className="">
-                    <h3
-                      className="mb-2"
-                      onClick={() => {
-                        router.push("./write-note")
-                      }}>
-                      {noteTitleVal || ""}
-                    </h3>
-                    <p className="bg-[#555555] border-none outline-none bg-inherit">
-                      {noteContentVal}
-                    </p>
-                  </div>
-                ) : (
-                  <Input
-                    className="bg-[#555555] border-none outline-none"
-                    onChange={handleInpVal}
-                    value={noteContentVal}
-                    placeholder="내용을 입력해주세요"
-                  />
-                )}
-              </div>
+              <Note
+                noteTitleVal={noteTitleVal}
+                noteContentVal={noteContentVal}
+                handleInpVal={handleInpVal}
+              />
             </div>
             {isEditMode ? (
               <Button
