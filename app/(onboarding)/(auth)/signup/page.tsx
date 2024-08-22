@@ -62,7 +62,7 @@ export default function SignupPage() {
 
   const onSubmit = async (formData: SignupForm) => {
     startTransition(async () => {
-      formData.type = "user"
+      formData.type = "seller"
       formData.extra = {
         age: userData.age,
         gender: userData.gender,

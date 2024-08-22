@@ -19,6 +19,7 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
 
   return (
     <div
+      key={diaryData._id}
       onClick={() => pathname === "/exchange-diary/load-diary" && back()}
       className="pt-[16px] first:pt-[28px] last:pb-[28px]">
       <div className="flex gap-3 px-6 relative">
