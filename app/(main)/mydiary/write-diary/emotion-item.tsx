@@ -1,12 +1,12 @@
 "use client"
 import Image from "next/image"
 import React from "react"
-import { useRouter } from "next/navigation"
 import { useDiaryValues } from "@/hooks/store/use-diary"
 import { cn } from "@/lib/utils"
 
 type EmotionItemProps = {
   isEditMode?: boolean
+  handleEmotionClick?: () => void
 }
 
 export type Emotion = {
@@ -47,12 +47,16 @@ const emotions: Emotion[] = [
     mood: "angry",
   },
 ]
-export const EmotionItem = ({ isEditMode }: EmotionItemProps) => {
+export const EmotionItem = ({
+  isEditMode,
+  handleEmotionClick,
+}: EmotionItemProps) => {
   const { seter, moodVal } = useDiaryValues()
-  const rotuer = useRouter()
+  // const rotuer = useRouter()
   const handleClick = (mood: string) => {
     seter(mood, "moodVal")
-    rotuer.push(`./write-diary2`)
+    handleEmotionClick && handleEmotionClick()
+    // rotuer.push(`./write-diary2`)
   }
   return (
     <>
