@@ -15,7 +15,7 @@ export default function ExchangeDiaryPage() {
   const { tabValue, setTabValue } = useExchangeDiaryTab()
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full relative ">
       <Tabs
         defaultValue={tabValue}
         value={tabValue}
@@ -23,7 +23,7 @@ export default function ExchangeDiaryPage() {
           setTabValue(value as "send" | "storage")
         }
         className="w-full h-full">
-        <TabsList className="w-full h-[48px] bg-backgroundLighter rounded-none ">
+        <TabsList className="w-full h-[48px] bg-backgroundLighter rounded-none fixed">
           <TabsTrigger className="w-full font-bold py-2.5" value="send">
             <p className="text-[#ffffff]">교환일기</p>
           </TabsTrigger>

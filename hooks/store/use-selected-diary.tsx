@@ -5,17 +5,20 @@ type SelectedDiaryTypes = {
   selectDiary?: DiaryTypes[]
   date?: string
   interest: string[]
+  product_id?: number
   setDate: (date: string) => void
   setSelectDiary: (diary: DiaryTypes[]) => void
   setInterest: (value: string) => void
   removeInterest: (value: string) => void
   onReset: () => void
+  setProductId: (value: number) => void
 }
 
 export const useSelectedDiary = create<SelectedDiaryTypes>((set) => ({
   selectDiary: undefined,
   date: undefined,
   interest: [],
+  product_id: undefined,
   setSelectDiary: (diary) => set({ selectDiary: diary }),
   setDate: (date) => set({ date: date }),
   setInterest: (value) => {
@@ -33,6 +36,12 @@ export const useSelectedDiary = create<SelectedDiaryTypes>((set) => ({
       selectDiary: undefined,
       date: undefined,
       interest: [],
+      product_id: undefined,
+    })
+  },
+  setProductId: (value) => {
+    set({
+      product_id: value,
     })
   },
 }))

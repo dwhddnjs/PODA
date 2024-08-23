@@ -5,7 +5,7 @@ import { deleteRequest, patchRequest, postRequest } from "@/lib/protocol"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export const useAddPost = () => {
-  const { mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, isError } = useMutation<any>({
     mutationFn: async (data: any) =>
       //! 실제 사용하는 title,tag,content는 extra아래에 있음!
       await postRequest(`${apiKeys.posts}`, data),

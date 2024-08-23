@@ -1,8 +1,9 @@
 // import { ExchangeDiary } from "@/app/(main)/_components/ExchangeDiary"
 // import { Diary } from "./my-diarys"
+import { TargetTypes } from "@/hooks/store/use-target"
 import { User } from "./user"
 
-export type DeliveryStatusTypes = "completed" | "delivery"
+export type DeliveryStatusTypes = "complete" | "delivery"
 
 type DeliveryDetail = {
   id: number
@@ -26,7 +27,7 @@ export type ExchangeDiary = {
 export type ExchangeDiaryTypes = {
   _id: number
   //   active: boolean
-  //   price: number
+  //   price: numberz
   //   quantity: number
   //   show: boolean
   content: string
@@ -36,6 +37,7 @@ export type ExchangeDiaryTypes = {
     title: string
     status: DeliveryStatusTypes
     interest: string[]
+    target: TargetTypes
   }
   seller: Pick<User, "_id" | "image" | "name">
   userId: number

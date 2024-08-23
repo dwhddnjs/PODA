@@ -1,3 +1,4 @@
+import { TargetTypes } from "@/hooks/store/use-target"
 import { User } from "./user"
 
 export type MoodType = {
@@ -42,6 +43,7 @@ export type DiaryTypes = {
     content?: string
     mood: keyof MoodType
     tag: string[]
+    target: TargetTypes
   }
 }
 

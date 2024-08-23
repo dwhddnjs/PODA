@@ -1,7 +1,8 @@
 export const apiKeys = {
   posts: "/posts",
-  user: "/users",
+  users: "/users",
   products: "/seller/products",
   replies: "/replies/products",
   reply: "/replies",
+  product: "/products",
 }
