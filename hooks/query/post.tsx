@@ -30,7 +30,6 @@ export const usePostsDiarys = (type: string, productId?: number) => {
       console.log("res: ", res)
       return sortDiarys(res.item)
     },
-    staleTime: 1000 * 3,
   })
 
   return {
@@ -47,7 +46,6 @@ export const usePostsDiary = (id: string) => {
     queryFn: async () => {
       return await fetcher(`/posts/${id}`)
     },
-    staleTime: 1000 * 3,
   })
 
   return {

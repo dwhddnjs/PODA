@@ -6,18 +6,36 @@ import { usePathname, useRouter } from "next/navigation"
 import { DiaryTypes } from "@/types/my-diarys"
 import { getImgByMood, getKoTime, getTxtByMood } from "@/lib/function"
 import { cn } from "@/lib/utils"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
+import { useExchangeDiaryTab } from "@/hooks/store/use-exchange-diary-tab"
 
 interface ExchangeDiaryProps {
   diaryDatas: DiaryTypes[]
 }
 
 export const ExchangeDiary = ({ diaryDatas }: ExchangeDiaryProps) => {
-  const { back } = useRouter()
+  const { back, replace } = useRouter()
   const pathname = usePathname()
+  const { product_id } = useSelectedDiary()
+  const { setTabValue } = useExchangeDiaryTab()
+
+  const handleReplaceSendTab = () => {
+    if (pathname === "/exchange-diary/load-diary" && product_id) {
+      setTabValue("send")
+      replace("/exchange-diary")
+      return
+    }
+
+    if (pathname === "/exchange-diary/load-diary") {
+      back()
+      return
+    }
+  }
 
   return (
     <div
-      onClick={() => pathname === "/exchange-diary/load-diary" && back()}
+      onClick={handleReplaceSendTab}
       className="bg-backgroundLighter flex rounded-lg w-full h-full">
       <div className="w-full">
         {diaryDatas?.map((diaryData, index) => (

@@ -4,9 +4,9 @@ import { apiKeys } from "@/lib/api-keys"
 import { fetcher } from "@/lib/protocol"
 import { useQuery } from "@tanstack/react-query"
 
-export const useUser = (id: string) => {
+export const useUsers = (id: string) => {
   const { data, isPending, error, refetch } = useQuery({
-    queryKey: [apiKeys.user, id],
+    queryKey: [apiKeys.users, id],
     queryFn: async () => {
       return await fetcher(`/users/${id}`)
     },

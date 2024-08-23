@@ -6,17 +6,61 @@ import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
 import Link from "next/link"
+import { useAddPost } from "@/hooks/mutation/post"
+import { useAddProduct } from "@/hooks/mutation/product"
+import { FullScreen } from "@/components/spinner"
+import { apiKeys } from "@/lib/api-keys"
+import { useTarget } from "@/hooks/store/use-target"
 
 export const SendDiaryTab = () => {
-  const { push } = useRouter()
+  const { push, replace } = useRouter()
   const { onOpen } = useInterestSheet()
-  const { selectDiary, date } = useSelectedDiary()
+  const { selectDiary, date, product_id } = useSelectedDiary()
+  const { isPending } = useAddProduct()
+  const { mutate, isPending: isLoading } = useAddPost()
+  const { target } = useTarget()
 
   const [isShowDiary, setIsShowDiary] = useState(false)
 
+  if (isPending || isLoading) {
+  }
+
+  const handleOnSubmit = async () => {
+    if (product_id && selectDiary && target) {
+      try {
+        await Promise.all(
+          selectDiary.map((diary) => {
+            return mutate({
+              type: "exchange-diary",
+              product_id,
+              private: true,
+              share: [target?._id],
+              extra: {
+                title: diary.extra.title,
+                content: diary.extra.content,
+                mood: diary.extra.mood,
+                tag: [...diary.extra.tag],
+                target: {
+                  _id: target._id,
+                  name: target.name,
+                  image: target.image,
+                },
+              },
+            } as any)
+          })
+        )
+        replace("/exchange-diary/delivery-success")
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      onOpen()
+    }
+  }
+
   return (
     <>
-      <div className="pt-[40px] w-full">
+      <div className="pt-[80px] w-full">
         <div
           onClick={() => setIsShowDiary(true)}
           className="w-full flex flex-col justify-center items-center space-y-3 ">
@@ -31,17 +75,19 @@ export const SendDiaryTab = () => {
       </div>
       <div className="w-full px-[48px] pt-[48px] space-y-3">
         <Button
-          onClick={onOpen}
+          onClick={handleOnSubmit}
+          disabled={isPending || isLoading}
           className="w-full font-black h-14 rounded-xl bg-mainColor text-black text-lg">
           배송 시작
         </Button>
         <Button
+          disabled={isPending || isLoading}
           onClick={() => push("/exchange-diary/load-diary")}
           className="w-full font-black h-14 border-2 border-mainColor rounded-xl bg-transparent text-mainColor text-lg">
           다시 포장
         </Button>
       </div>
-      <Button variant="ghost" className="text-mainColor">
+      <Button variant="link" className="text-mainColor " disabled={isPending}>
         <Link href={`/exchange-diary/preview/${selectDiary![0]._id}`}>
           포장한 일기 확인하러 가기
         </Link>

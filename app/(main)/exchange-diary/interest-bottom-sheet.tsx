@@ -11,13 +11,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useAddProduct } from "@/hooks/mutation/product"
-
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
-import { apiKeys } from "@/lib/api-keys"
-import { postRequest } from "@/lib/protocol"
-import { ApiResSuccess } from "@/types/api-response"
-import { Sun } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
@@ -33,7 +28,7 @@ export const InterestBottomSheet = () => {
   const handleSubmit = async () => {
     const requestBody = {
       price: 0,
-      quantity: 0,
+      quantity: 10,
       show: true,
       active: true,
       content: "I dont wanna write content cuz it freaking useless",
@@ -44,35 +39,19 @@ export const InterestBottomSheet = () => {
       },
     }
 
-    // const requestBody = {
-    //   type: "exchange-diary",
-    //   product_id: 1,
-    //   private: true,
-    //   share: [2],
-    //   title: "exchange-diary",
-    //   content: "I dont wanna write content cuz it freaking useless",
-    //   extra: {
-    //     title: selectDiary![0].extra.title,
-    //     content: selectDiary![0].extra.content,
-    //     mood: selectDiary![0].extra.mood,
-    //     tag: [...selectDiary![0].extra.tag],
-    //   },
-    // }
-
     if (!selectDiary) {
       return
     }
 
     try {
       const res = mutate(requestBody)
-      //   const res = await postRequest(`${apiKeys.posts}`, requestBody)
+
       console.log("res: ", res)
     } catch (error) {
       console.log(error)
     } finally {
       setOpen(false)
       push("/exchange-diary/delivery-success")
-      //   onReset()
     }
   }
 
@@ -91,7 +70,7 @@ export const InterestBottomSheet = () => {
         </DrawerHeader>
         <div className="w-full px-[12px] flex flex-wrap items-start justify-start">
           <Tag>다이어트</Tag>
-          <Tag>헬스</Tag>
+          <Tag>운동</Tag>
           <Tag>여행</Tag>
           <Tag>음식</Tag>
           <Tag>섹스</Tag>

@@ -78,7 +78,7 @@ export const getCurrentFormattedDate = () => {
 export const sortDiarys = (diarys: DiaryTypes[]) => {
   return diarys.reduce(
     (acc: Record<string, DiaryTypes[]>, item: DiaryTypes) => {
-      const date = getKoDate(item.createdAt) as string
+      const date = item.createdAt
       if (!acc[date]) {
         acc[date] = []
       }
