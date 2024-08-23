@@ -14,7 +14,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useDeletePost } from "@/hooks/mutation/deletePost"
+import { useDeletePost } from "@/hooks/mutation/post"
+
 import { useDiaryValues } from "@/hooks/store/use-diary"
 import { DiaryTypes } from "@/types/my-diarys"
 import { Ellipsis } from "lucide-react"
@@ -48,7 +49,7 @@ export function Dropdown({ diaryData }: DropDownProps) {
       }
     }
 
-    router.push("/mydiary/write-diary2")
+    router.push("/mydiary/write-diary")
   }
   const handleDelete = () => {
     deleteMutate()

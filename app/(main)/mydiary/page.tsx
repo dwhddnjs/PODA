@@ -3,20 +3,20 @@ import React from "react"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Diary } from "@/components/diary"
 import { BottomNavigation } from "@/components/bottom-navigation"
-import { usePostsDiarys } from "@/hooks/query/post"
+import { usePostsDiary, usePostsDiarys } from "@/hooks/query/post"
 import { DiaryTypes } from "@/types/my-diarys"
 import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
 
 export default function MydiaryPage() {
-  const { data } = usePostsDiarys()
-  // console.log(data)
+  const userId = Number(localStorage.getItem("userId"))
+  const { data } = usePostsDiarys("mydiary", userId)
 
   if (!data) {
     return null
   }
+
   const dates = Object.keys(data)
-  // console.log(dates)
 
   return (
     <>
@@ -24,7 +24,7 @@ export default function MydiaryPage() {
       {/* 날짜(2024-08-03) 개수만큼 반복 */}
 
       <div className="pb-28">
-        {data ? (
+        {dates.length ? (
           dates.map((dateKey: string) => {
             const datas = data[dateKey] || []
             return (
@@ -49,13 +49,14 @@ export default function MydiaryPage() {
             )
           })
         ) : (
-          <div className="flex justify-center mt-28">
+          <div className="flex flex-col justify-center items-center mt-28">
             <Image
               src={"/assets/no-diary.png"}
               width={160}
               height={160}
               alt="다이어리 없을때 이미지"
             />
+            <h2 className="mt-6 text-[#c4c4c4]">일기를 작성해주세요</h2>
           </div>
         )}
       </div>

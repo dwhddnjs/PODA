@@ -7,25 +7,41 @@ import { ApiResError, ApiResSuccess } from "@/types/api-response"
 import { DiaryTypes } from "@/types/my-diarys"
 import { useQuery } from "@tanstack/react-query"
 
-export const usePostsDiarys = (type: string, productId?: number) => {
-  const searchParams = productId
-    ? new URLSearchParams([
-        ["custom", JSON.stringify({ product_id: productId })],
-      ])
-    : null
+export const usePostsDiarys = (
+  type: string,
+  userId?: number,
+  productId?: number
+) => {
+  const searchParams = new URLSearchParams()
+  // const searchParams = productId
+  //   ? new URLSearchParams([
+  //       ["custom", JSON.stringify({ product_id: productId })],
+  //     ])
+  //   : null
 
-  console.log("searchParams: ", searchParams?.toString())
+  if (productId) {
+    searchParams.append("custom", JSON.stringify({ product_id: productId }))
+  }
+
+  if (userId) {
+    searchParams.append("custom", JSON.stringify({ "user._id": userId }))
+  }
+
+  console.log("searchParams: ", searchParams.toString())
 
   const { data, isPending, error, refetch } = useQuery<
     Record<string, DiaryTypes[]>
   >({
     queryKey: [apiKeys.posts],
     queryFn: async () => {
-      const res = productId
-        ? await fetcher(
-            `${apiKeys.posts}?type=${type}&${searchParams?.toString()}`
-          )
-        : await fetcher(`${apiKeys.posts}?type=${type}`)
+      // const res = productId
+      //   ? await fetcher(
+      //       `${apiKeys.posts}?type=${type}&${searchParams?.toString()}`
+      //     )
+      //   : await fetcher(`${apiKeys.posts}?type=${type}`)
+      const res = await fetcher(
+        `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
+      )
 
       console.log("res: ", res)
       return sortDiarys(res.item)

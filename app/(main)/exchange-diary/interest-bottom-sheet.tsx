@@ -16,6 +16,35 @@ import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
+export const interests: string[] = [
+  "가족",
+  "게임",
+  "경제",
+  "기획",
+  "독서",
+  "디자인",
+  "미용",
+  "박물관/미술관",
+  "반려 동물",
+  "축구",
+  "LGBTQ",
+  "역사",
+  "연애",
+  "UFC",
+  "음악",
+  "음식",
+  "언어",
+  "애니메이션",
+  "시",
+  "섹스",
+  "정치",
+  "철학",
+  "헬스",
+  "여행",
+  "농구",
+  "야구",
+]
+
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
   const { push } = useRouter()
@@ -69,24 +98,9 @@ export const InterestBottomSheet = () => {
           </div>
         </DrawerHeader>
         <div className="w-full px-[12px] flex flex-wrap items-start justify-start">
-          <Tag>다이어트</Tag>
-          <Tag>운동</Tag>
-          <Tag>여행</Tag>
-          <Tag>음식</Tag>
-          <Tag>섹스</Tag>
-          <Tag>언어</Tag>
-          <Tag>음악</Tag>
-          <Tag>영화</Tag>
-          <Tag>애니메이션</Tag>
-          <Tag>소설</Tag>
-          <Tag>시</Tag>
-          <Tag>정치</Tag>
-          <Tag>경제</Tag>
-          <Tag>디자인</Tag>
-          <Tag>프로그래밍</Tag>
-          <Tag>기획</Tag>
-          <Tag>육아</Tag>
-          <Tag>연애</Tag>
+          {interests.map((interest) => (
+            <Tag key={interest}>{interest}</Tag>
+          ))}
         </div>
         <DrawerFooter>
           {pathname === "/mypage" ? (
