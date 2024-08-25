@@ -2,6 +2,7 @@ import { create } from "zustand"
 
 type DiaryValue = {
   isEditMode?: boolean
+  step: number
   _id: number
   createdAt?: string
   updatedAt?: string
@@ -22,6 +23,7 @@ type DiaryValue = {
 }
 export const useDiaryValues = create<DiaryValue>((set) => ({
   isEditMode: false,
+  step: 1,
   _id: 0,
   createdAt: "",
   updatedAt: "",
@@ -38,10 +40,7 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
   seter: (value, type) => {
     if (type === "user") {
       set((state) => ({
-        user: {
-          ...state.user,
-          ...value, // value가 user 객체의 일부일 경우 병합
-        },
+        user: { ...state.user, ...value },
       }))
     } else {
       set({ [type]: value })
@@ -51,6 +50,7 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
     set({
       isEditMode: false,
       _id: 0,
+      step: 1,
       createdAt: "",
       updatedAt: "",
       user: {
@@ -64,47 +64,20 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
       noteContentVal: "",
     })
   },
-
-  // cameraInput: "",
-  // uploadImages: [],
-
-  // setCameraInput: (value) => set({ cameraInput: value }),
-  // setUploadImages: (images) =>
-  //   set((state) => ({ uploadImages: [...state.uploadImages!, ...images] })),
-
-  // setSelectedTags: (tags) => set({ selectedTags: tags }),
-  // setNoteTitleVal: (value) => set({ noteTitleVal: value }),
-  // setNoteContentVal: (value) => set({ noteContentVal: value }),
-  // if (type === "selectedTags") {
-  //   set((state) => ({ selectedTags: [...state.selectedTags!, value] }))
-  // }
-  // else if (type === "uploadImages") {
-  //   set((state) => ({ uploadImages: [...state.uploadImages!, ...value] }))}
 }))
 
-// type EditDiaryData = {
-//   mood: string
-//   tag?: string[]
-//   title?: string
-//   content?: string
+// cameraInput: "",
+// uploadImages: [],
 
-//   // setMood: (value: string) => void
-//   // setTag: (value: string[]) => void
-//   // setTitle: (value: string) => void
-//   // setContent: (value: string) => void
+// setCameraInput: (value) => set({ cameraInput: value }),
+// setUploadImages: (images) =>
+//   set((state) => ({ uploadImages: [...state.uploadImages!, ...images] })),
 
-//   seter: (value: string | string[], type: keyof EditDiaryData) => void
+// setSelectedTags: (tags) => set({ selectedTags: tags }),
+// setNoteTitleVal: (value) => set({ noteTitleVal: value }),
+// setNoteContentVal: (value) => set({ noteContentVal: value }),
+// if (type === "selectedTags") {
+//   set((state) => ({ selectedTags: [...state.selectedTags!, value] }))
 // }
-// export const useEditDiaryValues = create<EditDiaryData>((set) => ({
-//   mood: "",
-//   tag: [],
-//   title: "",
-//   content: "",
-//   seter: (value, type) => {
-//     set({ [type]: value })
-//   },
-//   // setMood: (value) => set({ mood: value }),
-//   // setTag: (value) => set({ tag: value }),
-//   // setTitle: (value) => set({ title: value }),
-//   // setContent: (value) => set({ content: value }),
-// }))
+// else if (type === "uploadImages") {
+//   set((state) => ({ uploadImages: [...state.uploadImages!, ...value] }))}

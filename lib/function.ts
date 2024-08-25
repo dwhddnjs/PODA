@@ -100,3 +100,30 @@ export const sortDiarys = (diarys: DiaryTypes[]) => {
     {}
   )
 }
+
+export const sortMyDiarys = (diarys: DiaryTypes[]) => {
+  return diarys.reduce(
+    (acc: Record<string, DiaryTypes[]>, item: DiaryTypes) => {
+      const date = item.createdAt
+      const dateOnly = date.split(" ")[0]
+      if (!acc[dateOnly]) {
+        acc[dateOnly] = []
+      }
+      acc[dateOnly].push({
+        _id: item._id,
+        type: item.type,
+        user: {
+          _id: item.user._id,
+          name: item.user.name,
+          image: item.user.image,
+        },
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        mainImages: item.mainImages,
+        extra: item.extra,
+      })
+      return acc
+    },
+    {}
+  )
+}

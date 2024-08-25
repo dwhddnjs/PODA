@@ -38,7 +38,7 @@ export const BottomNavigation = () => {
       title: "교환일기",
     },
     {
-      id: 1,
+      id: 4,
       url: "/mypage",
       icon: (
         <CircleUserRound

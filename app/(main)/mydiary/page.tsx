@@ -1,35 +1,45 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Diary } from "@/components/diary"
 import { BottomNavigation } from "@/components/bottom-navigation"
-import { usePostsDiary, usePostsDiarys } from "@/hooks/query/post"
+import { usePostsDiarys, usePostsMyDiarys } from "@/hooks/query/post"
 import { DiaryTypes } from "@/types/my-diarys"
 import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
+import { useUser } from "@/hooks/use-user"
+import { format, parse } from "date-fns"
+import { ko } from "date-fns/locale"
 
 export default function MydiaryPage() {
-  const userId = Number(localStorage.getItem("userId"))
-  const { data } = usePostsDiarys("mydiary", userId)
+  const userData = useUser()
+  const userId = userData?.providerAccountId
+  const { data, refetch } = usePostsMyDiarys("mydiary", Number(userId))
 
-  if (!data) {
-    return null
+  useEffect(() => {
+    if (userId) {
+      refetch()
+    }
+  }, [userId, refetch])
+
+  const dates = data && Object.keys(data)
+
+  const convertTime = (inputDate: string) => {
+    const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
+    return format(parsedDate, "M월 d일 EEEE", { locale: ko })
   }
-
-  const dates = Object.keys(data)
 
   return (
     <>
       <NavigationHeader isDate={true} isSearch={true} />
       {/* 날짜(2024-08-03) 개수만큼 반복 */}
-
-      <div className="pb-28">
-        {dates.length ? (
+      <div className="pt-16 pb-20">
+        {dates?.length ? (
           dates.map((dateKey: string) => {
-            const datas = data[dateKey] || []
+            const datas = data![dateKey] || []
             return (
               <div key={dateKey} className="m-6">
-                <h2 className="text-primary mb-1">{dateKey}</h2>
+                <h2 className="text-primary mb-1">{convertTime(dateKey)}</h2>
                 <div className="bg-backgroundLighter rounded-xl">
                   {
                     // 날짜별 일기 수 만큼 반복
