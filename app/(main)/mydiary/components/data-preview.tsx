@@ -1,4 +1,3 @@
-import { useDiaryValues } from "@/hooks/store/use-diary"
 import React from "react"
 
 type TagDetail = {

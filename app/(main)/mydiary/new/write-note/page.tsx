@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 import React, { ChangeEvent } from "react"
 
 export default function WriteNotePage() {
-  const { back } = useRouter()
+  const { back, push } = useRouter()
   const { noteContentVal, noteTitleVal, seter } = useDiaryValues()
 
   const handleContentVal = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,14 +22,14 @@ export default function WriteNotePage() {
   const handleSaveBtn = () => {
     seter(noteTitleVal, "noteTitleVal")
     seter(noteContentVal, "noteContentVal")
+    seter(2, "step")
     back()
   }
 
   return (
-    <div>
+    <div className="h-full">
       <NavigationHeader />
-
-      <div className="p-6">
+      <div className="h-full px-6 pt-16">
         <Input
           placeholder="제목 입력..."
           className="mb-2 outline-none border-none placeholder:text-3xl placeholder:text-primary placeholder:font-extrabold text-primary text-3xl font-extrabold"

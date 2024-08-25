@@ -32,6 +32,7 @@ export function Dropdown({ diaryData }: DropDownProps) {
 
   const handleEdit = () => {
     seter(true, "isEditMode")
+    seter(2, "step")
     if (diaryData) {
       seter(diaryData._id, "_id")
       seter(diaryData.createdAt, "createdAt")
@@ -49,7 +50,7 @@ export function Dropdown({ diaryData }: DropDownProps) {
       }
     }
 
-    router.push("/mydiary/write-diary")
+    router.push(`/mydiary/${diaryData?._id}/edit-diary`)
   }
   const handleDelete = () => {
     deleteMutate()

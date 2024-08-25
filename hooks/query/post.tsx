@@ -1,7 +1,7 @@
 "use client"
 
 import { apiKeys } from "@/lib/api-keys"
-import { sortDiarys } from "@/lib/function"
+import { sortDiarys, sortMyDiarys } from "@/lib/function"
 import { fetcher } from "@/lib/protocol"
 import { ApiResError, ApiResSuccess } from "@/types/api-response"
 import { DiaryTypes } from "@/types/my-diarys"
@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export const usePostsDiarys = (
   type: string,
-  userId?: number,
+  // userId?: number,
   productId?: number
 ) => {
   const searchParams = new URLSearchParams()
@@ -23,11 +23,9 @@ export const usePostsDiarys = (
     searchParams.append("custom", JSON.stringify({ product_id: productId }))
   }
 
-  if (userId) {
-    searchParams.append("custom", JSON.stringify({ "user._id": userId }))
-  }
-
-  console.log("searchParams: ", searchParams.toString())
+  // if (userId) {
+  //   searchParams.append("custom", JSON.stringify({ "user._id": userId }))
+  // }
 
   const { data, isPending, error, refetch } = useQuery<
     Record<string, DiaryTypes[]>
@@ -42,9 +40,30 @@ export const usePostsDiarys = (
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
-
-      console.log("res: ", res)
       return sortDiarys(res.item)
+    },
+  })
+
+  return {
+    data,
+    isPending,
+    error,
+    refetch,
+  }
+}
+
+export const usePostsMyDiarys = (type: string, userId: number) => {
+  const searchParams = new URLSearchParams()
+  searchParams.append("custom", JSON.stringify({ "user._id": userId }))
+  const { data, isPending, error, refetch } = useQuery<
+    Record<string, DiaryTypes[]>
+  >({
+    queryKey: [apiKeys.posts],
+    queryFn: async () => {
+      const res = await fetcher(
+        `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
+      )
+      return sortMyDiarys(res.item)
     },
   })
 
