@@ -1,5 +1,5 @@
 "use client"
-import { InterestBottomSheet } from "@/app/(main)/exchange-diary/interest-bottom-sheet"
+import { InterestBottomSheet } from "@/components/interest-bottom-sheet"
 import React, { useEffect, useState } from "react"
 
 export const SheetProvider = () => {
