@@ -32,7 +32,7 @@ export const Note = ({
           variant="ghost"
           className="text-mainColor font-medium"
           onClick={() => {
-            push("./write-note")
+            push(`./write-note`)
           }}>
           전체노트 열기
         </Button>

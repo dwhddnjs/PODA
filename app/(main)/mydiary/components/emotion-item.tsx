@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 
 type EmotionItemProps = {
   isEditMode?: boolean
-  handleEmotionClick?: () => void
 }
 
 export type Emotion = {
@@ -47,16 +46,11 @@ const emotions: Emotion[] = [
     mood: "angry",
   },
 ]
-export const EmotionItem = ({
-  isEditMode,
-  handleEmotionClick,
-}: EmotionItemProps) => {
+export const EmotionItem = ({ isEditMode }: EmotionItemProps) => {
   const { seter, moodVal } = useDiaryValues()
-  // const rotuer = useRouter()
   const handleClick = (mood: string) => {
     seter(mood, "moodVal")
-    handleEmotionClick && handleEmotionClick()
-    // rotuer.push(`./write-diary2`)
+    seter(2, "step")
   }
   return (
     <>

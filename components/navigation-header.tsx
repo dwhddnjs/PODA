@@ -6,7 +6,6 @@ import { ChevronLeft, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { useSelectedDiaryMood } from "@/hooks/store/use-seleceted-mood"
 import { useDiaryValues } from "@/hooks/store/use-diary"
 
 interface NavigationHeaderProps {
@@ -15,6 +14,7 @@ interface NavigationHeaderProps {
   isDate?: boolean
   isSearch?: boolean
   isEditMode?: boolean
+  isNew?: boolean
 }
 
 const handleBtnClick = () => {}
@@ -25,15 +25,23 @@ export const NavigationHeader = ({
   isDate,
   isSearch,
   isEditMode,
+  isNew,
 }: NavigationHeaderProps) => {
   const { seter } = useDiaryValues()
-  const { moodVal } = useDiaryValues()
+  const { moodVal, resetValues } = useDiaryValues()
   const { back, push } = useRouter()
+
   const handleBack = () => {
     if (isEditMode) {
       seter(false, "isEditMode")
-      push("/mydiary")
+      resetValues()
+      seter(1, "step")
+      back()
+    } else if (isNew) {
+      resetValues()
+      push("./write-diary")
     } else {
+      resetValues()
       back()
     }
   }
