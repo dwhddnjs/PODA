@@ -32,6 +32,7 @@ export interface SignupForm extends Pick<User, "name" | "email"> {
     gender: string | undefined
     region: string | undefined
     interest: string[] | undefined
+    isOnboarding?: boolean
   }
   password: string
   passwordCheck?: string

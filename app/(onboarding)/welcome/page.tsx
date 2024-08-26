@@ -1,13 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 export default function WelcomePage() {
-  const session = useSession()
-
   const router = useRouter()
 
   return (
@@ -20,11 +17,7 @@ export default function WelcomePage() {
         className="w-full"
       />
       <div className="p-6">
-        <h1 className={`mt-2`}>
-          환영합니다
-          <br />
-          {`${session.data?.user?.name ? session.data?.user?.name : ""}님!`}
-        </h1>
+        <h1 className={`mt-2`}>환영합니다! 🎉</h1>
         <p className="mt-2">
           당신의 이야기를 기록해 보세요
           <br />
