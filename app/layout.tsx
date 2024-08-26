@@ -279,7 +279,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AuthProvider>
             <FcmProvider>
-              <Toaster />
+              <Toaster position="top-center" />
               {children}
             </FcmProvider>
             <SheetProvider />

@@ -15,9 +15,8 @@ import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 
 export default function MyPagePage() {
   const user = useUser()
-  const { data, refetch } = useUserInfo(user?.providerAccountId as string)
+  const { data, refetch } = useUserInfo(user?._id as string)
   const { onOpen } = useInterestSheet()
-  console.log("data:@@@@@@@@ ", data)
 
   const mypageItems = [
     {
@@ -27,16 +26,14 @@ export default function MyPagePage() {
       value: data?.item?.extra?.pushNotification,
       onClick: async () => {
         if (!data.item.extra.pushNotification) {
-          const res = await patchRequest(
-            `${apiKeys.users}/${user?.providerAccountId}`,
-            { extra: { ...data.item.extra, pushNotification: true } }
-          )
+          const res = await patchRequest(`${apiKeys.users}/${user?._id}`, {
+            extra: { ...data.item.extra, pushNotification: true },
+          })
           console.log("res: ", res)
         } else {
-          const res = await patchRequest(
-            `${apiKeys.users}/${user?.providerAccountId}`,
-            { extra: { ...data.item.extra, pushNotification: false } }
-          )
+          const res = await patchRequest(`${apiKeys.users}/${user?._id}`, {
+            extra: { ...data.item.extra, pushNotification: false },
+          })
           console.log("res: ", res)
         }
         refetch()
