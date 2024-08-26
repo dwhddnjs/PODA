@@ -281,7 +281,7 @@ export default function RootLayout({
           <AuthProvider>
             <ReactQueryProvider>
               <FcmProvider>
-                <Toaster />
+                <Toaster position="top-center" />
                 {children}
               </FcmProvider>
               <SheetProvider />
