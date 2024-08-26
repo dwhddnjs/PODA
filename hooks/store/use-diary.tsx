@@ -13,6 +13,7 @@ type DiaryValue = {
     image: string
   }
   selectedTags?: string[]
+  activeTags: { [key: string]: boolean }
   noteTitleVal?: string
   noteContentVal?: string
 
@@ -33,6 +34,7 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
     image: "",
   },
   moodVal: "",
+  activeTags: {},
   selectedTags: [],
   noteTitleVal: "",
   noteContentVal: "",
@@ -41,6 +43,10 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
     if (type === "user") {
       set((state) => ({
         user: { ...state.user, ...value },
+      }))
+    } else if (type === "activeTags") {
+      set((state) => ({
+        activeTags: { ...state.activeTags, ...value },
       }))
     } else {
       set({ [type]: value })
@@ -59,6 +65,7 @@ export const useDiaryValues = create<DiaryValue>((set) => ({
         image: "",
       },
       moodVal: "",
+      activeTags: {},
       selectedTags: [],
       noteTitleVal: "",
       noteContentVal: "",

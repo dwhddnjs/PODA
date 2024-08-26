@@ -21,6 +21,7 @@ import { SignupForm } from "@/types/user"
 import { useTransition } from "react"
 import { FullScreen } from "@/components/spinner"
 import { useUserData } from "@/hooks/store/use-user-data"
+import { toast } from "sonner"
 
 const FormSchema = z
   .object({
@@ -76,7 +77,13 @@ export default function SignupPage() {
       const resData = await signup(formData)
 
       if (resData.ok) {
-        alert(`${resData.item.name}님, 회원가입을 환영합니다.`)
+        toast.success(`${resData.item.name}님 회원가입을 환영합니다`, {
+          style: {
+            backgroundColor: "#3e3e3e",
+            color: "white",
+            border: "none",
+          },
+        })
         router.push("/login")
       } else {
         if ("errors" in resData) {
@@ -87,7 +94,7 @@ export default function SignupPage() {
             }) => form.setError(error.path, { message: error.msg })
           )
         } else if (resData.message) {
-          alert(resData.message)
+          toast(resData.message)
         }
       }
     })

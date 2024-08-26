@@ -9,13 +9,13 @@ import { useUserInfo } from "@/hooks/query/user"
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data, status } = useSession()
-  console.log("data: ", data)
+  // console.log("data: ", data)
 
   useEffect(() => {
     if (data?.accessToken && status === "authenticated") {
       localStorage.setItem("accessToken", data.accessToken)
     }
-  }, [])
+  }, [data])
 
   return <>{children}</>
 }
