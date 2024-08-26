@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
@@ -11,6 +13,8 @@ import { useAddProduct } from "@/hooks/mutation/product"
 import { FullScreen } from "@/components/spinner"
 import { apiKeys } from "@/lib/api-keys"
 import { useTarget } from "@/hooks/store/use-target"
+import { MdAssuredWorkload } from "react-icons/md"
+import { useSendPush } from "@/hooks/use-send-push"
 
 export const SendDiaryTab = () => {
   const { push, replace } = useRouter()
@@ -19,11 +23,9 @@ export const SendDiaryTab = () => {
   const { isPending } = useAddProduct()
   const { mutate, isPending: isLoading } = useAddPost()
   const { target } = useTarget()
+  const trigger = useSendPush()
 
   const [isShowDiary, setIsShowDiary] = useState(false)
-
-  if (isPending || isLoading) {
-  }
 
   const handleOnSubmit = async () => {
     if (product_id && selectDiary && target) {
