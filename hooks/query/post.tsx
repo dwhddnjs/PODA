@@ -27,8 +27,6 @@ export const usePostsDiarys = (
     searchParams.append("custom", JSON.stringify({ "user._id": userId }))
   }
 
-  console.log("searchParams: ", searchParams.toString())
-
   const { data, isPending, error, refetch } = useQuery<
     Record<string, DiaryTypes[]>
   >({
@@ -42,8 +40,6 @@ export const usePostsDiarys = (
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
-
-      console.log("res: ", res)
       return sortDiarys(res.item)
     },
   })

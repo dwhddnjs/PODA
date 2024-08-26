@@ -278,7 +278,7 @@ export default function WriteDiaryPage() {
     }
 
     try {
-      const res = addMutate(requestBody)
+      const res = addMutate(requestBody as any)
       console.log("res: ", res)
     } catch (error) {
       console.log(error)

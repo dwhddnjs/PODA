@@ -6,13 +6,41 @@ import React from "react"
 import { Switch } from "@/components/ui/switch"
 import { SwitchItem } from "./switch-item"
 import { Footer } from "@/components/footer"
+import { useUserInfo } from "@/hooks/query/user"
+import { useUser } from "@/hooks/use-user"
+import { patchRequest } from "@/lib/protocol"
+import { apiKeys } from "@/lib/api-keys"
+import { signOut } from "next-auth/react"
+import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 
 export default function MyPagePage() {
+  const user = useUser()
+  const { data, refetch } = useUserInfo(user?.providerAccountId as string)
+  const { onOpen } = useInterestSheet()
+  console.log("data:@@@@@@@@ ", data)
+
   const mypageItems = [
     {
       id: 1,
       Icon: Bell,
       title: "푸시 알람 동의",
+      value: data?.item?.extra?.pushNotification,
+      onClick: async () => {
+        if (!data.item.extra.pushNotification) {
+          const res = await patchRequest(
+            `${apiKeys.users}/${user?.providerAccountId}`,
+            { extra: { ...data.item.extra, pushNotification: true } }
+          )
+          console.log("res: ", res)
+        } else {
+          const res = await patchRequest(
+            `${apiKeys.users}/${user?.providerAccountId}`,
+            { extra: { ...data.item.extra, pushNotification: false } }
+          )
+          console.log("res: ", res)
+        }
+        refetch()
+      },
     },
     {
       id: 2,
@@ -41,6 +69,8 @@ export default function MyPagePage() {
       key={item.id}
       title={item.title}
       Icon={item.Icon as LucideIcon}
+      value={item.value}
+      onClick={item.onClick}
     />
   ))
 
