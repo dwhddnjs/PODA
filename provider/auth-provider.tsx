@@ -1,6 +1,5 @@
 "use client"
 
-import { InterestBottomSheet } from "@/app/(main)/exchange-diary/interest-bottom-sheet"
 import React, { useEffect, useState } from "react"
 import { patchRequest } from "@/lib/protocol"
 import { apiKeys } from "@/lib/api-keys"

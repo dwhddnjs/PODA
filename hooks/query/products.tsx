@@ -20,14 +20,14 @@ export const useProductsDiarys = () => {
         [
           "custom",
           JSON.stringify({
-            "extra.target._id": user?.id,
+            "extra.target._id": user?._id,
           }),
         ],
       ])
       const data = await fetcher(
         `${apiKeys.product}?${searchParams.toString()}`
       )
-      const data2 = await fetcher(`${apiKeys.product}?seller_id=${user?.id}`)
+      const data2 = await fetcher(`${apiKeys.product}?seller_id=${user?._id}`)
       console.log("data2: ", data2)
       console.log("data: ", data)
 
