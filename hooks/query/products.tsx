@@ -8,9 +8,11 @@ import { ExchangeDiaryTypes } from "@/types/exchange-diary"
 import { DiaryTypes } from "@/types/my-diarys"
 import { useQuery } from "@tanstack/react-query"
 import { useUser } from "../use-user"
+import { useSession } from "next-auth/react"
 
 export const useProductsDiarys = () => {
-  const user = useUser()
+  const { data: userData } = useSession()
+
   const { data, isPending, error, refetch } = useQuery<
     ApiResSuccess<ExchangeDiaryTypes[]>
   >({
@@ -20,16 +22,18 @@ export const useProductsDiarys = () => {
         [
           "custom",
           JSON.stringify({
-            "extra.target._id": user?.id,
+            "extra.target._id": userData?.user?._id,
           }),
         ],
       ])
       const data = await fetcher(
         `${apiKeys.product}?${searchParams.toString()}`
       )
-      const data2 = await fetcher(`${apiKeys.product}?seller_id=${user?.id}`)
-      console.log("data2: ", data2)
-      console.log("data: ", data)
+      const data2 = await fetcher(
+        `${apiKeys.product}?seller_id=${userData?.user?._id}`
+      )
+      console.log("sellerId", data2)
+      console.log("product", data)
 
       const result = [...data.item, ...data2.item].reduce((acc, current) => {
         if (!acc.some((item: any) => item._id === current._id)) {

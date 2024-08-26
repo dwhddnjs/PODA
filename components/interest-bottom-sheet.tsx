@@ -56,14 +56,20 @@ export const interests: string[] = [
 
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
-  const { selectDiary, myInterest, interest, setMyInterest, onReset } =
-    useSelectedDiary()
+  const {
+    selectDiary,
+    myInterest,
+    interest,
+    setMyInterest,
+    onReset,
+    setInterest,
+  } = useSelectedDiary()
   const { push } = useRouter()
   const pathname = usePathname()
   const { mutate } = useAddProduct()
 
   const userData = useUser()
-  const id = userData?.providerAccountId
+  const id = userData?._id
   const { userInterest } = useUserInfo(id as string)
   const { mutate: patchUserMutate } = usePatchUser(Number(id))
 
@@ -91,7 +97,7 @@ export const InterestBottomSheet = () => {
   const handleSubmit = async () => {
     const requestBody = {
       price: 0,
-      quantity: 0,
+      quantity: 1,
       show: true,
       active: true,
       content: "I dont wanna write content cuz it freaking useless",

@@ -15,6 +15,7 @@ import { apiKeys } from "@/lib/api-keys"
 import { useTarget } from "@/hooks/store/use-target"
 import { MdAssuredWorkload } from "react-icons/md"
 import { useSendPush } from "@/hooks/use-send-push"
+import { fetcher } from "@/lib/protocol"
 
 export const SendDiaryTab = () => {
   const { push, replace } = useRouter()
@@ -24,6 +25,7 @@ export const SendDiaryTab = () => {
   const { mutate, isPending: isLoading } = useAddPost()
   const { target } = useTarget()
   const trigger = useSendPush()
+  const send = useSendPush()
 
   const [isShowDiary, setIsShowDiary] = useState(false)
 
@@ -51,6 +53,13 @@ export const SendDiaryTab = () => {
             } as any)
           })
         )
+        const res = await fetcher(`${apiKeys.users}/${target._id}/token`)
+        send({
+          title: "새로운 일기가 왔어요",
+          message: "PODA에 들어와서 확인해보세요",
+          link: "https://poda.vercel.app",
+          token: res.item.token,
+        })
         replace("/exchange-diary/delivery-success")
       } catch (error) {
         console.log(error)

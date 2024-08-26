@@ -8,6 +8,8 @@ import {
   isSupported,
   Messaging,
 } from "firebase/messaging"
+import { patchRequest } from "./protocol"
+import { apiKeys } from "./api-keys"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FCM_API_KEY,
@@ -21,19 +23,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-const messaging = getMessaging(app)
+const messaging =
+  typeof window !== "undefined" &&
+  typeof window.navigator !== "undefined" &&
+  getMessaging(app)
+
+// const messaging = getMessaging(app)
 
 // 알림 수신 핸들러
 
-export const fetchToken = async () => {
+export const fetchToken = async (userId: string) => {
   try {
     const currentToken = await getToken(messaging as any, {
       vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
     })
     if (currentToken) {
       console.log("FCM 토큰:", currentToken)
+      //   const token = localStorage.getItem("userId")
+      //   console.log("token: ", token)
       // 토큰을 서버에 저장하여 나중에 사용
-      //   const res = await patchRequest(`${apiKeys.users}/`)
+      await patchRequest(`${apiKeys.users}/${userId}`, {
+        token: currentToken,
+      })
       localStorage.setItem("token", currentToken)
     } else {
       console.log("알림 권한이 없습니다.")

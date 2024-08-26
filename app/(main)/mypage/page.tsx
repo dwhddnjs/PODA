@@ -15,7 +15,7 @@ import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 
 export default function MyPagePage() {
   const user = useUser()
-  const { data, refetch } = useUserInfo(user?.providerAccountId as string)
+  const { data, refetch } = useUserInfo(user?._id as string)
   const { onOpen } = useInterestSheet()
   console.log("data:@@@@@@@@ ", data)
 
