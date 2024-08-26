@@ -58,7 +58,8 @@ export const interests: string[] = [
 
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
-  const { selectDiary, myInterest, setMyInterest, onReset } = useSelectedDiary()
+  const { selectDiary, myInterest, setMyInterest, onReset, interest } =
+    useSelectedDiary()
   const { push } = useRouter()
   const pathname = usePathname()
   const { mutate } = useAddProduct()
@@ -76,7 +77,7 @@ export const InterestBottomSheet = () => {
   const handleEdit = () => {
     const requestBody = {
       extra: {
-        interest: myInterest,
+        interest: [...interest],
       },
     }
     try {
@@ -100,7 +101,7 @@ export const InterestBottomSheet = () => {
   const handleSubmit = async () => {
     const requestBody = {
       price: 0,
-      quantity: 0,
+      quantity: 1,
       show: true,
       active: true,
       content: "I dont wanna write content cuz it freaking useless",
@@ -121,7 +122,7 @@ export const InterestBottomSheet = () => {
       console.log(error)
     } finally {
       onClose()
-      onReset()
+      //   onReset()
       push("/exchange-diary/delivery-success")
     }
   }

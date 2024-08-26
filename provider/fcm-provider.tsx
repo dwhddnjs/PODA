@@ -10,9 +10,11 @@ export const FcmProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     console.log("adsadsdas", data?.user)
-    fetchToken()
+    if (data) {
+      fetchToken(data.user?._id!)
+    }
 
-    if ("serviceWorker" in navigator) {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/firebase-messaging-sw.js")
         .then((registration) => {
@@ -22,7 +24,7 @@ export const FcmProvider = ({ children }: { children: React.ReactNode }) => {
           console.error("Service Worker 등록 실패:", err)
         })
     }
-  }, [])
+  }, [data])
 
   return <>{children}</>
 }
