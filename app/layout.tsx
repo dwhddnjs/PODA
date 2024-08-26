@@ -6,7 +6,6 @@ import ReactQueryProvider from "@/provider/react-query-provider"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import localFont from "next/font/local"
 import { SheetProvider } from "@/provider/sheet-provider"
-import { SessionProvider } from "next-auth/react"
 import { AuthProvider } from "@/provider/auth-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { FcmProvider } from "@/provider/fcm-provider"
@@ -277,17 +276,15 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           myFont.variable
         )}>
-        <SessionProvider>
+        <ReactQueryProvider>
           <AuthProvider>
-            <ReactQueryProvider>
-              <FcmProvider>
-                <Toaster />
-                {children}
-              </FcmProvider>
-              <SheetProvider />
-            </ReactQueryProvider>
+            <FcmProvider>
+              <Toaster />
+              {children}
+            </FcmProvider>
+            <SheetProvider />
           </AuthProvider>
-        </SessionProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   )
