@@ -1,8 +1,6 @@
 import { auth, update } from "@/app/auth"
 import { postRequest } from "@/lib/protocol"
-import { NextRequest } from "next/server"
-
-const PRODUCTION_URL = process.env.PRODUCTION_URL
+import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -26,6 +24,7 @@ export async function GET(request: NextRequest) {
         gender: gender,
         region: region,
         interest: arrInterest,
+        isOnboarding: false,
       },
       loginType: session?.user?.loginType,
       image: session?.user?.image,
@@ -37,11 +36,19 @@ export async function GET(request: NextRequest) {
       providerAccountId: session?.user?.providerAccountId,
     })
 
-    await update(resLogin.item)
-
     console.log("resLogin : " + JSON.stringify(resLogin))
+
     if (!resLogin.ok) throw new Error("로그인 에러입니다.")
-    return Response.redirect(`${PRODUCTION_URL}/welcome`)
+
+    if (resSignup.ok) {
+      await update(resLogin.item)
+    }
+
+    if (resLogin.item.extra.isOnboarding) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/mydiary`)
+    }
+
+    return NextResponse.redirect(`${request.nextUrl.origin}/welcome`)
   } catch (error) {
     console.error(error)
   }

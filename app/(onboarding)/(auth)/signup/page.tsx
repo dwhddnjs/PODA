@@ -68,6 +68,7 @@ export default function SignupPage() {
         gender: userData.gender,
         region: userData.region,
         interest: userData.interest,
+        isOnboarding: false,
       }
       delete formData.passwordCheck
       console.log("onSubmit formData of signup is : " + formData)
