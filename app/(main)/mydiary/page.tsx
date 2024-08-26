@@ -8,14 +8,15 @@ import { DiaryTypes } from "@/types/my-diarys"
 import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
 import { useUser } from "@/hooks/use-user"
-import { format, parse } from "date-fns"
+import { format, parse, parseISO } from "date-fns"
 import { ko } from "date-fns/locale"
 
 export default function MydiaryPage() {
   const userData = useUser()
-  const userId = userData?.providerAccountId
+  const userId = userData?._id
   const { data, refetch } = usePostsMyDiarys("mydiary", Number(userId))
 
+  console.log("@@@@@@@@@@@@@@@@@@@@", data)
   useEffect(() => {
     if (userId) {
       refetch()
@@ -28,6 +29,8 @@ export default function MydiaryPage() {
     const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
     return format(parsedDate, "M월 d일 EEEE", { locale: ko })
   }
+  dates?.map((item) => console.log(parseISO(item)))
+  const getHeaderDate = () => {}
 
   return (
     <>

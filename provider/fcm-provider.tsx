@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react"
 import { fetchToken } from "@/lib/firebase"
 import { useUser } from "@/hooks/use-user"
-import { useSession } from "next-auth/react"
+import { useCurrentSession } from "@/hooks/use-current-session"
 
 export const FcmProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data } = useSession()
+  const { data } = useCurrentSession()
 
   useEffect(() => {
     if (data) {

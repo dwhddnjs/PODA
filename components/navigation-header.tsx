@@ -33,8 +33,6 @@ export const NavigationHeader = ({
 
   const handleBack = () => {
     if (isEditMode) {
-      seter(false, "isEditMode")
-      resetValues()
       seter(1, "step")
       back()
     } else if (isNew) {

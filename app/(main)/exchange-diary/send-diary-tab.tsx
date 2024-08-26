@@ -75,7 +75,7 @@ export const SendDiaryTab = () => {
         <div
           onClick={() => setIsShowDiary(true)}
           className="w-full flex flex-col justify-center items-center space-y-3 ">
-          <Image src="/assets/boxs.png" width={260} height={300} alt="truck" />
+          <Image src="/assets/boxs.gif" width={320} height={300} alt="boxs" />
           <div className="space-y-1">
             <h1 className="text-2xl font-black leading-7 text-primary text-center">
               당신의 일기를 전달할

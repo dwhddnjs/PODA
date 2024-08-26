@@ -20,11 +20,12 @@ export const DiaryStep = () => {
     noteContentVal,
     noteTitleVal,
     selectedTags,
+    activeTags,
     seter,
     resetValues,
   } = useDiaryValues()
   const { push } = useRouter()
-  const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
+  // const [activeTags, setActiveTags] = useState<{ [key: string]: boolean }>({})
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0)
   const currentTabDatas = Object.values(
     datas[tabData[activeTabIndex] as keyof TagData]
@@ -45,18 +46,12 @@ export const DiaryStep = () => {
         selectedTags?.filter((tag) => tag !== currentTag?.key),
         "selectedTags"
       )
-      setActiveTags((prev) => ({
-        ...prev,
-        [key]: false,
-      }))
+      seter({ [key]: false }, "activeTags")
     } else {
       if (selectedTags) {
         seter([...selectedTags, currentTag!.key], "selectedTags")
       }
-      setActiveTags((prev) => ({
-        ...prev,
-        [key]: true,
-      }))
+      seter({ [key]: true }, "activeTags")
     }
   }
   // 미리보기 박스에서 태그 클릭 시 해당 태그 비활성화
@@ -66,10 +61,7 @@ export const DiaryStep = () => {
         selectedTags.filter((tag) => tag !== key),
         "selectedTags"
       )
-      setActiveTags((prev) => ({
-        ...prev,
-        [key]: false,
-      }))
+      seter({ [key]: false }, "activeTags")
     }
   }
   const handleTabClick = (tab: string) => {
@@ -108,9 +100,6 @@ export const DiaryStep = () => {
       push("/mydiary")
       resetValues()
     }
-  }
-  if (isPending) {
-    return <FullScreen />
   }
   return (
     <>

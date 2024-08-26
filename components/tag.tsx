@@ -34,7 +34,7 @@ export const Tag = ({
       removeInterest(children)
       removeUserInterest(children)
 
-      if (pathName === "/mypage") {
+      if (pathName === "/mypage" || pathName === "/exchange-diary") {
         const updatedInterest = myInterest.filter((item) => item !== children)
         setMyInterest(updatedInterest)
       }
@@ -43,7 +43,7 @@ export const Tag = ({
       setInterest(children)
       addUserInterest(children)
 
-      if (pathName === "/mypage") {
+      if (pathName === "/mypage" || pathName === "/exchange-diary") {
         setMyInterest([...myInterest, children])
       }
     }
@@ -62,22 +62,3 @@ export const Tag = ({
     </label>
   )
 }
-
-// if (userInterest) {
-//   userInterest.forEach((item) => {
-//     if (item === children) {
-//       setSelected((prev) => [...prev, children as string])
-//     }
-//   })
-// }
-
-// if (target.id) {
-//   setSelected([...selected, target.id])
-//   addUserInterest(target.id)
-//   setInterest(target.id)
-// }
-// if (target.id === selected) {
-//   setSelected()
-//   removeUserInterest(target.id)
-//   removeInterest(target.id)
-// }
