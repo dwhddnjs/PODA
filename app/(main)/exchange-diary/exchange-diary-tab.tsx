@@ -12,16 +12,6 @@ export const ExchangeDiaryTab = () => {
   const { push } = useRouter()
   const sendPush = useSendPush()
 
-  const onClick = async () => {
-    const fcmToken = localStorage.getItem("token")
-    await sendPush({
-      title: "안녕",
-      message: "안녕",
-      link: "https://poda.vercel.com",
-      token: fcmToken as any,
-    })
-  }
-
   return (
     <div className="w-full h-full">
       <div className="pt-[150px] flex flex-col justify-between items-center space-y-3">
@@ -33,8 +23,7 @@ export const ExchangeDiaryTab = () => {
       </div>
       <div className="w-full px-[48px] pt-[70px]">
         <Button
-          //   onClick={() => push("/exchange-diary/load-diary")}
-          onClick={onClick}
+          onClick={() => push("/exchange-diary/load-diary")}
           className="w-full font-black h-14 rounded-xl bg-mainColor text-black text-lg">
           내 일기 포장하기
         </Button>

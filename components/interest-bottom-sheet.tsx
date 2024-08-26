@@ -58,14 +58,7 @@ export const interests: string[] = [
 
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
-  const {
-    selectDiary,
-    myInterest,
-    setInterest,
-    interest,
-    setMyInterest,
-    onReset,
-  } = useSelectedDiary()
+  const { selectDiary, myInterest, setMyInterest, onReset } = useSelectedDiary()
   const { push } = useRouter()
   const pathname = usePathname()
   const { mutate } = useAddProduct()
@@ -114,7 +107,7 @@ export const InterestBottomSheet = () => {
       name: "exchange-diary",
       extra: {
         status: "delivery",
-        interest: [...interest],
+        interest: myInterest,
       },
     }
 
@@ -127,7 +120,8 @@ export const InterestBottomSheet = () => {
     } catch (error) {
       console.log(error)
     } finally {
-      setOpen(false)
+      onClose()
+      onReset()
       push("/exchange-diary/delivery-success")
     }
   }
