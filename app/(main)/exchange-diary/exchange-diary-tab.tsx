@@ -25,7 +25,7 @@ export const ExchangeDiaryTab = () => {
   return (
     <div className="w-full h-full">
       <div className="pt-[150px] flex flex-col justify-between items-center space-y-3">
-        <Image src="/assets/truck.png" width={300} height={300} alt="truck" />
+        <Image src="/assets/truck.gif" width={300} height={300} alt="truck" />
         <h1 className="text-2xl font-black leading-7 text-primary text-center">
           당신의 일기를
           <br /> 전달 해드립니다.
