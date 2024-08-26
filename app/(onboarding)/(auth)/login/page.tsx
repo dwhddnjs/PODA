@@ -34,7 +34,9 @@ const FormSchema = z.object({
       message: "이메일은 최소 한 자리 이상 입력해주셔야 해요!",
     })
     .email({ message: "유효하지 않은 이메일 형식이에요!" }),
-  password: z.string().min(8),
+  password: z.string().min(8, {
+    message: "비밀번호는 최소 8 자리 이상 입력해주셔야 해요!",
+  }),
   age: z.string().optional(),
   gender: z.string().optional(),
   region: z.string().optional(),
@@ -59,7 +61,13 @@ export default function LoginPage() {
 
   const onCredentialSubmit = async (formData: z.infer<typeof FormSchema>) => {
     startTransition(async () => {
-      await signInWithCredentials(formData)
+      const res = await signInWithCredentials(formData)
+      console.log(res)
+      if (res.type === "AccessDenied") {
+        alert("아이디와 비밀번호를 확인해주세요!")
+      } else if (res.kind === "error") {
+        alert("오류가 발생했습니다!")
+      }
     })
   }
 
