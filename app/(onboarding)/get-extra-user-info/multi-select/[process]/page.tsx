@@ -5,28 +5,7 @@ import { ProcessStatusGreen } from "../../process-status-green"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { NavigationHeader } from "@/components/navigation-header"
-import { interests } from "@/app/(main)/exchange-diary/interest-bottom-sheet"
-
-const interestOptions = [
-  "다이어트",
-  "헬스",
-  "여행",
-  "음식",
-  "섹스",
-  "언어",
-  "음악",
-  "영화",
-  "애니메이션",
-  "소설",
-  "시",
-  "정치",
-  "경제",
-  "디자인",
-  "프로그래밍",
-  "기획",
-  "육아",
-  "연애",
-]
+import { interests } from "@/components/interest-bottom-sheet"
 
 export default function MultiSelectPage({
   params,

@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   console.log("data: ", data)
 
   useEffect(() => {
-    if (data && status === "authenticated") {
-      localStorage.setItem("accessToken", data?.accessToken)
+    if (data?.accessToken && status === "authenticated") {
+      localStorage.setItem("accessToken", data.accessToken)
     }
   }, [data])
 
