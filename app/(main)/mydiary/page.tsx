@@ -7,20 +7,18 @@ import { usePostsDiarys, usePostsMyDiarys } from "@/hooks/query/post"
 import { DiaryTypes } from "@/types/my-diarys"
 import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
-import { useUser } from "@/hooks/use-user"
-import { format, parse, parseISO } from "date-fns"
+import { format, parse } from "date-fns"
 import { ko } from "date-fns/locale"
+import { useCurrentSession } from "@/hooks/use-current-session"
 
 export default function MydiaryPage() {
-  const userData = useUser()
-  const userId = userData?._id
+  const { data: userData } = useCurrentSession()
+  const userId = userData?.user?._id
   const { data, refetch } = usePostsMyDiarys("mydiary", Number(userId))
 
   console.log("@@@@@@@@@@@@@@@@@@@@", data)
   useEffect(() => {
-    if (userId) {
-      refetch()
-    }
+    refetch()
   }, [userId, refetch])
 
   const dates = data && Object.keys(data)
@@ -29,8 +27,8 @@ export default function MydiaryPage() {
     const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
     return format(parsedDate, "M월 d일 EEEE", { locale: ko })
   }
-  dates?.map((item) => console.log(parseISO(item)))
-  const getHeaderDate = () => {}
+  // dates?.map((item) => console.log(parseISO(item)))
+  // const getHeaderDate = () => {}
 
   return (
     <>
@@ -46,16 +44,14 @@ export default function MydiaryPage() {
                 <div className="bg-backgroundLighter rounded-xl">
                   {
                     // 날짜별 일기 수 만큼 반복
-                    datas.map((data: DiaryTypes, index: number) => {
-                      return (
-                        <Diary
-                          key={data._id}
-                          diaryData={data}
-                          index={index}
-                          totalLength={datas.length}
-                        />
-                      )
-                    })
+                    datas.map((data: DiaryTypes, index: number) => (
+                      <Diary
+                        key={data._id}
+                        diaryData={data}
+                        index={index}
+                        totalLength={datas.length}
+                      />
+                    ))
                   }
                 </div>
               </div>
