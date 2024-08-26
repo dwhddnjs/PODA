@@ -18,7 +18,8 @@ import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useUser } from "@/hooks/use-user"
 import { usePathname, useRouter } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
+import { toast } from "sonner"
 
 export const interests: string[] = [
   "가족",
@@ -39,6 +40,7 @@ export const interests: string[] = [
   "UFC",
   "음악",
   "육아",
+  "운동",
   "음식",
   "언어",
   "영화",
@@ -56,18 +58,24 @@ export const interests: string[] = [
 
 export const InterestBottomSheet = () => {
   const { isOpen, onOpen, onClose, setOpen } = useInterestSheet()
-  const { selectDiary, myInterest, interest, setMyInterest, onReset } =
-    useSelectedDiary()
+  const {
+    selectDiary,
+    myInterest,
+    setInterest,
+    interest,
+    setMyInterest,
+    onReset,
+  } = useSelectedDiary()
   const { push } = useRouter()
   const pathname = usePathname()
   const { mutate } = useAddProduct()
 
   const userData = useUser()
-  const id = userData?.providerAccountId
+  const id = userData?._id
   const { userInterest } = useUserInfo(id as string)
   const { mutate: patchUserMutate } = usePatchUser(Number(id))
 
-  // 수정을 하지 않고 단순히 바텀시트가 열고 닫으면 값을 기존값으로 초기화 해주기
+  // 바텀시트가 열고 닫으면 기존값으로 초기화 해주기
   useEffect(() => {
     setMyInterest(userInterest)
   }, [userInterest, isOpen])
@@ -80,6 +88,14 @@ export const InterestBottomSheet = () => {
     }
     try {
       patchUserMutate(requestBody)
+      toast.success("관심사가 수정되었습니다!", {
+        style: {
+          backgroundColor: "#3e3e3e",
+          color: "white",
+          border: "none",
+          font: "bolder",
+        },
+      })
     } catch (error) {
       console.log(error)
     } finally {

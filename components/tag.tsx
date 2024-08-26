@@ -34,7 +34,7 @@ export const Tag = ({
       removeInterest(children)
       removeUserInterest(children)
 
-      if (pathName === "/mypage") {
+      if (pathName === "/mypage" || pathName === "/exchange-diary") {
         const updatedInterest = myInterest.filter((item) => item !== children)
         setMyInterest(updatedInterest)
       }
@@ -43,7 +43,7 @@ export const Tag = ({
       setInterest(children)
       addUserInterest(children)
 
-      if (pathName === "/mypage") {
+      if (pathName === "/mypage" || pathName === "/exchange-diary") {
         setMyInterest([...myInterest, children])
       }
     }

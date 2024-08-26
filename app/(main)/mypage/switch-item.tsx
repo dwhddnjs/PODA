@@ -23,8 +23,7 @@ export const SwitchItem = ({
 }: SwitchItemProps) => {
   const { onOpen } = useInterestSheet()
   const user = useUser()
-  console.log("user: ", user)
-
+  // console.log("user: ", user)
   const handleClick = async () => {
     switch (title) {
       case "관심사 변경":
