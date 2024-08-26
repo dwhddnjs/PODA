@@ -22,17 +22,25 @@ export const {
         if (res.ok) {
           const user = res.item
           return {
-            id: user._id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             type: user.type,
             image: user.profileImage && SERVER + user.profileImage,
             accessToken: user.token.accessToken,
             refreshToken: user.token.refreshToken,
+            extra: {
+              age: user.extra.age,
+              gender: user.extra.gender,
+              region: user.extra.region,
+              interest: user.extra.interest,
+              isOnboarding: user.extra.isOnboarding,
+            },
           }
-        } else {
-          return null
+        } else if (!res.ok) {
+          return { error: res.message }
         }
+        return null
       },
     }),
     google({
@@ -53,12 +61,21 @@ export const {
     signIn: "/login",
   },
   callbacks: {
-    async signIn() {
+    async signIn({ user }) {
+      if (user.error) {
+        throw new Error(user.error)
+      }
       return true
     },
 
     async jwt({ token, user, account, trigger, session }) {
-      if (user?.accessToken) {
+      if (user) {
+        token._id = user._id
+        token.age = user.extra?.age
+        token.gender = user.extra?.gender
+        token.region = user.extra?.region
+        token.isOnboarding = user.extra?.isOnboarding
+        token.interest = user.extra?.interest
         token.accessToken = user.accessToken
         token.refreshToken = user.refreshToken
       }
@@ -72,6 +89,12 @@ export const {
       }
 
       if (trigger === "update" && session) {
+        token._id = session._id
+        token.age = session.extra.age
+        token.gender = session.extra.gender
+        token.region = session.extra.region
+        token.isOnboarding = true
+        token.interest = session.extra.interest
         token.accessToken = session.token.accessToken
         token.refreshToken = session.token.refreshToken
       }
@@ -81,6 +104,14 @@ export const {
     async session({ session, token }) {
       session.user.loginType = token.loginType
       session.user.providerAccountId = token.providerAccountId
+      session.user._id = token._id
+      session.user.extra = {
+        age: token.age,
+        gender: token.gender,
+        region: token.region,
+        interest: token.interest,
+        isOnboarding: token.isOnboarding,
+      }
       session.accessToken = token.accessToken
       session.refreshToken = token.refreshToken
       return session
