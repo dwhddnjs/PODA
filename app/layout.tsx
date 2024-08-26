@@ -9,6 +9,7 @@ import { SheetProvider } from "@/provider/sheet-provider"
 import { AuthProvider } from "@/provider/auth-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { FcmProvider } from "@/provider/fcm-provider"
+import { SessionProvider } from "next-auth/react"
 
 // const fontSans = FontSans({
 //   subsets: ["latin"],
@@ -276,15 +277,17 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           myFont.variable
         )}>
-        <ReactQueryProvider>
-          <AuthProvider>
-            <FcmProvider>
-              <Toaster position="top-center" />
-              {children}
-            </FcmProvider>
-            <SheetProvider />
-          </AuthProvider>
-        </ReactQueryProvider>
+        <SessionProvider>
+          <ReactQueryProvider>
+            <AuthProvider>
+              <FcmProvider>
+                <Toaster position="top-center" />
+                {children}
+              </FcmProvider>
+              <SheetProvider />
+            </AuthProvider>
+          </ReactQueryProvider>
+        </SessionProvider>
       </body>
     </html>
   )

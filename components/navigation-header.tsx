@@ -60,7 +60,7 @@ export const NavigationHeader = ({
         )}
       </div>
 
-      <h2 className={cn("text-primary", !isDate && "hidden ")}>2024년 7월</h2>
+      <h2 className={cn("text-primary", !isDate && "hidden ")}>2024년 8월</h2>
 
       <Button
         variant="ghost"
