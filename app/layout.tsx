@@ -8,6 +8,8 @@ import localFont from "next/font/local"
 import { SheetProvider } from "@/provider/sheet-provider"
 import { SessionProvider } from "next-auth/react"
 import { AuthProvider } from "@/provider/auth-provider"
+import { Toaster } from "@/components/ui/sonner"
+import { FcmProvider } from "@/provider/fcm-provider"
 
 // const fontSans = FontSans({
 //   subsets: ["latin"],
@@ -278,7 +280,10 @@ export default function RootLayout({
         <SessionProvider>
           <AuthProvider>
             <ReactQueryProvider>
-              {children}
+              <FcmProvider>
+                <Toaster />
+                {children}
+              </FcmProvider>
               <SheetProvider />
             </ReactQueryProvider>
           </AuthProvider>
