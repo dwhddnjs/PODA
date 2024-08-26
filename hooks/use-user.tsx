@@ -1,9 +1,8 @@
 "use client"
 
-import { useSession } from "next-auth/react"
-import React from "react"
+import { useCurrentSession } from "./use-current-session"
 
 export const useUser = () => {
-  const { data } = useSession()
+  const { data } = useCurrentSession()
   return data?.user
 }
