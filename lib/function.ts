@@ -38,13 +38,6 @@ export const convertDate = (dateStr: string) => {
   return `${year}년 ${month}월 ${day}일`
 }
 
-export const convertTime = (inputDate: string) => {
-  if (inputDate) {
-    const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
-    return format(parsedDate, "M월 d일 EEEE", { locale: ko })
-  }
-}
-
 export const convertStatusText = (status: DeliveryStatusTypes) => {
   let result
 
