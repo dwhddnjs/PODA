@@ -44,11 +44,11 @@ export default function LoadDiaryPage() {
 
   return (
     <div className="w-full h-full relative ">
-      <NavigationHeader isDate />
+      <NavigationHeader isBack isDate />
 
       <div className="w-full h-full space-y-5 pt-[60px]">
         {!data && isPending && <FullScreen />}
-        {!data && !isPending && (
+        {(!data || Object.keys(data).length === 0) && !isPending && (
           <div className="flex flex-col justify-center items-center mt-28">
             <Image
               src={"/assets/no-diary.png"}
@@ -61,6 +61,7 @@ export default function LoadDiaryPage() {
         )}
         {!isPending &&
           data &&
+          Object.keys(data).length > 0 &&
           Object.keys(data).map((date) => (
             <div
               key={date}
