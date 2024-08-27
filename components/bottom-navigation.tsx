@@ -80,7 +80,7 @@ export const BottomNavigation = () => {
   ))
 
   return (
-    <div className="fixed   bottom-0 left-0 z-50 w-full h-16 bg-tabColor border-t border-backgroundLighter dark:bg-gray-700 dark:border-gray-600">
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 pt-2 pb-20 bg-tabColor border-t border-backgroundLighter dark:bg-gray-700 dark:border-gray-600">
       <div className="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">
         {renderTabs}
       </div>
