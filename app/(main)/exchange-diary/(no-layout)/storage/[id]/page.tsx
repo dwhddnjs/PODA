@@ -54,7 +54,8 @@ export default function StorageIdPage() {
               image={item[1][0].user.image}
             />
             <p className="text-sm text-primary font-semibold">
-              {format(item[0], "M월 d일 EEEE", { locale: ko })}
+              {item[0]}
+              {/* {format(item[0], "M월 d일 EEEE", { locale: ko })} */}
             </p>
           </div>
           <ExchangeDiary diaryDatas={item[1]} />
