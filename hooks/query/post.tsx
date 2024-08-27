@@ -65,9 +65,9 @@ export const usePostsMyDiarys = (type: string, userId: number) => {
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
-      if (res && res.item.length === 0) {
-        return undefined
-      }
+      // if (res && res.item.length === 0) {
+      //   return undefined
+      // }
       return sortMyDiarys(res.item)
     },
   })

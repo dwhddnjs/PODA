@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { useDiaryValues } from "@/hooks/store/use-diary"
+import { useAddPost } from "@/hooks/mutation/post"
 
 interface NavigationHeaderProps {
   isBack?: boolean
@@ -21,8 +22,6 @@ interface NavigationHeaderProps {
   isEditWriteNote?: boolean
 }
 
-const handleBtnClick = () => {}
-
 export const NavigationHeader = ({
   isBack,
   isMood,
@@ -35,9 +34,38 @@ export const NavigationHeader = ({
   isEmotionStep,
   isEditWriteNote,
 }: NavigationHeaderProps) => {
-  const { seter } = useDiaryValues()
-  const { moodVal, resetValues } = useDiaryValues()
+  const {
+    moodVal,
+    seter,
+    noteContentVal,
+    noteTitleVal,
+    selectedTags,
+    resetValues,
+  } = useDiaryValues()
+
+  const { mutate } = useAddPost()
   const { back, push } = useRouter()
+
+  const handleSave = () => {
+    const requestBody = {
+      type: "mydiary",
+      extra: {
+        title: noteTitleVal,
+        content: noteContentVal,
+        mood: moodVal,
+        tag: selectedTags ? [...selectedTags] : [],
+      },
+    }
+
+    try {
+      mutate(requestBody)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      push("/mydiary")
+      resetValues()
+    }
+  }
 
   const handleBack = () => {
     if (isEditMode) {
@@ -100,7 +128,7 @@ export const NavigationHeader = ({
         variant="ghost"
         disabled={!isSave}
         className={cn("text-primary flex gap-2", !isSave && "hidden")}
-        onClick={handleBtnClick}>
+        onClick={handleSave}>
         <Image
           width={28}
           height={28}

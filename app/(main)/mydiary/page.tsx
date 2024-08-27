@@ -20,7 +20,7 @@ export default function MydiaryPage() {
     refetch()
   }, [userData, refetch])
 
-  const dates = data && Object.keys(data)
+  const dates = data ? Object.keys(data) : []
 
   const convertTime = (inputDate: string) => {
     const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
@@ -34,7 +34,7 @@ export default function MydiaryPage() {
       <div className="pt-16 pb-20">
         {dates?.length ? (
           dates.map((dateKey: string) => {
-            const datas = data![dateKey] || []
+            const datas = data![dateKey]
             return (
               <div key={dateKey} className="m-6">
                 <h2 className="text-primary mb-1">{convertTime(dateKey)}</h2>
