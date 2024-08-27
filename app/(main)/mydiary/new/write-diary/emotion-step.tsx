@@ -7,7 +7,7 @@ import { NavigationHeader } from "@/components/navigation-header"
 export const EmotionStep = () => {
   return (
     <>
-      <NavigationHeader />
+      <NavigationHeader isBack isEmotionStep />
       <div className="h-full pt-16 justify-center items-center">
         <div className="justify-center flex flex-col items-center py-32">
           <h1 className="">당신의 기분은?</h1>

@@ -123,7 +123,7 @@ export default function WriteDiaryPage() {
 
   return (
     <>
-      <NavigationHeader isEditMode={true} isMood={true} isSave={true} />
+      <NavigationHeader isBack isEditMode isMood isSave />
       <div className="text-primary px-6 pt-16">
         <div className="flex justify-between gap-2 my-6">
           <EmotionItem isEditMode={isEditMode} />

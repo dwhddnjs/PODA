@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Diary } from "@/components/diary"
 import { BottomNavigation } from "@/components/bottom-navigation"
-import { usePostsDiarys, usePostsMyDiarys } from "@/hooks/query/post"
+import { usePostsMyDiarys } from "@/hooks/query/post"
 import { DiaryTypes } from "@/types/my-diarys"
 import { WriteDiaryBtn } from "./write-diary-btn"
 import Image from "next/image"
@@ -16,10 +16,9 @@ export default function MydiaryPage() {
   const userId = userData?.user?._id
   const { data, refetch } = usePostsMyDiarys("mydiary", Number(userId))
 
-  console.log("@@@@@@@@@@@@@@@@@@@@", data)
   useEffect(() => {
     refetch()
-  }, [userId, refetch])
+  }, [userData, refetch])
 
   const dates = data && Object.keys(data)
 
@@ -27,12 +26,10 @@ export default function MydiaryPage() {
     const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
     return format(parsedDate, "M월 d일 EEEE", { locale: ko })
   }
-  // dates?.map((item) => console.log(parseISO(item)))
-  // const getHeaderDate = () => {}
 
   return (
     <>
-      <NavigationHeader isDate={true} isSearch={true} />
+      <NavigationHeader isDate isSearch />
       {/* 날짜(2024-08-03) 개수만큼 반복 */}
       <div className="pt-16 pb-20">
         {dates?.length ? (

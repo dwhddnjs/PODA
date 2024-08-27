@@ -70,8 +70,17 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
               <p className="text-primary text-xs">{diaryData.extra.content}</p>
             )}
           </div>
-          {/* 업로드한 이미지들 */}
-          {/* <div className="flex flex-wrap w-full gap-3">
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  /* 업로드한 이미지들 */
+}
+{
+  /* <div className="flex flex-wrap w-full gap-3">
             {diaryData.uploadImgs &&
               diaryData.uploadImgs.map((imgItem) => {
                 return (
@@ -92,9 +101,5 @@ export const Diary = ({ diaryData, index, totalLength }: DiaryProps) => {
                   </div>
                 )
               })}
-          </div> */}
-        </div>
-      </div>
-    </div>
-  )
+          </div> */
 }

@@ -28,7 +28,7 @@ export default function WriteNotePage() {
 
   return (
     <div>
-      <NavigationHeader isEditMode={true} />
+      <NavigationHeader isBack isEditWriteNote />
 
       <div className="p-6 pt-16">
         <Input

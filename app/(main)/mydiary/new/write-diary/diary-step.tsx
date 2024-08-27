@@ -103,7 +103,7 @@ export const DiaryStep = () => {
   }
   return (
     <>
-      <NavigationHeader isNew={true} isMood={true} isSave={true} />
+      <NavigationHeader isBack isNew isMood isSave />
       <div className="h-full text-primary pt-16 px-6">
         <div className="flex gap-2 mb-4">
           <Image

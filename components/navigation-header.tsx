@@ -9,23 +9,31 @@ import Image from "next/image"
 import { useDiaryValues } from "@/hooks/store/use-diary"
 
 interface NavigationHeaderProps {
+  isBack?: boolean
   isMood?: boolean
   isSave?: boolean
   isDate?: boolean
   isSearch?: boolean
   isEditMode?: boolean
   isNew?: boolean
+  isWriteNote?: boolean
+  isEmotionStep?: boolean
+  isEditWriteNote?: boolean
 }
 
 const handleBtnClick = () => {}
 
 export const NavigationHeader = ({
+  isBack,
   isMood,
   isSave,
   isDate,
   isSearch,
   isEditMode,
   isNew,
+  isWriteNote,
+  isEmotionStep,
+  isEditWriteNote,
 }: NavigationHeaderProps) => {
   const { seter } = useDiaryValues()
   const { moodVal, resetValues } = useDiaryValues()
@@ -33,11 +41,18 @@ export const NavigationHeader = ({
 
   const handleBack = () => {
     if (isEditMode) {
-      seter(1, "step")
+      resetValues()
       back()
     } else if (isNew) {
       resetValues()
       push("./write-diary")
+    } else if (isWriteNote) {
+      seter(2, "step")
+      push("./write-diary")
+    } else if (isEmotionStep) {
+      push("/mydiary")
+    } else if (isEditWriteNote) {
+      back()
     } else {
       resetValues()
       back()
@@ -46,9 +61,14 @@ export const NavigationHeader = ({
   return (
     <div className="w-full flex justify-between items-center py-[12px] bg-background z-50 fixed">
       <div className="flex">
-        <Button variant="ghost" onClick={handleBack}>
-          <ChevronLeft className="text-primary" width={32} height={32} />
-        </Button>
+        {isBack ? (
+          <Button variant="ghost" onClick={handleBack}>
+            <ChevronLeft className="text-primary" width={32} height={32} />
+          </Button>
+        ) : (
+          <div className="w-8 h-8 invisible"></div>
+        )}
+
         {isMood && (
           <Image
             width={32}
