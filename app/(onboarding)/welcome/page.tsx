@@ -13,7 +13,7 @@ export default function WelcomePage() {
   return (
     <div className="h-full">
       <Image
-        src={"/assets/start-page-desc.png"}
+        src={"/assets/welcome.png"}
         alt="start page description"
         width={786}
         height={540}
