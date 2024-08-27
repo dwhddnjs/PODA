@@ -45,7 +45,7 @@ export default function LoadDiaryPage() {
       <NavigationHeader isBack isDate />
 
       <div className="w-full h-full space-y-5 pt-[60px]">
-        {!data && isPending && <FullScreen />}
+        {/* {!data && isPending && <FullScreen />}
         {(!data || Object.keys(data).length === 0) && !isPending && (
           <div className="flex flex-col justify-center items-center mt-28">
             <Image
@@ -71,7 +71,7 @@ export default function LoadDiaryPage() {
               <ExchangeDiary key={date} diaryDatas={data[date]} />
             </div>
           ))}
-        <Spacer />
+        <Spacer /> */}
       </div>
     </div>
   )
