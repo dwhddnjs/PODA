@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { NavigationHeader } from "@/components/navigation-header"
 import { interests } from "@/components/interest-bottom-sheet"
 import { useUserData } from "@/hooks/store/use-user-data"
+import { useEffect } from "react"
 
 export default function MultiSelectPage({
   params,
@@ -17,7 +18,11 @@ export default function MultiSelectPage({
 
   const router = useRouter()
 
-  const { userData } = useUserData()
+  const { userData, clearUserInterest } = useUserData()
+
+  useEffect(() => {
+    clearUserInterest()
+  }, [])
 
   return (
     <>

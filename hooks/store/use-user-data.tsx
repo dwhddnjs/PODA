@@ -12,6 +12,7 @@ interface IUserData {
   setUserRegion: (value: string) => void
   addUserInterest: (value: string) => void
   removeUserInterest: (value: string) => void
+  clearUserInterest: () => void
 }
 
 export const useUserData = create<IUserData>((set) => ({
@@ -43,6 +44,13 @@ export const useUserData = create<IUserData>((set) => ({
         interest: state.userData.interest
           ? state.userData.interest.filter((el) => el !== value)
           : undefined,
+      },
+    })),
+  clearUserInterest: () =>
+    set((state) => ({
+      userData: {
+        ...state.userData,
+        interest: undefined,
       },
     })),
 }))
