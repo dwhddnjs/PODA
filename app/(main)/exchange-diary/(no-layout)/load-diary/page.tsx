@@ -57,15 +57,15 @@ export default function LoadDiaryPage() {
             <h2 className="mt-6 text-[#c4c4c4]">일기를 작성해주세요</h2>
           </div>
         )} */}
-        {!isPending &&
-          data &&
+        {data &&
           Object.keys(data).map((date) => (
             <div
               key={date}
               className="m-6"
               onClick={() => handleSelectDiary(data[date], date)}>
               <h3 className="text-primary mb-1">
-                {format(date, "M월 d일 EEEE", { locale: ko })}
+                adsdasdadas
+                {/* {format(date, "M월 d일 EEEE", { locale: ko })} */}
               </h3>
               <ExchangeDiary key={date} diaryDatas={data[date]} />
             </div>
