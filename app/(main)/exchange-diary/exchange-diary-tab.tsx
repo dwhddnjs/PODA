@@ -3,18 +3,29 @@
 import { Button } from "@/components/ui/button"
 
 import { useSendPush } from "@/hooks/use-send-push"
-import { fetchToken } from "@/lib/firebase"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 export const ExchangeDiaryTab = () => {
   const { push } = useRouter()
   const sendPush = useSendPush()
+  const onClick = () => {
+    const token = localStorage.getItem("token")
+    sendPush({
+      title: "누군가로 부터 새로운 일기가 왔어요",
+      message: "PODA에 들어와서 확인해보세요",
+      link: "https://poda.vercel.app",
+      token: token as string,
+    })
+  }
 
   return (
     <div className="w-full h-full">
-      <div className="pt-[150px] flex flex-col justify-between items-center space-y-3">
+      <div
+        onClick={onClick}
+        className="pt-[150px] flex flex-col justify-between items-center space-y-3">
         <Image src="/assets/truck.gif" width={300} height={300} alt="truck" />
         <h1 className="text-2xl font-black leading-7 text-primary text-center">
           당신의 일기를

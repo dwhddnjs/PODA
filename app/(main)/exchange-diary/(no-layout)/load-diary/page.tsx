@@ -7,7 +7,7 @@ import { FullScreen } from "@/components/spinner"
 import { usePostsMyDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useCurrentSession } from "@/hooks/use-current-session"
-import { useUser } from "@/hooks/use-user"
+
 import { convertTime } from "@/lib/function"
 import { DiaryTypes } from "@/types/my-diarys"
 import { format, parse } from "date-fns"
@@ -20,14 +20,12 @@ import React, { useEffect, useState } from "react"
 export default function LoadDiaryPage() {
   const { selectDiary, setSelectDiary, setDate } = useSelectedDiary()
   const { data: userData } = useCurrentSession()
-  const userId = userData?.user?._id
+  const userId = userData && userData?.user?._id
 
   const { data, isPending, refetch } = usePostsMyDiarys(
     "mydiary",
     Number(userId)
   )
-
-  console.log("data: ", data)
 
   useEffect(() => {
     refetch()

@@ -5,14 +5,13 @@ import { AvatarName } from "@/components/avatar-name"
 import { Dotline } from "@/components/dot-line"
 import { NavigationHeader } from "@/components/navigation-header"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
-import { useUser } from "@/hooks/use-user"
+
 import { getKoDate } from "@/lib/function"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 export default function PreviewIdPage() {
   const { selectDiary, date } = useSelectedDiary()
-  const user = useUser()
 
   return (
     <div className="w-full h-full relative">
