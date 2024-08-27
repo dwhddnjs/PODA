@@ -45,8 +45,8 @@ export default function LoadDiaryPage() {
       <NavigationHeader isBack isDate />
 
       <div className="w-full h-full space-y-5 pt-[60px]">
-        {/* {!data && isPending && <FullScreen />}
-        {(!data || Object.keys(data).length === 0) && !isPending && (
+        {!data && isPending && <FullScreen />}
+        {!data && !isPending && (
           <div className="flex flex-col justify-center items-center mt-28">
             <Image
               src={"/assets/no-diary.png"}
@@ -56,8 +56,9 @@ export default function LoadDiaryPage() {
             />
             <h2 className="mt-6 text-[#c4c4c4]">일기를 작성해주세요</h2>
           </div>
-        )} */}
+        )}
         {data &&
+          !isPending &&
           Object.keys(data).map((date) => (
             <div
               key={date}
