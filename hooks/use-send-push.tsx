@@ -10,6 +10,8 @@ export const useSendPush = () => {
     link: string
     token: string
   }) => {
+    //http://localhost:3000
+    //https://poda.vercel.app
     await postRequest("https://poda.vercel.app/api/fcm", message)
   }
 
