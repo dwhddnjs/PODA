@@ -95,3 +95,29 @@ export const usePostsDiary = (id: string) => {
     refetch,
   }
 }
+
+export const usePostsExchangeMyDiarys = (type: string, userId: number) => {
+  const searchParams = new URLSearchParams()
+  searchParams.append("custom", JSON.stringify({ "user._id": userId }))
+  const { data, isPending, error, refetch } = useQuery<
+    Record<string, DiaryTypes[]> | undefined
+  >({
+    queryKey: [apiKeys.posts, userId],
+    queryFn: async () => {
+      const res = await fetcher(
+        `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
+      )
+      if (res && res.item.length === 0) {
+        return undefined
+      }
+      return sortMyDiarys(res.item)
+    },
+  })
+
+  return {
+    data,
+    isPending,
+    error,
+    refetch,
+  }
+}

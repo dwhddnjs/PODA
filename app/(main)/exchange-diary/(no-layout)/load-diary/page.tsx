@@ -4,7 +4,7 @@ import { ExchangeDiary } from "@/app/(main)/_components/exchange-diary"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Spacer } from "@/components/spacer"
 import { FullScreen } from "@/components/spinner"
-import { usePostsMyDiarys } from "@/hooks/query/post"
+import { usePostsExchangeMyDiarys, usePostsMyDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useCurrentSession } from "@/hooks/use-current-session"
 
@@ -22,7 +22,7 @@ export default function LoadDiaryPage() {
   const { data: userData } = useCurrentSession()
   const userId = userData && userData?.user?._id
 
-  const { data, isPending, refetch } = usePostsMyDiarys(
+  const { data, isPending, refetch } = usePostsExchangeMyDiarys(
     "mydiary",
     Number(userId)
   )
@@ -59,7 +59,6 @@ export default function LoadDiaryPage() {
         )} */}
         {!isPending &&
           data &&
-          Object.keys(data).length > 0 &&
           Object.keys(data).map((date) => (
             <div
               key={date}
