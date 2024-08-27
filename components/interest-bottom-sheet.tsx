@@ -68,11 +68,14 @@ export const InterestBottomSheet = () => {
   const id = userData?._id
   const { userInterest } = useUserInfo(id as string)
   const { mutate: patchUserMutate } = usePatchUser(Number(id))
+  console.log("interest: ", interest)
 
   // 바텀시트가 열고 닫으면 기존값으로 초기화 해주기
   useEffect(() => {
-    setMyInterest(userInterest)
-  }, [userInterest, isOpen])
+    if (pathname === "/mypage") {
+      setMyInterest(userInterest)
+    }
+  }, [userInterest, pathname])
 
   const handleEdit = () => {
     const requestBody = {
@@ -108,7 +111,7 @@ export const InterestBottomSheet = () => {
       name: "exchange-diary",
       extra: {
         status: "delivery",
-        interest: myInterest,
+        interest: [...interest],
       },
     }
 

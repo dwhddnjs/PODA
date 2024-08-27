@@ -46,7 +46,10 @@ export const NavigationHeader = ({
   return (
     <div className="w-full flex justify-between items-center py-[12px] bg-background z-50 fixed">
       <div className="flex">
-        <Button variant="ghost" onClick={handleBack}>
+        <Button
+          variant="ghost"
+          onClick={handleBack}
+          className="hover:bg-transparent">
           <ChevronLeft className="text-primary" width={32} height={32} />
         </Button>
         {isMood && (
