@@ -56,7 +56,7 @@ export default function LoadDiaryPage() {
             />
             <h2 className="mt-6 text-[#c4c4c4]">일기를 작성해주세요</h2>
           </div>
-        )}
+        )} */}
         {!isPending &&
           data &&
           Object.keys(data).length > 0 &&
@@ -71,7 +71,7 @@ export default function LoadDiaryPage() {
               <ExchangeDiary key={date} diaryDatas={data[date]} />
             </div>
           ))}
-        <Spacer /> */}
+        <Spacer />
       </div>
     </div>
   )
