@@ -64,7 +64,7 @@ export default function LoadDiaryPage() {
               className="m-6"
               onClick={() => handleSelectDiary(data[date], date)}>
               <h3 className="text-primary mb-1">
-                adsdasdadas
+                {date}
                 {/* {format(date, "M월 d일 EEEE", { locale: ko })} */}
               </h3>
               <ExchangeDiary key={date} diaryDatas={data[date]} />
