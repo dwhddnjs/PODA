@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react"
 
 export default function LoadDiaryPage() {
   const { selectDiary, setSelectDiary, setDate } = useSelectedDiary()
-  const { data: userData } = useSession()
+  const { data: userData } = useCurrentSession()
   const userId = userData?.user?._id
 
   const { data, isPending, refetch } = usePostsMyDiarys(
@@ -27,7 +27,7 @@ export default function LoadDiaryPage() {
 
   useEffect(() => {
     refetch()
-  }, [userId, refetch])
+  }, [userData, refetch])
 
   const pathname = usePathname()
 

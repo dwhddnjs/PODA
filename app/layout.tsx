@@ -277,17 +277,15 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           myFont.variable
         )}>
-        <SessionProvider>
-          <ReactQueryProvider>
-            <AuthProvider>
-              <FcmProvider>
-                <Toaster position="top-center" />
-                {children}
-              </FcmProvider>
-              <SheetProvider />
-            </AuthProvider>
-          </ReactQueryProvider>
-        </SessionProvider>
+        <ReactQueryProvider>
+          <AuthProvider>
+            <FcmProvider>
+              <Toaster position="top-center" />
+              {children}
+            </FcmProvider>
+            <SheetProvider />
+          </AuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   )
