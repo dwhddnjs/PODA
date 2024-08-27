@@ -94,7 +94,11 @@ export default function SignupPage() {
             }) => form.setError(error.path, { message: error.msg })
           )
         } else if (resData.message) {
-          toast(resData.message)
+          toast.error(resData.message, {
+            style: {
+              color: "white",
+            },
+          })
         }
       }
     })
