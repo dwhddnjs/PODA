@@ -8,10 +8,12 @@ import { usePostsMyDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useCurrentSession } from "@/hooks/use-current-session"
 import { useUser } from "@/hooks/use-user"
+import { convertTime } from "@/lib/function"
 import { DiaryTypes } from "@/types/my-diarys"
 import { format, parse } from "date-fns"
 import { ko } from "date-fns/locale"
 import { useSession } from "next-auth/react"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
@@ -25,9 +27,11 @@ export default function LoadDiaryPage() {
     Number(userId)
   )
 
+  console.log("data: ", data)
+
   useEffect(() => {
     refetch()
-  }, [userData, refetch])
+  }, [userData])
 
   const pathname = usePathname()
 
@@ -38,16 +42,23 @@ export default function LoadDiaryPage() {
     }
   }
 
-  const convertTime = (inputDate: string) => {
-    const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
-    return format(parsedDate, "M월 d일 EEEE", { locale: ko })
-  }
-
   return (
     <div className="w-full h-full relative ">
       <NavigationHeader isDate />
-      {isPending && <FullScreen />}
+
       <div className="w-full h-full space-y-5 pt-[60px]">
+        {!data && isPending && <FullScreen />}
+        {!data && !isPending && (
+          <div className="flex flex-col justify-center items-center mt-28">
+            <Image
+              src={"/assets/no-diary.png"}
+              width={160}
+              height={160}
+              alt="다이어리 없을때 이미지"
+            />
+            <h2 className="mt-6 text-[#c4c4c4]">일기를 작성해주세요</h2>
+          </div>
+        )}
         {!isPending &&
           data &&
           Object.keys(data).map((date) => (
@@ -55,7 +66,9 @@ export default function LoadDiaryPage() {
               key={date}
               className="m-6"
               onClick={() => handleSelectDiary(data[date], date)}>
-              <h3 className="text-primary mb-1">{convertTime(date)}</h3>
+              <h3 className="text-primary mb-1">
+                {format(date, "M월 d일 EEEE", { locale: ko })}
+              </h3>
               <ExchangeDiary key={date} diaryDatas={data[date]} />
             </div>
           ))}

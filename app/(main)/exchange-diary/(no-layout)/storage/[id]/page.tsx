@@ -10,9 +10,12 @@ import { usePostsDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useTarget } from "@/hooks/store/use-target"
 import { useUser } from "@/hooks/use-user"
-import { convertDate, getKoDate } from "@/lib/function"
+import { convertDate, convertTime, getKoDate } from "@/lib/function"
 import { cn } from "@/lib/utils"
 import { DiaryTypes } from "@/types/my-diarys"
+import { format } from "date-fns"
+import { ko } from "date-fns/locale"
+import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import React from "react"
 
@@ -22,6 +25,9 @@ export default function StorageIdPage() {
     "exchange-diary",
     parseInt(param.id as string)
   )
+
+  console.log("data: ", data)
+
   const { target } = useTarget()
   const { setProductId } = useSelectedDiary()
   const { push } = useRouter()
@@ -34,25 +40,37 @@ export default function StorageIdPage() {
 
   const renderListItem =
     data &&
-    Object.entries(data as Record<string, DiaryTypes[]>)?.map((item) => (
-      <div className="w-full space-y-1.5" key={item[0]}>
-        <div
-          className={cn(
-            "flex justify-between items-end ",
-            item[1][0].user.name !== user?.name && "flex-row-reverse"
-          )}>
-          <AvatarName name={item[1][0].user.name} />
-          <p className="text-sm text-primary font-semibold">
-            {getKoDate(item[0])}
-          </p>
+    Object.entries(data as Record<string, DiaryTypes[]>)?.map((item) => {
+      console.log("item: ", item[0])
+      return (
+        <div className="w-full space-y-1.5" key={item[0]}>
+          <div
+            className={cn(
+              "flex justify-between items-end ",
+              item[1][0].user.name !== user?.name && "flex-row-reverse"
+            )}>
+            <AvatarName
+              name={item[1][0].user.name}
+              image={item[1][0].user.image}
+            />
+            <p className="text-sm text-primary font-semibold">
+              {format(item[0], "M월 d일 EEEE", { locale: ko })}
+            </p>
+          </div>
+          <ExchangeDiary diaryDatas={item[1]} />
         </div>
-        <ExchangeDiary diaryDatas={item[1]} />
-      </div>
-    ))
+      )
+    })
 
   return (
     <div className="w-full h-dvh relative ">
-      {isPending && <FullScreen />}
+      {!data && isPending && <FullScreen />}
+      {!data && !isPending && (
+        <div w-full h-full>
+          <Image src="/asset/exchange-diary" width={100} height={100} alt="" />
+        </div>
+      )}
+
       <NavigationHeader />
       <div className="h-full space-y-8 px-[24px] pt-[80px]">
         {renderListItem}

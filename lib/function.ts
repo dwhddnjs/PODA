@@ -34,8 +34,15 @@ export const getTxtByMood = (mood: keyof MoodType) => {
 // }
 
 export const convertDate = (dateStr: string) => {
-  const [year, month, day] = dateStr.split("-").map(Number)
+  const [year, month, day] = dateStr.split(".").map(Number)
   return `${year}년 ${month}월 ${day}일`
+}
+
+export const convertTime = (inputDate: string) => {
+  if (inputDate) {
+    const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
+    return format(parsedDate, "M월 d일 EEEE", { locale: ko })
+  }
 }
 
 export const convertStatusText = (status: DeliveryStatusTypes) => {

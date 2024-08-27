@@ -10,7 +10,7 @@ export const useSendPush = () => {
     link: string
     token: string
   }) => {
-    await postRequest("http://localhost:3000/api/fcm", message)
+    await postRequest("https://poda.vercel.app/api/fcm", message)
   }
 
   return sendPush
