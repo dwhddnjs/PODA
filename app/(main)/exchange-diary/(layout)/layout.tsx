@@ -8,7 +8,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#ffffff",
+  themeColor: "#272727",
 }
 
 export default function MyPagePage({

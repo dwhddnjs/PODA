@@ -1,9 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { patchRequest } from "@/lib/protocol"
-import { apiKeys } from "@/lib/api-keys"
-import { useUserInfo } from "@/hooks/query/user"
+
 import { useCurrentSession } from "@/hooks/use-current-session"
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
