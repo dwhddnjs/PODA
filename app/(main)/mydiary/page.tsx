@@ -29,7 +29,7 @@ export default function MydiaryPage() {
 
   return (
     <>
-      <NavigationHeader isDate isSearch />
+      <NavigationHeader isDate />
       {/* 날짜(2024-08-03) 개수만큼 반복 */}
       <div className="pt-16 pb-20">
         {dates?.length ? (
