@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useDeletePost } from "@/hooks/mutation/post"
+import { usePostsDiary } from "@/hooks/query/post"
 
 import { useDiaryValues } from "@/hooks/store/use-diary"
 import { DiaryTypes } from "@/types/my-diarys"
@@ -22,13 +23,14 @@ import { Ellipsis } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 type DropDownProps = {
-  diaryData?: DiaryTypes
+  diaryData: DiaryTypes
 }
 
 export function Dropdown({ diaryData }: DropDownProps) {
   const router = useRouter()
   const { seter } = useDiaryValues()
-  const { mutate: deleteMutate } = useDeletePost(diaryData!._id)
+  // const { data } = usePostsDiary(String(diaryData._id))
+  const { mutate: deleteMutate } = useDeletePost(diaryData._id)
 
   const handleEdit = () => {
     seter(true, "isEditMode")
@@ -59,7 +61,6 @@ export function Dropdown({ diaryData }: DropDownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {/* //! 드롭다운 focus 적용 안되는 문제 있음 */}
         <Button variant="ghost" className="focus:outline-none">
           <Ellipsis />
         </Button>
