@@ -23,10 +23,10 @@ import {
   signInWithGithub,
   signInWithGoogle,
 } from "@/actions/authAction"
-import { useEffect, useTransition } from "react"
+import { useTransition } from "react"
 import { useUserData } from "@/hooks/store/use-user-data"
 import { FullScreen } from "@/components/spinner"
-import { Toaster, toast } from "sonner"
+import { toast } from "sonner"
 
 const FormSchema = z.object({
   email: z
@@ -63,11 +63,18 @@ export default function LoginPage() {
   const onCredentialSubmit = async (formData: z.infer<typeof FormSchema>) => {
     startTransition(async () => {
       const res = await signInWithCredentials(formData)
-      console.log(res)
       if (res.type === "AccessDenied") {
-        alert("아이디와 비밀번호를 확인해주세요!")
+        toast.error("아이디와 비밀번호를 확인해주세요!", {
+          style: {
+            color: "white",
+          },
+        })
       } else if (res.kind === "error") {
-        alert("오류가 발생했습니다!")
+        toast.error("오류가 발생했습니다!", {
+          style: {
+            color: "white",
+          },
+        })
       }
     })
   }
