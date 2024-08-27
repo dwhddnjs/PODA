@@ -60,6 +60,11 @@ export const convertStatusText = (status: DeliveryStatusTypes) => {
   return result
 }
 
+export const convertTime = (inputDate: string) => {
+  const parsedDate = parse(inputDate, "yyyy.MM.dd", new Date())
+  return format(parsedDate, "M월 d일 EEEE", { locale: ko })
+}
+
 export const getKoTime = (val: string) => {
   if (val) {
     const date = parse(val, "yyyy.MM.dd HH:mm:ss", new Date())

@@ -28,7 +28,7 @@ export default function WriteNotePage() {
 
   return (
     <div className="h-full">
-      <NavigationHeader isNew={true} />
+      <NavigationHeader isBack isWriteNote />
       <div className="h-full px-6 pt-16">
         <Input
           placeholder="제목 입력..."
