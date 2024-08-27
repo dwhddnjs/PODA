@@ -30,7 +30,10 @@ export const FcmProvider = ({ children }: { children: React.ReactNode }) => {
 
   const app = initializeApp(firebaseConfig)
 
-  const messaging = getMessaging(app)
+  const messaging =
+    typeof window !== "undefined" &&
+    typeof window.navigator !== "undefined" &&
+    getMessaging(app)
 
   const fetchToken = async (userId: string) => {
     try {
@@ -53,11 +56,10 @@ export const FcmProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
-    console.log("adsadsdas", data?.user)
-    if (data) {
-      fetchToken(data.user?._id!)
-    }
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      if (data) {
+        fetchToken(data.user?._id!)
+      }
       navigator.serviceWorker
         .register("/firebase-messaging-sw.js")
         .then((registration) => {
