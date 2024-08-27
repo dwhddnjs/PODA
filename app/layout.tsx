@@ -80,8 +80,6 @@ export const metadata: Metadata = {
   title: "PODA",
   description: "쉽고 간단하게 일기를 쓰고 다양한 사람들과 공유해보세요",
   manifest: "/manifest.json",
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
   other: {
     "apple-mobile-web-app-capable": "yes",
   },
