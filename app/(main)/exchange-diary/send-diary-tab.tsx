@@ -53,13 +53,16 @@ export const SendDiaryTab = () => {
             } as any)
           })
         )
-        const res = await fetcher(`${apiKeys.users}/${target._id}/token`)
-        send({
-          title: "새로운 일기가 왔어요",
-          message: "PODA에 들어와서 확인해보세요",
-          link: "https://poda.vercel.app",
-          token: res.item.token,
-        })
+        if (target._id) {
+          const res = await fetcher(`${apiKeys.users}/${target._id}/token`)
+          send({
+            title: "새로운 일기가 왔어요",
+            message: "PODA에 들어와서 확인해보세요",
+            link: "https://poda.vercel.app",
+            token: res.item.token,
+          })
+        }
+
         replace("/exchange-diary/delivery-success")
       } catch (error) {
         console.log(error)

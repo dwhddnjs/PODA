@@ -2,7 +2,7 @@
 
 import { Switch } from "@/components/ui/switch"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
-import { useUser } from "@/hooks/use-user"
+
 import { fetcher } from "@/lib/protocol"
 import { Bell, LucideIcon, LucideProps } from "lucide-react"
 import { signOut } from "next-auth/react"
@@ -22,7 +22,7 @@ export const SwitchItem = ({
   onClick,
 }: SwitchItemProps) => {
   const { onOpen } = useInterestSheet()
-  const user = useUser()
+
   // console.log("user: ", user)
   const handleClick = async () => {
     switch (title) {

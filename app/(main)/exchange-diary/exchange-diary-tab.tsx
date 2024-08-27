@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 
 import { useSendPush } from "@/hooks/use-send-push"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React from "react"
 

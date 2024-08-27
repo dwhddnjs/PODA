@@ -7,15 +7,16 @@ import { Switch } from "@/components/ui/switch"
 import { SwitchItem } from "./switch-item"
 import { Footer } from "@/components/footer"
 import { useUserInfo } from "@/hooks/query/user"
-import { useUser } from "@/hooks/use-user"
+
 import { patchRequest } from "@/lib/protocol"
 import { apiKeys } from "@/lib/api-keys"
 import { signOut } from "next-auth/react"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
+import { useCurrentSession } from "@/hooks/use-current-session"
 
 export default function MyPagePage() {
-  const user = useUser()
-  const { data, refetch } = useUserInfo(user?._id as string)
+  const { data: userData } = useCurrentSession()
+  const { data, refetch } = useUserInfo(userData?.user?._id as string)
   const { onOpen } = useInterestSheet()
 
   const mypageItems = [
@@ -26,14 +27,20 @@ export default function MyPagePage() {
       value: data?.item?.extra?.pushNotification,
       onClick: async () => {
         if (!data.item.extra.pushNotification) {
-          const res = await patchRequest(`${apiKeys.users}/${user?._id}`, {
-            extra: { ...data.item.extra, pushNotification: true },
-          })
+          const res = await patchRequest(
+            `${apiKeys.users}/${userData?.user?._id}`,
+            {
+              extra: { ...data.item.extra, pushNotification: true },
+            }
+          )
           console.log("res: ", res)
         } else {
-          const res = await patchRequest(`${apiKeys.users}/${user?._id}`, {
-            extra: { ...data.item.extra, pushNotification: false },
-          })
+          const res = await patchRequest(
+            `${apiKeys.users}/${userData?.user?._id}`,
+            {
+              extra: { ...data.item.extra, pushNotification: false },
+            }
+          )
           console.log("res: ", res)
         }
         refetch()

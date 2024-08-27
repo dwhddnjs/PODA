@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 // import { fetchToken } from "@/lib/firebase"
-import { useUser } from "@/hooks/use-user"
+
 import { useCurrentSession } from "@/hooks/use-current-session"
 import { initializeApp } from "firebase/app"
 import {

@@ -16,7 +16,8 @@ import { usePatchUser } from "@/hooks/mutation/user"
 import { useUserInfo } from "@/hooks/query/user"
 import { useInterestSheet } from "@/hooks/store/use-interest-sheet"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
-import { useUser } from "@/hooks/use-user"
+import { useCurrentSession } from "@/hooks/use-current-session"
+
 import { usePathname, useRouter } from "next/navigation"
 import React, { useEffect } from "react"
 import { toast } from "sonner"
@@ -64,10 +65,10 @@ export const InterestBottomSheet = () => {
   const pathname = usePathname()
   const { mutate } = useAddProduct()
 
-  const userData = useUser()
-  const id = userData?._id
-  const { userInterest } = useUserInfo(id as string)
-  const { mutate: patchUserMutate } = usePatchUser(Number(id))
+  const { data } = useCurrentSession()
+
+  const { userInterest } = useUserInfo(data?.user?._id as string)
+  const { mutate: patchUserMutate } = usePatchUser(Number(data?.user?._id))
   console.log("interest: ", interest)
 
   // 바텀시트가 열고 닫으면 기존값으로 초기화 해주기
