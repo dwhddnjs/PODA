@@ -21,7 +21,11 @@ export const Tag = ({
   const pathName = usePathname()
 
   useEffect(() => {
-    if (userInterest && userInterest.includes(children)) {
+    if (
+      pathName === "mypage" &&
+      userInterest &&
+      userInterest.includes(children)
+    ) {
       setSelected(true)
     } else {
       setSelected(false)
@@ -34,7 +38,7 @@ export const Tag = ({
       removeInterest(children)
       removeUserInterest(children)
 
-      if (pathName === "/mypage" || pathName === "/exchange-diary") {
+      if (pathName === "/mypage") {
         const updatedInterest = myInterest.filter((item) => item !== children)
         setMyInterest(updatedInterest)
       }
@@ -43,7 +47,7 @@ export const Tag = ({
       setInterest(children)
       addUserInterest(children)
 
-      if (pathName === "/mypage" || pathName === "/exchange-diary") {
+      if (pathName === "/mypage") {
         setMyInterest([...myInterest, children])
       }
     }

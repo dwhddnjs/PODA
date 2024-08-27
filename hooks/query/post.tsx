@@ -12,25 +12,26 @@ export const usePostsDiarys = (
   // userId?: number,
   productId?: number
 ) => {
-  const searchParams = new URLSearchParams()
   // const searchParams = productId
   //   ? new URLSearchParams([
   //       ["custom", JSON.stringify({ product_id: productId })],
   //     ])
   //   : null
 
-  if (productId) {
-    searchParams.append("custom", JSON.stringify({ product_id: productId }))
-  }
-
   // if (userId) {
   //   searchParams.append("custom", JSON.stringify({ "user._id": userId }))
   // }
 
+  const searchParams = new URLSearchParams()
+
+  if (productId) {
+    searchParams.append("custom", JSON.stringify({ product_id: productId }))
+  }
+
   const { data, isPending, error, refetch } = useQuery<
     Record<string, DiaryTypes[]>
   >({
-    queryKey: [apiKeys.posts],
+    queryKey: [apiKeys.posts, productId],
     queryFn: async () => {
       // const res = productId
       //   ? await fetcher(
@@ -40,6 +41,7 @@ export const usePostsDiarys = (
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
+
       return sortDiarys(res.item)
     },
   })
@@ -56,13 +58,16 @@ export const usePostsMyDiarys = (type: string, userId: number) => {
   const searchParams = new URLSearchParams()
   searchParams.append("custom", JSON.stringify({ "user._id": userId }))
   const { data, isPending, error, refetch } = useQuery<
-    Record<string, DiaryTypes[]>
+    Record<string, DiaryTypes[]> | undefined
   >({
-    queryKey: [apiKeys.posts],
+    queryKey: [apiKeys.posts, userId],
     queryFn: async () => {
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
+      if (res && res.item.length === 0) {
+        return undefined
+      }
       return sortMyDiarys(res.item)
     },
   })
