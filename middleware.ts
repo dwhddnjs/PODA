@@ -9,12 +9,6 @@ export default async function middleware(request: NextRequest) {
   if (!session?.user) {
     return NextResponse.redirect(`${nextUrl.origin}/login`)
   }
-
-  if (nextUrl.pathname === `/welcome`) {
-    if (session.user.extra?.isOnboarding) {
-      return NextResponse.redirect(`${nextUrl.origin}/mydiary`)
-    }
-  }
 }
 
 export const config = {
