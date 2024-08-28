@@ -2,7 +2,7 @@ import React from "react"
 
 export const Footer = () => {
   return (
-    <div className="w-full bg-[#363636] px-[12px] py-[12px] ">
+    <div className="w-full bg-[#363636] px-[12px] pt-[12px] pb-[28px]">
       <div className="border-b-[1.5px] border-secondary pb-1.5 mb-1.5">
         <div>
           <h3>Contact us</h3>
