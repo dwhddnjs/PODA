@@ -72,7 +72,7 @@ export default function StorageIdPage() {
         </div>
       )}
 
-      <NavigationHeader />
+      <NavigationHeader isBack />
       <div className="h-full space-y-8 px-[24px] pt-[80px]">
         {renderListItem}
         <Spacer />
