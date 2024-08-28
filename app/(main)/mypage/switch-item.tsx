@@ -30,7 +30,7 @@ export const SwitchItem = ({
         onOpen()
         break
       case "로그아웃":
-        signOut({ callbackUrl: "/login" })
+        signOut({ callbackUrl: "/" })
         break
       default:
         break
