@@ -15,7 +15,7 @@ export default function PreviewIdPage() {
 
   return (
     <div className="w-full h-full relative">
-      <NavigationHeader />
+      <NavigationHeader isBack />
       <div className="w-full  space-y-8 pt-[80px]">
         <div className="flex w-full justify-center items-center space-x-5">
           <AvatarName
