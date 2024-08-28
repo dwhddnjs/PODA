@@ -26,6 +26,7 @@ export default function LoadDiaryPage() {
     "mydiary",
     Number(userId)
   )
+  console.log("data: ", data)
 
   useEffect(() => {
     refetch()
