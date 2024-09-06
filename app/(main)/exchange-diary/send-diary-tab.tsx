@@ -6,14 +6,11 @@ import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
-
 import Link from "next/link"
 import { useAddPost } from "@/hooks/mutation/post"
 import { useAddProduct } from "@/hooks/mutation/product"
-import { FullScreen } from "@/components/spinner"
 import { apiKeys } from "@/lib/api-keys"
 import { useTarget } from "@/hooks/store/use-target"
-import { MdAssuredWorkload } from "react-icons/md"
 import { useSendPush } from "@/hooks/use-send-push"
 import { fetcher } from "@/lib/protocol"
 
@@ -28,7 +25,6 @@ export const SendDiaryTab = () => {
   const send = useSendPush()
 
   const [isShowDiary, setIsShowDiary] = useState(false)
-
   const handleOnSubmit = async () => {
     if (product_id && selectDiary && target) {
       try {
@@ -50,7 +46,7 @@ export const SendDiaryTab = () => {
                   image: target.image,
                 },
               },
-            } as any)
+            })
           })
         )
         if (target._id) {
@@ -62,7 +58,6 @@ export const SendDiaryTab = () => {
             token: res.item.token,
           })
         }
-
         replace("/exchange-diary/delivery-success")
       } catch (error) {
         console.log(error)
