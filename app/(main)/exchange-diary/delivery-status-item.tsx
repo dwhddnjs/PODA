@@ -6,7 +6,7 @@ import { Tag } from "@/components/tag"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { apiKeys } from "@/lib/api-keys"
-import { convertStatusText, getKoDate } from "@/lib/function"
+import { convertStatusText, getKoDate, getKoYearDate } from "@/lib/function"
 import { patchRequest } from "@/lib/protocol"
 import { cn } from "@/lib/utils"
 import { DeliveryStatusTypes, ExchangeDiaryTypes } from "@/types/exchange-diary"
@@ -97,7 +97,7 @@ export const DeliveryStatusItem = ({ diary }: DeliveryStatusItemProps) => {
             {/* <MessageSquareHeart /> */}
             <CalendarDays size={16} className="text-secondary" />
             <span className="font-bold text-secondary text-sm">
-              {getKoDate(diary?.createdAt)}
+              {getKoYearDate(diary?.createdAt)}
             </span>
           </div>
         </div>
