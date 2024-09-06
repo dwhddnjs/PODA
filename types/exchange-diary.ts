@@ -26,10 +26,10 @@ export type ExchangeDiary = {
 
 export type ExchangeDiaryTypes = {
   _id: number
-  //   active: boolean
-  //   price: numberz
-  //   quantity: number
-  //   show: boolean
+  active: boolean
+  price: number
+  quantity: number
+  show: boolean
   content: string
   createdAt: string
   updatedAt: string
