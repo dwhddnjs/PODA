@@ -1,24 +1,20 @@
 "use client"
 
 import { apiKeys } from "@/lib/api-keys"
-import { sortDiarys } from "@/lib/function"
 import { fetcher } from "@/lib/protocol"
 import { ApiResError, ApiResSuccess } from "@/types/api-response"
 import { ExchangeDiaryTypes } from "@/types/exchange-diary"
-import { DiaryTypes } from "@/types/my-diarys"
 import { useQuery } from "@tanstack/react-query"
-import { useUser } from "../use-user"
 import { useCurrentSession } from "../use-current-session"
 
 export const useProductsDiarys = () => {
   const { data: userData } = useCurrentSession()
-  console.log("userData: ", userData)
 
-  const { data, isPending, error, refetch } = useQuery<
-    ApiResSuccess<ExchangeDiaryTypes[]>
-  >({
+  const { data, isPending, error, refetch } = useQuery({
     queryKey: [apiKeys.products, userData?.user?._id],
-    queryFn: async () => {
+    queryFn: async (): Promise<
+      ApiResSuccess<ExchangeDiaryTypes[]> | undefined
+    > => {
       if (userData) {
         const searchParams = new URLSearchParams([
           [
@@ -28,28 +24,55 @@ export const useProductsDiarys = () => {
             }),
           ],
         ])
-        const data = await fetcher(
-          `${apiKeys.product}?${searchParams.toString()}`
-        )
-        const data2 = await fetcher(
-          `${apiKeys.product}?seller_id=${userData?.user?._id}`
-        )
-        const result = [...data.item, ...data2.item].reduce((acc, current) => {
-          if (!acc.some((item: any) => item._id === current._id)) {
-            acc.push(current)
+        try {
+          if (userData) {
+            //타겟이 나인 것
+            const targetIdData = await fetcher(
+              `${apiKeys.product}?${searchParams.toString()}`
+            )
+            //내가 만든 것
+            const sellerIdData = await fetcher(
+              `${apiKeys.product}?seller_id=${userData?.user?._id}`
+            )
+            //두개를 합쳐서 중복 제거 후 솔팅
+            if (targetIdData && sellerIdData) {
+              const result = [...targetIdData.item, ...sellerIdData.item]
+                .reduce((acc, current) => {
+                  if (
+                    !acc.some(
+                      (item: ExchangeDiaryTypes) => item._id === current._id
+                    )
+                  ) {
+                    acc.push(current)
+                  }
+                  return acc
+                }, [])
+                .sort(
+                  (a: ExchangeDiaryTypes, b: ExchangeDiaryTypes) =>
+                    b._id - a._id
+                )
+
+              if (result.length === 0) {
+                return undefined
+              }
+
+              return {
+                ok: 1,
+                ...data,
+                item: result,
+              }
+            } else {
+              console.log("데이터가 없습니다")
+              return undefined
+            }
+          } else {
+            console.log("유저가 없습니다")
+            return undefined
           }
-          return acc
-        }, [])
-        if (result.length === 0) {
-          return undefined
-        }
-        return {
-          ...data,
-          item: result,
+        } catch (error) {
+          console.log("error", error)
         }
       }
-
-      //   const targetByUsers = data.item.filter((el: any) => el._id === )
     },
   })
 

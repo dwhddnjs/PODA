@@ -7,6 +7,7 @@ import { useSelectedDiary } from "../store/use-selected-diary"
 import { useUser } from "../use-user"
 import { User } from "@/types/user"
 import { useSendPush } from "../use-send-push"
+import { ExchangeDiaryTypes } from "@/types/exchange-diary"
 
 export const useAddProduct = () => {
   const { selectDiary, interest, myInterest } = useSelectedDiary()
@@ -15,7 +16,7 @@ export const useAddProduct = () => {
   const send = useSendPush()
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: ExchangeDiaryTypes) => {
       const searchParams = new URLSearchParams([
         [
           "custom",
@@ -24,42 +25,65 @@ export const useAddProduct = () => {
           }),
         ],
       ])
-      const getUsers = await fetcher(
-        `${apiKeys.users}/?${searchParams.toString()}`
-      )
-      console.log("getUsers: ", getUsers)
+      try {
+        if (!user) {
+          console.log("유저가 존재하지 않습니다")
+          return undefined
+        }
 
-      const filteredPeople = getUsers.item.filter(
-        (item: User) => user?.name !== item.name
-      )
-      const randomIndex = Math.floor(Math.random() * filteredPeople.length)
-      const targetUser = filteredPeople[randomIndex]
-      console.log("targetUser: ", targetUser)
+        const getUsers = await fetcher(
+          `${apiKeys.users}/?${searchParams.toString()}`
+        )
 
-      const res = await fetcher(`${apiKeys.users}/${targetUser?._id}/token`)
-      console.log("res: ", res)
-      if (res) {
-        send({
+        if (getUsers.ok === 0) {
+          console.log("유저리스트를 못불러옴")
+          return undefined
+        }
+
+        const filteredPeople = getUsers.item.filter(
+          (item: User) => user?.name !== item.name
+        )
+        const randomIndex = Math.floor(Math.random() * filteredPeople.length)
+        const targetUser = filteredPeople[randomIndex]
+
+        if (!targetUser) {
+          console.log("타겟유저가 없음")
+          return undefined
+        }
+        const res = await fetcher(`${apiKeys.users}/${targetUser?._id}/token`)
+        if (res.ok === 0) {
+          console.log("토큰 못불러옴")
+          return undefined
+        }
+
+        const productRes = await postRequest(`${apiKeys.products}`, {
+          ...data,
+          extra: {
+            ...data.extra,
+            target: {
+              _id: targetUser._id,
+              name: targetUser.name,
+              image: targetUser.image,
+            },
+          },
+        })
+
+        if (productRes.ok === 0) {
+          console.log("생성 실패")
+          return undefined
+        }
+
+        await send({
           title: "누군가로 부터 새로운 일기가 왔어요",
           message: "PODA에 들어와서 확인해보세요",
           link: "https://poda.vercel.app",
           token: res.item.token,
         })
-      } else {
-        console.log("메세지 전송이 실패 되었습니다")
-      }
 
-      return await postRequest(`${apiKeys.products}`, {
-        ...data,
-        extra: {
-          ...data.extra,
-          target: {
-            _id: targetUser._id,
-            name: targetUser.name,
-            image: targetUser.image,
-          },
-        },
-      })
+        return productRes
+      } catch (error) {
+        console.log("일단 에러남", error)
+      }
     },
     onSuccess: async (data) => {
       if (selectDiary && data) {

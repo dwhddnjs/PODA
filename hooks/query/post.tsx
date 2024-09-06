@@ -107,13 +107,11 @@ export const usePostsExchangeMyDiarys = (type: string, userId: number) => {
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
-      console.log("res:dasadsdsasadads ", res)
 
       if (res && res.item.length === 0) {
         return undefined
-      } else {
-        return sortMyDiarys(res.item)
       }
+      return sortMyDiarys(res.item)
     },
   })
 
