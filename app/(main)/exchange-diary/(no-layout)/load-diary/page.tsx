@@ -7,12 +7,8 @@ import { FullScreen } from "@/components/spinner"
 import { usePostsExchangeMyDiarys, usePostsMyDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useCurrentSession } from "@/hooks/use-current-session"
-
-import { convertTime } from "@/lib/function"
+import { convertDate, getKoDate } from "@/lib/function"
 import { DiaryTypes } from "@/types/my-diarys"
-import { format, parse } from "date-fns"
-import { ko } from "date-fns/locale"
-import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -26,6 +22,7 @@ export default function LoadDiaryPage() {
     "mydiary",
     Number(userId)
   )
+
   console.log("data: ", data)
 
   useEffect(() => {
@@ -44,7 +41,6 @@ export default function LoadDiaryPage() {
   return (
     <div className="w-full h-full relative ">
       <NavigationHeader isBack isDate />
-
       <div className="w-full h-full space-y-5 pt-[60px]">
         {!data && isPending && <FullScreen />}
         {!data && !isPending && (
@@ -65,10 +61,7 @@ export default function LoadDiaryPage() {
               key={date}
               className="m-6"
               onClick={() => handleSelectDiary(data[date], date)}>
-              <h3 className="text-primary mb-1">
-                {date}
-                {/* {format(date, "M월 d일 EEEE", { locale: ko })} */}
-              </h3>
+              <h3 className="text-primary mb-1">{convertDate(date)}</h3>
               <ExchangeDiary key={date} diaryDatas={data[date]} />
             </div>
           ))}

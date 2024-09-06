@@ -10,11 +10,9 @@ import { usePostsDiarys } from "@/hooks/query/post"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 import { useTarget } from "@/hooks/store/use-target"
 import { useUser } from "@/hooks/use-user"
-import { convertDate, convertTime, getKoDate } from "@/lib/function"
+import { getKoDate, getKoYearDate } from "@/lib/function"
 import { cn } from "@/lib/utils"
 import { DiaryTypes } from "@/types/my-diarys"
-import { format } from "date-fns"
-import { ko } from "date-fns/locale"
 import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import React from "react"
@@ -54,7 +52,7 @@ export default function StorageIdPage() {
               image={item[1][0].user.image}
             />
             <p className="text-sm text-primary font-semibold">
-              {item[0]}
+              {getKoYearDate(item[0])}
               {/* {format(item[0], "M월 d일 EEEE", { locale: ko })} */}
             </p>
           </div>

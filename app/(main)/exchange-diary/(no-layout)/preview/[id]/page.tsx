@@ -6,12 +6,13 @@ import { Dotline } from "@/components/dot-line"
 import { NavigationHeader } from "@/components/navigation-header"
 import { useSelectedDiary } from "@/hooks/store/use-selected-diary"
 
-import { getKoDate } from "@/lib/function"
+import { getKoDate, getKoYearDate } from "@/lib/function"
 import { useRouter } from "next/navigation"
 import React from "react"
 
 export default function PreviewIdPage() {
   const { selectDiary, date } = useSelectedDiary()
+  console.log("selectDiary: ", selectDiary)
 
   return (
     <div className="w-full h-full relative">
@@ -30,7 +31,7 @@ export default function PreviewIdPage() {
         </div>
         <div className="w-full px-[24px] space-y-1">
           <h3 className="pl-1 text-primary font-semibold">
-            {getKoDate(selectDiary![0]?.createdAt)}
+            {getKoYearDate(selectDiary![0]?.createdAt)}
           </h3>
           <ExchangeDiary diaryDatas={selectDiary!} />
         </div>
