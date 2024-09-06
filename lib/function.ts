@@ -74,6 +74,14 @@ export const getKoDate = (val: string) => {
   }
 }
 
+export const getKoYearDate = (val: string) => {
+  if (val) {
+    const date = parse(val, "yyyy.MM.dd HH:mm:ss", new Date())
+    const formattedDate = format(date, `yyyy년 M월 d일`, { locale: ko })
+    return formattedDate
+  }
+}
+
 export const getCurrentFormattedDate = () => {
   const now = new Date()
   const formattedDate = format(now, "M월 d일 HH:mm", { locale: ko })
