@@ -29,7 +29,7 @@ export const usePostsDiarys = (
   }
 
   const { data, isPending, error, refetch } = useQuery<
-    Record<string, DiaryTypes[]>
+    Record<string, DiaryTypes[]> | undefined
   >({
     queryKey: [apiKeys.posts, productId],
     queryFn: async () => {
@@ -41,6 +41,10 @@ export const usePostsDiarys = (
       const res = await fetcher(
         `${apiKeys.posts}?type=${type}&${searchParams.toString()}`
       )
+
+      if (res && res.item.length === 0) {
+        return undefined
+      }
 
       return sortDiarys(res.item)
     },
