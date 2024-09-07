@@ -103,7 +103,7 @@ export const InterestBottomSheet = () => {
   }
 
   const handleSubmit = async () => {
-    const requestBody = {
+    const requestBody: any = {
       price: 0,
       quantity: 1,
       show: true,
