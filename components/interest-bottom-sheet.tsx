@@ -127,7 +127,6 @@ export const InterestBottomSheet = () => {
     } finally {
       onClose()
       //   onReset()
-      push("/exchange-diary/delivery-success")
     }
   }
 
